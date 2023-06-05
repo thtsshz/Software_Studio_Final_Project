@@ -34,7 +34,7 @@ export default class NewClass extends cc.Component {
     }
     onKeyDown(event) {
         if(this.node.name=='player1'){
-            if(event.keyCode == cc.macro.KEY.up&&this.on_ground==true){//w jump
+            if(event.keyCode == cc.macro.KEY.up&&this.on_ground==true){//jump
                 this.jump=true;
                 this.on_ground=false;
             }
@@ -65,7 +65,7 @@ export default class NewClass extends cc.Component {
     }
     onKeyUp(event){
         if(this.node.name=='player1'){
-            if(event.keyCode == cc.macro.KEY.up){//w jump
+            if(event.keyCode == cc.macro.KEY.up){//jump
                 this.jump=false;
             }
             else if(event.keyCode==cc.macro.KEY.left){//left
@@ -83,11 +83,11 @@ export default class NewClass extends cc.Component {
             }
             else if(event.keyCode==cc.macro.KEY.a){//left
                 this.left_move=false;
-                this.anim.stop("player_1_walk");
+                this.anim.stop("weasly_walk");
             }
             else if(event.keyCode==cc.macro.KEY.d){//right
                 this.right_move=false;
-                this.anim.stop("player_1_walk");
+                this.anim.stop("weasly_walk");
             }
         }
         
@@ -104,16 +104,31 @@ export default class NewClass extends cc.Component {
         if(this.left_move) {
             this.playerSpeed=-400;
             this.node.scaleX=-0.1;  // modify node's X scale value to change facing direction
-            if(!this.anim.getAnimationState('player_1_walk').isPlaying){
-                this.anim.play("player_1_walk");
+            if(this.node.name=='player1'){
+                if(!this.anim.getAnimationState('player_1_walk').isPlaying){
+                    this.anim.play("player_1_walk");
+                }
             }
+            else{
+                if(!this.anim.getAnimationState('weasly_walk').isPlaying){
+                    this.anim.play("weasly_walk");
+                } 
+            }
+            
             
         } 
         else if(this.right_move) {
             this.playerSpeed=400;
             this.node.scaleX=0.1;  
-            if(!this.anim.getAnimationState('player_1_walk').isPlaying){
-                this.anim.play("player_1_walk");
+            if(this.node.name=='player1'){
+                if(!this.anim.getAnimationState('player_1_walk').isPlaying){
+                    this.anim.play("player_1_walk");
+                }
+            }
+            else{
+                if(!this.anim.getAnimationState('weasly_walk').isPlaying){
+                    this.anim.play("weasly_walk");
+                } 
             }
         }
         if(this.jump){
