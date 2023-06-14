@@ -1,0 +1,55 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "weasly_attack",
+  "_objFlags": 0,
+  "_native": "",
+  "_duration": 0.7666666666666667,
+  "sample": 60,
+  "speed": 1,
+  "wrapMode": 1,
+  "curveData": {
+    "comps": {
+      "cc.Sprite": {
+        "spriteFrame": [
+          {
+            "frame": 0,
+            "value": {
+              "__uuid__": "4f3a3b41-9ce3-42f0-9849-aa7f635889a3"
+            }
+          },
+          {
+            "frame": 0.16666666666666666,
+            "value": {
+              "__uuid__": "64453db0-1a77-4567-a816-e67773f2a702"
+            }
+          },
+          {
+            "frame": 0.3,
+            "value": {
+              "__uuid__": "bebe223c-96fe-4948-8e4a-f3757e06db4c"
+            }
+          },
+          {
+            "frame": 0.43333333333333335,
+            "value": {
+              "__uuid__": "64453db0-1a77-4567-a816-e67773f2a702"
+            }
+          },
+          {
+            "frame": 0.6,
+            "value": {
+              "__uuid__": "bebe223c-96fe-4948-8e4a-f3757e06db4c"
+            }
+          },
+          {
+            "frame": 0.75,
+            "value": {
+              "__uuid__": "bebe223c-96fe-4948-8e4a-f3757e06db4c"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "events": []
+}
