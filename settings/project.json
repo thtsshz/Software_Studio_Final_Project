@@ -1,9 +1,15 @@
 {
   "group-list": [
-    "default"
+    "default",
+    "Ground"
   ],
   "collision-matrix": [
     [
+      true,
+      true
+    ],
+    [
+      true,
       true
     ]
   ],
@@ -32,6 +38,5 @@
     "audience": {
       "enable": false
     }
-  },
-  "start-scene": "current"
+  }
 }

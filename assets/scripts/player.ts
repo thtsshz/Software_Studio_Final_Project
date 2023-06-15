@@ -96,7 +96,7 @@ export default class NewClass extends cc.Component {
 
     }
     onBeginContact(contact,self,other){
-        if(other.node.name=='Platform1'||other.node.name=='Platform2'||other.node.name=='Platform3')
+        if(other.node.group=='Ground')
             this.on_ground=true;
     }
     update (dt) {
@@ -135,6 +135,7 @@ export default class NewClass extends cc.Component {
             this.getComponent(cc.RigidBody).linearVelocity=cc.v2(0,650);
             this.jump=false;
         }
-        this.node.x += this.playerSpeed *dt; 
+        //this.node.x += this.playerSpeed *dt; 
+        this.getComponent(cc.RigidBody).linearVelocity=cc.v2(this.playerSpeed, this.getComponent(cc.RigidBody).linearVelocity.y);
     }
 }
