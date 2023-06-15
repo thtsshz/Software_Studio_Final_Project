@@ -3717,18 +3717,6 @@
     "_id": "6fW0TJhxFKYLp3i3+TBVJ1"
   },
   {
-    "__type__": "699deF9FC5Je6ZcCB+UreLi",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 29
-    },
-    "_enabled": true,
-    "label": null,
-    "text": "hello",
-    "_id": "4bGOTf1I9FlIgcyRxrWs66"
-  },
-  {
     "__type__": "cc.RigidBody",
     "_name": "",
     "_objFlags": 0,
@@ -3778,6 +3766,18 @@
       "height": 979.1
     },
     "_id": "5923h7k+tPDaBtnvEYuBJe"
+  },
+  {
+    "__type__": "699deF9FC5Je6ZcCB+UreLi",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 29
+    },
+    "_enabled": true,
+    "label": null,
+    "text": "hello",
+    "_id": "d0p2f/yMpHFo5WOHdgN7J8"
   },
   {
     "__type__": "cc.Node",
