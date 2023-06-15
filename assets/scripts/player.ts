@@ -21,9 +21,12 @@ export default class NewClass extends cc.Component {
     right_move:boolean=false;
     jump:boolean=false;
     on_ground:boolean=false;
+    attack:boolean=false;
+    can_attack:boolean=true;
 
     playerSpeed:number=0;
-
+    attack_time:number=3;
+    skill_time:number=1.5;
     private anim=null;
 
     onLoad () {
@@ -46,6 +49,23 @@ export default class NewClass extends cc.Component {
                 this.right_move=true;
                 this.left_move=false;
             }
+            else if(event.keyCode==cc.macro.KEY.down){//skill
+                if(this.can_attack){
+                    this.attack=true;
+                    this.can_attack=false;
+                    this.node.getChildByName('Red power').active=true;
+
+                    if(!this.anim.getAnimationState('player_1_attack').isPlaying){
+                        this.anim.play("player_1_attack");
+                    }
+                    this.scheduleOnce(function(){
+                        this.node.getChildByName('Red power').active=false;
+                    },this.skill_time);
+                    this.scheduleOnce(
+                        function(){this.can_attack=true},this.attack_time
+                    );
+                }
+            }
         }
         else{
             if(event.keyCode == cc.macro.KEY.w&&this.on_ground==true){//w jump
@@ -59,6 +79,23 @@ export default class NewClass extends cc.Component {
             else if(event.keyCode==cc.macro.KEY.d){//right
                 this.right_move=true;
                 this.left_move=false;
+            }
+            else if(event.keyCode==cc.macro.KEY.s){//skill
+                if(this.can_attack){
+                    this.attack=true;
+                    this.can_attack=false;
+                    this.node.getChildByName('Red power').active=true;
+
+                    if(!this.anim.getAnimationState('weasly_attack').isPlaying){
+                        this.anim.play("weasly_attack");
+                    } 
+                    this.scheduleOnce(function(){
+                        this.node.getChildByName('Red power').active=false;
+                    },this.skill_time);
+                    this.scheduleOnce(
+                        function(){this.can_attack=true},this.attack_time
+                    );
+                }
             }
         }
         
@@ -131,6 +168,7 @@ export default class NewClass extends cc.Component {
                 } 
             }
         }
+        
         if(this.jump){
             this.getComponent(cc.RigidBody).linearVelocity=cc.v2(0,650);
             this.jump=false;
