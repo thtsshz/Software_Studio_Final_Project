@@ -6,28 +6,21 @@
 //  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
 
 const {ccclass, property} = cc._decorator;
-
+declare const firebase : any;
 @ccclass
-export default class player extends cc.Component {
-
-    @property(cc.Label)
-    label: cc.Label = null;
-
-    @property
-    text: string = 'hello';
+export default class Cplayer extends cc.Component {
 
     // LIFE-CYCLE CALLBACKS:
     left_move:boolean=false;
     right_move:boolean=false;
     jump:boolean=false;
     on_ground:boolean=false;
-    attack:boolean=false;
-    can_attack:boolean=true;
 
     playerSpeed:number=0;
-    attack_time:number=3;
-    skill_time:number=1.5;
+
     private anim=null;
+    private roomnumber : number = 9487;
+    role: number = 0;
 
     onLoad () {
         cc.director.getPhysicsManager().enabled = true;
@@ -49,23 +42,6 @@ export default class player extends cc.Component {
                 this.right_move=true;
                 this.left_move=false;
             }
-            else if(event.keyCode==cc.macro.KEY.down){//skill
-                if(this.can_attack){
-                    this.attack=true;
-                    this.can_attack=false;
-                    this.node.getChildByName('Red power').active=true;
-
-                    if(!this.anim.getAnimationState('player_1_attack').isPlaying){
-                        this.anim.play("player_1_attack");
-                    }
-                    this.scheduleOnce(function(){
-                        this.node.getChildByName('Red power').active=false;
-                    },this.skill_time);
-                    this.scheduleOnce(
-                        function(){this.can_attack=true},this.attack_time
-                    );
-                }
-            }
         }
         else{
             if(event.keyCode == cc.macro.KEY.w&&this.on_ground==true){//w jump
@@ -79,23 +55,6 @@ export default class player extends cc.Component {
             else if(event.keyCode==cc.macro.KEY.d){//right
                 this.right_move=true;
                 this.left_move=false;
-            }
-            else if(event.keyCode==cc.macro.KEY.s){//skill
-                if(this.can_attack){
-                    this.attack=true;
-                    this.can_attack=false;
-                    this.node.getChildByName('Red power').active=true;
-
-                    if(!this.anim.getAnimationState('weasly_attack').isPlaying){
-                        this.anim.play("weasly_attack");
-                    } 
-                    this.scheduleOnce(function(){
-                        this.node.getChildByName('Red power').active=false;
-                    },this.skill_time);
-                    this.scheduleOnce(
-                        function(){this.can_attack=true},this.attack_time
-                    );
-                }
             }
         }
         
@@ -128,6 +87,7 @@ export default class player extends cc.Component {
             }
         }
         
+        
     }
     start () {
 
@@ -137,6 +97,36 @@ export default class player extends cc.Component {
             this.on_ground=true;
     }
     update (dt) {
+        const promise = new Promise((res, rej) => {
+            this.updatefromserver(dt);
+            var tmp = 0;
+            res(tmp);
+        });
+        promise.then(() => {
+            this.playerupdate(dt);
+        });
+        // this.updatefromserver(dt);
+        // this.playerupdate(dt);
+    }
+    updatefromserver(dt : number){
+        const promise = new Promise((res, rej) => {
+            firebase.database().ref("rooms/"+ this.roomnumber + "/serverinput").on('value', (data, prevchildkey) => {
+                var tmp = data.val();
+                res(tmp);
+            });
+        });
+        promise.then((data : doublecoord) => {
+            // console.log("cc: ",data);
+            if(this.node.name == "player1"){
+                this.node.x = data.player1.x;
+                this.node.y = data.player1.y;
+            }else if(this.node.name == "player2"){
+                this.node.x = data.player2.x;
+                this.node.y = data.player2.y;
+            }
+        });
+    }
+    playerupdate(dt : number){
         this.playerSpeed=0;
         if(this.left_move) {
             this.playerSpeed=-400;
@@ -151,8 +141,6 @@ export default class player extends cc.Component {
                     this.anim.play("weasly_walk");
                 } 
             }
-            
-            
         } 
         else if(this.right_move) {
             this.playerSpeed=400;
@@ -168,12 +156,51 @@ export default class player extends cc.Component {
                 } 
             }
         }
-        
         if(this.jump){
             this.getComponent(cc.RigidBody).linearVelocity=cc.v2(0,650);
-            this.jump=false;
+            // this.jump=false;
         }
-        //this.node.x += this.playerSpeed *dt; 
-        this.getComponent(cc.RigidBody).linearVelocity=cc.v2(this.playerSpeed, this.getComponent(cc.RigidBody).linearVelocity.y);
+        this.node.x += this.playerSpeed *dt; 
+
+        if(this.role == 1 && this.node.name == "player1"){
+            var nowdata1 : playerdt = {
+                left_move : this.left_move,
+                right_move : this.right_move,
+                jump : this.jump,
+                on_ground : this.on_ground
+            };
+            // console.log("player1 : ", nowdata1);
+            console.log("1");
+            firebase.database().ref("rooms/" + this.roomnumber + "/clientinput/player1").set(nowdata1);
+        }
+        if(this.role == 2 && this.node.name == "player2"){
+            var nowdata2 : playerdt = {
+                left_move : this.left_move,
+                right_move :  this.right_move,
+                jump : this.jump,
+                on_ground : this.on_ground
+            };
+            // console.log("player2 : ", nowdata2);
+            console.log("2");
+            firebase.database().ref("rooms/" + this.roomnumber + "/clientinput/player2").set(nowdata2);
+        }
+        this.jump = false;
     }
+}
+
+
+class playerdt {
+    left_move : boolean = false;
+    right_move : boolean = false;
+    jump : boolean = false;
+    on_ground : boolean = false;
+}
+
+class coord {
+    x : number = null;
+    y : number = null;
+}
+class doublecoord {
+    player1 : coord = null;
+    player2 : coord = null;
 }
