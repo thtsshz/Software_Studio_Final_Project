@@ -1,0 +1,38 @@
+{
+  "ver": "2.3.7",
+  "uuid": "3e807827-ec28-4fa9-8a6a-b81ced12b144",
+  "importer": "texture",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 280,
+  "height": 240,
+  "platformSettings": {},
+  "subMetas": {
+    "Street_Fighter_VS_logo": {
+      "ver": "1.0.6",
+      "uuid": "a13ccd12-404b-4dac-9391-50e8139e0cfd",
+      "importer": "sprite-frame",
+      "rawTextureUuid": "3e807827-ec28-4fa9-8a6a-b81ced12b144",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 280,
+      "height": 240,
+      "rawWidth": 280,
+      "rawHeight": 240,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}
