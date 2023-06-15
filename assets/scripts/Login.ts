@@ -9,7 +9,7 @@ export default class NewClass extends cc.Component {
     Login():void{
         firebase.auth().signInWithEmailAndPassword(this.inputemail, this.inputpassword)
         .then((userCredential) => {
-            cc.director.loadScene("Logincheck");
+            cc.director.loadScene("Login-check");
         })
         .catch(e => {
             alert('Invalid Email or Password');
@@ -19,7 +19,7 @@ export default class NewClass extends cc.Component {
     NewAccount():void{
         firebase.auth().createUserWithEmailAndPassword(this.inputemail, this.inputpassword)
         .then((userCredential) => {
-            cc.director.loadScene("Logincheck");
+            cc.director.loadScene("Login-check");
         })
         .catch(e => {
             alert('Invalid Email or Password');
