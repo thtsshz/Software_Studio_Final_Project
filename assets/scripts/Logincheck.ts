@@ -17,6 +17,19 @@ export default class NewClass extends cc.Component {
             alert("error!\n" + e.message);
         });
     }
+    multiplayertest():void{
+        cc.director.loadScene("multiplayer-test");
+    }
     // start () {}
-    // update (dt) {}
+    update (dt) {
+        // const promise = new Promise((res, rej) => {
+        //     firebase.database().ref("test").on('value', (data, prevchildkey) => {
+        //         var tmp = data.val();
+        //         res(tmp);
+        //     });
+        // });
+        // promise.then((data) => {
+        //     if(data)console.log(data);
+        // });
+    }
 }
