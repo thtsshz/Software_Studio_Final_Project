@@ -1343,7 +1343,7 @@
     "tag": 0,
     "_density": 1,
     "_sensor": false,
-    "_friction": 1.6,
+    "_friction": 0,
     "_restitution": 0,
     "body": null,
     "_offset": {
@@ -2346,7 +2346,7 @@
     "tag": 0,
     "_density": 1,
     "_sensor": false,
-    "_friction": 1.1,
+    "_friction": 0,
     "_restitution": 0,
     "body": null,
     "_offset": {
@@ -3744,8 +3744,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 304,
-      "height": 988
+      "width": 1920,
+      "height": 1080
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -3874,7 +3874,7 @@
     "tag": 0,
     "_density": 1,
     "_sensor": false,
-    "_friction": 0.2,
+    "_friction": 0,
     "_restitution": 0,
     "body": null,
     "_offset": {
@@ -4080,7 +4080,7 @@
     "tag": 0,
     "_density": 1,
     "_sensor": false,
-    "_friction": 0.2,
+    "_friction": 0,
     "_restitution": 0,
     "body": null,
     "_offset": {

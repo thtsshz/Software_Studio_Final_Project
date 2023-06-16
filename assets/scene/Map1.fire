@@ -2532,8 +2532,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 304,
-      "height": 988
+      "width": 1920,
+      "height": 1080
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -2621,6 +2621,9 @@
       },
       {
         "__uuid__": "7d72d6ed-9f54-4207-b3d1-f606de26a3cb"
+      },
+      {
+        "__uuid__": "b899a608-cf45-4023-843f-93d5caadb5b2"
       }
     ],
     "playOnLoad": false,
@@ -2662,7 +2665,7 @@
     "tag": 0,
     "_density": 1,
     "_sensor": false,
-    "_friction": 0.2,
+    "_friction": 0,
     "_restitution": 0,
     "body": null,
     "_offset": {
@@ -2868,7 +2871,7 @@
     "tag": 0,
     "_density": 1,
     "_sensor": false,
-    "_friction": 0.2,
+    "_friction": 0,
     "_restitution": 0,
     "body": null,
     "_offset": {
