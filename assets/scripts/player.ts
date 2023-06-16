@@ -29,7 +29,7 @@ export default class player extends cc.Component {
     skill_time:number=1.5;
     private anim=null;
 
-    health : number = 0;
+    health : number = 500;
 
     onLoad () {
         cc.director.getPhysicsManager().enabled = true;
@@ -148,7 +148,10 @@ export default class player extends cc.Component {
         // console.log(contact.getWorldManifold().normal.y);
         if(contact.getWorldManifold().normal.y==-1&&other.node.group=='Ground')
             this.on_ground=true;
-        
+        console.log(other.node.name);
+        if(other.node.name=='BasicAttack'){
+            this.health-=100;
+        }
     }
     update (dt) {
         this.playerSpeed=0;
