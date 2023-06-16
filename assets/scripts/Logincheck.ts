@@ -9,7 +9,7 @@ export default class NewClass extends cc.Component {
 
         
         const data = {
-            userID: user.uid
+            userID: "1"
         }
         const request = fetch('http://192.168.50.62:8080/createroom', {
             method: "POST",

@@ -191,6 +191,7 @@ export default class CplayerFast extends cc.Component {
             res(nowdata);
         });
         promise.then((data) => {
+            // console.log(data.userID);
             const request = fetch('http://192.168.50.62:8080/action', {
                 method: "POST",
                 body: JSON.stringify(data),

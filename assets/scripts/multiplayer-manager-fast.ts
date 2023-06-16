@@ -124,7 +124,7 @@ export default class multiplayerFast extends cc.Component {
             }).catch(err => {
                 console.log("multiplayer manager error : ", err);
             }).then(data => {
-                console.log("multiplayer manager receive data");
+                console.log("multiplayer manager receive data", data);
                 res(data);
             });
         });
@@ -139,6 +139,8 @@ export default class multiplayerFast extends cc.Component {
             this.player2.right_move = clientdata["2"].right_move;
             this.player2.jump = clientdata["2"].jump;
             this.player2.on_ground = clientdata["2"].on_ground;
+
+            
         }).catch(err => {
             console.log("multipler mgr recevive data promise error", err);
         });
