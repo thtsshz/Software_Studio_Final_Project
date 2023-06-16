@@ -2,7 +2,7 @@ import Splayer from "./Splayer";
 import Cplayer from "./Cplayer"
 import player from "./player";
 const {ccclass, property} = cc._decorator;
-
+declare const firebase : any;
 class pp{
     player1 : playerdt = null;
     player2 : playerdt = null;
@@ -16,6 +16,8 @@ class playerdt {
 class coord {
     x : number = null;
     y : number = null;
+    // vx : number = null;
+    // vy : number = null;
 }
 class doublecoord {
     player1 : coord = null;
@@ -122,10 +124,14 @@ export default class multiplayer extends cc.Component {
                 player1 : {
                     x : this.player1.node.x,
                     y : this.player1.node.y
+                    // vx : this.player1.getComponent(cc.RigidBody).linearVelocity.x,
+                    // vy : this.player1.getComponent(cc.RigidBody).linearVelocity.y,
                 },
                 player2 : {
                     x : this.player2.node.x,
                     y : this.player2.node.y
+                    // vx : this.player2.getComponent(cc.RigidBody).linearVelocity.x,
+                    // vy : this.player2.getComponent(cc.RigidBody).linearVelocity.y,
                 }
             }
             firebase.database().ref("rooms/" + this.roomnumber + "/serverinput").set(serverdata);
