@@ -25,8 +25,8 @@ export default class NewClass extends cc.Component {
     }
 
     update (dt) {
-        this.node.x=825.613;
-        this.node.y=585.964;
+        this.node.x=884.956;
+        this.node.y=406.105;
     
     }
 }

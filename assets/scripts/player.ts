@@ -41,10 +41,20 @@ export default class player extends cc.Component {
     }
     cancel_basic_attack(){
         console.log('cancel_basic_attack');
+        
         this.node.getChildByName('BasicAttack').active=false;
+        this.node.getChildByName('FireRay').active=false;
     }
     active_basic_attack(){
-        this.node.getChildByName('BasicAttack').active=true;
+        if(this.progressbar.progress>=1){
+            this.progressbar.progress=0;
+            this.node.getChildByName('FireRay').active=true;
+        }
+        else{
+            this.node.getChildByName('BasicAttack').active=true;
+
+        }
+        
     }
     onKeyDown(event) {
         // if(event.keyCode == cc.macro.KEY.u){
@@ -83,7 +93,7 @@ export default class player extends cc.Component {
             if(event.keyCode==cc.macro.KEY.ctrl){
                 // console.log('gather');
                 // this.progressbar.getComponent('ProgressBar').progressbar
-                this.progressbar.progress+=0.1;
+                this.progressbar.progress+=0.02;
             }
         }
         else{
