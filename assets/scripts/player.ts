@@ -6,7 +6,7 @@
 //  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
 
 const {ccclass, property} = cc._decorator;
-
+//825.613 585.964
 @ccclass
 export default class player extends cc.Component {
 
@@ -37,6 +37,13 @@ export default class player extends cc.Component {
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_UP, this.onKeyUp, this);    
         this.anim=this.getComponent(cc.Animation);
     }
+    cancel_basic_attack(){
+        console.log('cancel_basic_attack');
+        this.node.getChildByName('BasicAttack').active=false;
+    }
+    active_basic_attack(){
+        this.node.getChildByName('BasicAttack').active=true;
+    }
     onKeyDown(event) {
         // if(event.keyCode == cc.macro.KEY.u){
         //     this.health += 10;
@@ -54,18 +61,18 @@ export default class player extends cc.Component {
                 this.right_move=true;
                 this.left_move=false;
             }
-            else if(event.keyCode==cc.macro.KEY.down){//skill
+            if(event.keyCode==cc.macro.KEY.down){//skill
                 if(this.can_attack){
                     this.attack=true;
                     this.can_attack=false;
-                    this.node.getChildByName('Red power').active=true;
+                    // this.node.getChildByName('BasicAttack').active=true;
 
-                    if(!this.anim.getAnimationState('player_1_attack').isPlaying){
-                        this.anim.play("player_1_attack");
+                    if(!this.anim.getAnimationState('player_1_basic_attack').isPlaying){
+                        this.anim.play("player_1_basic_attack");
                     }
-                    this.scheduleOnce(function(){
-                        this.node.getChildByName('Red power').active=false;
-                    },this.skill_time);
+                    // this.scheduleOnce(function(){
+                    //     this.node.getChildByName('BasicAttack').active=false;
+                    // },this.skill_time);
                     this.scheduleOnce(
                         function(){this.can_attack=true},this.attack_time
                     );
@@ -138,16 +145,18 @@ export default class player extends cc.Component {
 
     }
     onBeginContact(contact,self,other){
-        if(other.node.group=='Ground')
+        // console.log(contact.getWorldManifold().normal.y);
+        if(contact.getWorldManifold().normal.y==-1&&other.node.group=='Ground')
             this.on_ground=true;
+        
     }
     update (dt) {
         this.playerSpeed=0;
         if(this.left_move) {
             this.playerSpeed=-400;
-            this.node.scaleX=-0.1;  // modify node's X scale value to change facing direction
+            this.node.scaleX=-0.2;  // modify node's X scale value to change facing direction
             if(this.node.name=='player1'){
-                if(!this.anim.getAnimationState('player_1_walk').isPlaying){
+                if(!this.anim.getAnimationState('player_1_walk').isPlaying&&!this.anim.getAnimationState('player_1_basic_attack').isPlaying){
                     this.anim.play("player_1_walk");
                 }
             }
@@ -161,9 +170,9 @@ export default class player extends cc.Component {
         } 
         else if(this.right_move) {
             this.playerSpeed=400;
-            this.node.scaleX=0.1;  
+            this.node.scaleX=0.2;  
             if(this.node.name=='player1'){
-                if(!this.anim.getAnimationState('player_1_walk').isPlaying){
+                if(!this.anim.getAnimationState('player_1_walk').isPlaying&&!this.anim.getAnimationState('player_1_basic_attack').isPlaying){
                     this.anim.play("player_1_walk");
                 }
             }
@@ -173,9 +182,20 @@ export default class player extends cc.Component {
                 } 
             }
         }
-        
+        else{
+            if(this.node.name=='player1'){
+                if(!this.anim.getAnimationState('player_1_basic_attack').isPlaying){
+                    this.anim.play("player_1_idle");
+                }
+            }
+            else{
+                if(!this.anim.getAnimationState('weasly_idle').isPlaying){
+                    this.anim.play("weasly_idle");
+                } 
+            }
+        }
         if(this.jump){
-            this.getComponent(cc.RigidBody).linearVelocity=cc.v2(0,650);
+            this.getComponent(cc.RigidBody).linearVelocity=cc.v2(0,950);
             this.jump=false;
         }
         //this.node.x += this.playerSpeed *dt; 
