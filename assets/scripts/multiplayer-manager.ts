@@ -39,7 +39,7 @@ export default class multiplayer extends cc.Component {
     @property(cc.Integer)
     role : number = 0;
 
-    private roomnumber : number = 9487;
+    private roomnumber : number = 0;
     
     private dbtest : boolean = false;
 
@@ -47,26 +47,26 @@ export default class multiplayer extends cc.Component {
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyDown, this);
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_UP, this.onKeyUp, this);
        
-        const promise = new Promise((res, rej) => {
-            var tmp;
-            firebase.database().ref("rooms/"+ this.roomnumber + "getid").on('value', (data, prevchildkey) => {
-                tmp = data.val();
-                res(tmp);
-            });
-        });
-        promise.then((data) => {
-            console.log("data: ", data);
-            if(data == "0"){
-                this.role = 1;
-                this.Cplayer1.role = 1;
-                this.Cplayer2.role = 1;
-                firebase.database().ref("rooms/"+ this.roomnumber+ "getid").set("1");
-            }else{
-                this.role = 2;
-                this.Cplayer1.role = 2;
-                this.Cplayer2.role = 2;
-            }
-        });
+        // const promise = new Promise((RES, rej) => {
+        //     var tmp;
+        //     firebase.database().ref("rooms/"+ this.roomnumber + "getid").on('value', (data, prevchildkey) => {
+        //         tmp = data.val();
+        //         RES(tmp);
+        //     });
+        // });
+        // promise.then((data) => {
+        //     console.log("data: ", data);
+        //     if(data == "0"){
+        //         this.role = 1;
+        //         this.Cplayer1.role = 1;
+        //         this.Cplayer2.role = 1;
+        //         firebase.database().ref("rooms/"+ this.roomnumber+ "getid").set("1");
+        //     }else{
+        //         this.role = 2;
+        //         this.Cplayer1.role = 2;
+        //         this.Cplayer2.role = 2;
+        //     }
+        // });
     }
     onKeyDown(event){
         if(event.keyCode == cc.macro.KEY.p){
@@ -107,6 +107,24 @@ export default class multiplayer extends cc.Component {
                 //console.log(playerdata);
                 res(playerdata);
             });
+
+            // test
+            // const data = {
+            //     userID: this.role
+            // }
+            // const request = fetch('http://192.168.50.62:8080/createroom', {
+            //     method: "POST",
+            //     body: JSON.stringify(data),
+            // }).then(res => {
+            //     console.log("", res)
+            //     return res.json()
+            // }).catch(err => {
+            //     console.log(err);
+            // }).then(data => {
+            //     console.log("onload check: ", data);
+            //     res(data);
+            // })
+            // endtest
             
         });
         promise.then((playerdata: pp) => {

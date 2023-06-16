@@ -8,7 +8,7 @@
 const {ccclass, property} = cc._decorator;
 declare const firebase : any;
 @ccclass
-export default class Cplayer extends cc.Component {
+export default class CplayerFast extends cc.Component {
 
     // LIFE-CYCLE CALLBACKS:
     left_move:boolean=false;
@@ -22,6 +22,8 @@ export default class Cplayer extends cc.Component {
     private roomnumber : number = 0;
     private gametime : number = 0;
     private nextupdatetime : number = 0;
+
+    private serverdata;
 
     role: number = 0;
 
@@ -112,29 +114,23 @@ export default class Cplayer extends cc.Component {
         // this.updatefromserver(dt);
         // this.playerupdate(dt);
     }
+
     updatefromserver(dt : number){
         // if(this.gametime < this.nextupdatetime)return ;
         // else this.nextupdatetime += 0.2;
-        const promise = new Promise((res, rej) => {
-            firebase.database().ref("rooms/"+ this.roomnumber + "/serverinput").on('value', (data, prevchildkey) => {
-                var tmp = data.val();
-                res(tmp);
-            });
-        });
-        promise.then((data : doublecoord) => {
-            // console.log("cc: ",data);
-            if(this.node.name == "player1"){
-                this.node.x = data.player1.x;
-                this.node.y = data.player1.y;
-                // this.node.getComponent(cc.RigidBody).linearVelocity.x = data.player1.vx;
-                // this.node.getComponent(cc.RigidBody).linearVelocity.y = data.player1.vy;
-            }else if(this.node.name == "player2"){
-                this.node.x = data.player2.x;
-                this.node.y = data.player2.y;
-                // this.node.getComponent(cc.RigidBody).linearVelocity.x = data.player2.vx;
-                // this.node.getComponent(cc.RigidBody).linearVelocity.y = data.player2.vy;
-            }
-        });
+        console.log(this.serverdata);
+        // if(this.node.name == "player1"){
+
+        //     this.node.x = this.serverdata["1"].x;
+        //     this.node.x = this.serverdata["1"].y;
+
+        // }else if(this.node.name == "player2"){
+
+        //     this.node.x = this.serverdata["2"].x;
+        //     this.node.x = this.serverdata["2"].y;
+
+        // }
+        
     }
     playerupdate(dt : number){
         this.playerSpeed=0;
@@ -172,28 +168,44 @@ export default class Cplayer extends cc.Component {
         }
         this.node.x += this.playerSpeed *dt; 
 
-        if(this.role == 1 && this.node.name == "player1"){
-            var nowdata1 : playerdt = {
-                left_move : this.left_move,
-                right_move : this.right_move,
-                jump : this.jump,
-                on_ground : this.on_ground
+        const promise = new Promise((res, rej) => {
+            var nowdata = {
+                userID: '1',
+                roomID: 0,
+                action: {
+                    left_move: this.left_move,
+                    right_move: this.right_move,
+                    on_ground: this.on_ground,
+                    jump: this.jump,
+                    attack: false
+                }
             };
-            // console.log("player1 : ", nowdata1);
-            console.log("1");
-            firebase.database().ref("rooms/" + this.roomnumber + "/clientinput/player1").set(nowdata1);
-        }
-        if(this.role == 2 && this.node.name == "player2"){
-            var nowdata2 : playerdt = {
-                left_move : this.left_move,
-                right_move :  this.right_move,
-                jump : this.jump,
-                on_ground : this.on_ground
-            };
-            // console.log("player2 : ", nowdata2);
-            console.log("2");
-            firebase.database().ref("rooms/" + this.roomnumber + "/clientinput/player2").set(nowdata2);
-        }
+            if(this.role == 1 && this.node.name == "player1"){
+                nowdata.userID = '1';
+                console.log("1");
+            }
+            if(this.role == 2 && this.node.name == "player2"){
+                nowdata.userID = '2';
+                console.log("2");
+            }
+            res(nowdata);
+        });
+        promise.then((data) => {
+            // console.log(data.userID);
+            const request = fetch('http://192.168.50.62:8080/action', {
+                method: "POST",
+                body: JSON.stringify(data),
+            }).then(res => {
+                console.log("", res)
+                return res.json()
+            }).catch(err => {
+                console.log("multiplayer manager error : ", err);
+            }).then(data => {
+                console.log("multiplayer manager receive data");
+                this.serverdata = data;
+            })
+        });
+
         this.jump = false;
     }
 }
