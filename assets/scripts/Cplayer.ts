@@ -20,6 +20,9 @@ export default class Cplayer extends cc.Component {
 
     private anim=null;
     private roomnumber : number = 9487;
+    private gametime : number = 0;
+    private nextupdatetime : number = 0;
+
     role: number = 0;
 
     onLoad () {
@@ -97,6 +100,7 @@ export default class Cplayer extends cc.Component {
             this.on_ground=true;
     }
     update (dt) {
+        this.gametime += dt;
         const promise = new Promise((res, rej) => {
             this.updatefromserver(dt);
             var tmp = 0;
@@ -109,6 +113,8 @@ export default class Cplayer extends cc.Component {
         // this.playerupdate(dt);
     }
     updatefromserver(dt : number){
+        // if(this.gametime < this.nextupdatetime)return ;
+        // else this.nextupdatetime += 0.2;
         const promise = new Promise((res, rej) => {
             firebase.database().ref("rooms/"+ this.roomnumber + "/serverinput").on('value', (data, prevchildkey) => {
                 var tmp = data.val();
@@ -120,9 +126,13 @@ export default class Cplayer extends cc.Component {
             if(this.node.name == "player1"){
                 this.node.x = data.player1.x;
                 this.node.y = data.player1.y;
+                // this.node.getComponent(cc.RigidBody).linearVelocity.x = data.player1.vx;
+                // this.node.getComponent(cc.RigidBody).linearVelocity.y = data.player1.vy;
             }else if(this.node.name == "player2"){
                 this.node.x = data.player2.x;
                 this.node.y = data.player2.y;
+                // this.node.getComponent(cc.RigidBody).linearVelocity.x = data.player2.vx;
+                // this.node.getComponent(cc.RigidBody).linearVelocity.y = data.player2.vy;
             }
         });
     }
@@ -199,6 +209,8 @@ class playerdt {
 class coord {
     x : number = null;
     y : number = null;
+    // vx : number = null;
+    // vy : number = null;
 }
 class doublecoord {
     player1 : coord = null;
