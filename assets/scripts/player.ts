@@ -29,6 +29,8 @@ export default class player extends cc.Component {
     skill_time:number=1.5;
     private anim=null;
 
+    health : number = 0;
+
     onLoad () {
         cc.director.getPhysicsManager().enabled = true;
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyDown, this);
@@ -36,6 +38,9 @@ export default class player extends cc.Component {
         this.anim=this.getComponent(cc.Animation);
     }
     onKeyDown(event) {
+        // if(event.keyCode == cc.macro.KEY.u){
+        //     this.health += 10;
+        // }
         if(this.node.name=='player1'){
             if(event.keyCode == cc.macro.KEY.up&&this.on_ground==true){//jump
                 this.jump=true;

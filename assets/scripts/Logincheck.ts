@@ -20,7 +20,14 @@ export default class NewClass extends cc.Component {
     multiplayertest():void{
         cc.director.loadScene("multiplayer-test");
     }
-    // start () {}
+    start () {
+        // console.log('start : ');
+        // fetch("http://192.168.50.62:8080/ping", {mode : "no-cors"}).then((response: Response) => {
+        //     return response.text()
+        // }).then((value) => {
+        //     console.log("res : "value);
+        // })
+    }
     update (dt) {
         // const promise = new Promise((res, rej) => {
         //     firebase.database().ref("test").on('value', (data, prevchildkey) => {
