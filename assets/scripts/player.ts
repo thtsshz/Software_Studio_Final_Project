@@ -13,6 +13,8 @@ export default class player extends cc.Component {
     @property(cc.Label)
     label: cc.Label = null;
 
+    @property(cc.ProgressBar)
+    progressbar:cc.ProgressBar=null;
     @property
     text: string = 'hello';
 
@@ -77,6 +79,11 @@ export default class player extends cc.Component {
                         function(){this.can_attack=true},this.attack_time
                     );
                 }
+            }
+            if(event.keyCode==cc.macro.KEY.ctrl){
+                // console.log('gather');
+                // this.progressbar.getComponent('ProgressBar').progressbar
+                this.progressbar.progress+=0.1;
             }
         }
         else{
