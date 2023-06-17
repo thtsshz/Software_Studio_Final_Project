@@ -27,6 +27,7 @@ export default class player extends cc.Component {
     on_ground:boolean=false;
     attack:boolean=false;
     can_attack:boolean=true;
+    dizzy:boolean=false;
 
     playerSpeed:number=0;
     attack_time:number=1.5;
@@ -236,6 +237,13 @@ export default class player extends cc.Component {
             this.health-=200;
             let action=cc.sequence(cc.moveBy(0.01,30,3),cc.moveBy(0.01,-30,-3)).repeat(5);
             this.camera.node.runAction(action);
+            if(other.node.name=='WaterRay'){
+                this.dizzy=true;
+                this.scheduleOnce(function(){
+                    this.dizzy=false;
+                }
+                ,2);
+            }
         }
     }
     update (dt) {
@@ -282,6 +290,8 @@ export default class player extends cc.Component {
                 } 
             }
         }
+        if(this.dizzy)
+            return;
         if(this.jump){
             this.getComponent(cc.RigidBody).linearVelocity=cc.v2(0,950);
             this.jump=false;
