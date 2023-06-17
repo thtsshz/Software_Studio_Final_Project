@@ -1,0 +1,79 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "GhostNick_walk",
+  "_objFlags": 0,
+  "_native": "",
+  "_duration": 0.9166666666666666,
+  "sample": 60,
+  "speed": 1,
+  "wrapMode": 2,
+  "curveData": {
+    "comps": {
+      "cc.Sprite": {
+        "spriteFrame": [
+          {
+            "frame": 0,
+            "value": {
+              "__uuid__": "a40358fb-c7e3-4095-9e6f-a6494a0ea1d6"
+            }
+          },
+          {
+            "frame": 0.1,
+            "value": {
+              "__uuid__": "4b7c1cc2-8170-4814-a29b-b664ab7702c2"
+            }
+          },
+          {
+            "frame": 0.2,
+            "value": {
+              "__uuid__": "28559d2e-244e-4c48-a47e-7528cb04d0a4"
+            }
+          },
+          {
+            "frame": 0.3,
+            "value": {
+              "__uuid__": "730b380d-0aab-4d01-9d71-42df9b9031c2"
+            }
+          },
+          {
+            "frame": 0.4,
+            "value": {
+              "__uuid__": "6a87345a-c926-4f97-9328-dcb977926c38"
+            }
+          },
+          {
+            "frame": 0.5,
+            "value": {
+              "__uuid__": "730b380d-0aab-4d01-9d71-42df9b9031c2"
+            }
+          },
+          {
+            "frame": 0.6,
+            "value": {
+              "__uuid__": "28559d2e-244e-4c48-a47e-7528cb04d0a4"
+            }
+          },
+          {
+            "frame": 0.7,
+            "value": {
+              "__uuid__": "4b7c1cc2-8170-4814-a29b-b664ab7702c2"
+            }
+          },
+          {
+            "frame": 0.8,
+            "value": {
+              "__uuid__": "a40358fb-c7e3-4095-9e6f-a6494a0ea1d6"
+            }
+          },
+          {
+            "frame": 0.9,
+            "value": {
+              "__uuid__": "a40358fb-c7e3-4095-9e6f-a6494a0ea1d6"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "events": []
+}
