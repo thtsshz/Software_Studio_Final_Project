@@ -3777,8 +3777,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 266,
-      "height": 971
+      "width": 1920,
+      "height": 1080
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -3859,7 +3859,7 @@
     },
     "_clips": [
       {
-        "__uuid__": "0a97e29d-fbd5-4311-9858-f1b7c42d926b"
+        "__uuid__": "8957312d-e441-45b1-8080-5fa248b143a5"
       },
       {
         "__uuid__": "2c60bdfd-7cd3-4146-9edf-c7a8a3066936"
