@@ -27,11 +27,24 @@ export default class player extends cc.Component {
     can_attack:boolean=true;
 
     playerSpeed:number=0;
-    attack_time:number=3;
-    skill_time:number=1.5;
+    attack_time:number=1.5;
+    skill_time1:number=3;
+    skill_time2:number=4;
+    skill_time3:number=5;
     private anim=null;
 
     health : number = 500;
+
+    skill1: boolean = false;
+    skill2: boolean = false;
+    skill3: boolean = false;
+    normal_attack: boolean = false;
+
+    skill1_Cooldown: boolean = false;
+    skill2_Cooldown: boolean = false;
+    skill3_Cooldown: boolean = false;
+    
+    inAttack: boolean = false;
 
     onLoad () {
         cc.director.getPhysicsManager().enabled = true;
@@ -44,13 +57,25 @@ export default class player extends cc.Component {
         
         this.node.getChildByName('BasicAttack').active=false;
         this.node.getChildByName('FireRay').active=false;
+        this.node.getChildByName('WaterRay').active = false;
+        this.node.getChildByName('HolyRay').active = false;
+        this.inAttack = false;
     }
     active_basic_attack(){
-        if(this.progressbar.progress>=1){
-            this.progressbar.progress=0;
+        if(this.skill1){
+            this.skill1 = false;
             this.node.getChildByName('FireRay').active=true;
         }
+        else if(this.skill2) {
+            this.skill2 = false;
+            this.node.getChildByName('WaterRay').active=true;
+        }
+        else if(this.skill3) {
+            this.skill3 = false;
+            this.node.getChildByName('HolyRay').active=true;
+        }
         else{
+            this.normal_attack = false;
             this.node.getChildByName('BasicAttack').active=true;
 
         }
@@ -73,10 +98,12 @@ export default class player extends cc.Component {
                 this.right_move=true;
                 this.left_move=false;
             }
-            if(event.keyCode==cc.macro.KEY.down){//skill
+            if(event.keyCode==cc.macro.KEY.down && !this.inAttack){//skill
                 if(this.can_attack){
+                    this.inAttack = true;
                     this.attack=true;
                     this.can_attack=false;
+                    this.normal_attack = true;
                     // this.node.getChildByName('BasicAttack').active=true;
 
                     if(!this.anim.getAnimationState('player_1_basic_attack').isPlaying){
@@ -95,6 +122,40 @@ export default class player extends cc.Component {
                 // this.progressbar.getComponent('ProgressBar').progressbar
                 this.progressbar.progress+=0.02;
             }
+            if(event.keyCode == cc.macro.KEY.j && !this.skill1_Cooldown && !this.inAttack) {
+                this.inAttack = true;
+                this.skill1_Cooldown = true;
+                this.scheduleOnce(() => {
+                    this.skill1_Cooldown = false;
+                }, this.skill_time1);
+                this.skill1 = true;
+                if(!this.anim.getAnimationState('player_1_basic_attack').isPlaying){
+                    this.anim.play("player_1_basic_attack");
+                }
+            }
+            if(event.keyCode == cc.macro.KEY.k && !this.skill2_Cooldown && !this.inAttack) {
+                this.inAttack = true;
+                this.skill2_Cooldown = true;
+                this.scheduleOnce(() => {
+                    this.skill2_Cooldown = false;
+                }, this.skill_time2);
+                this.skill2 = true;
+                if(!this.anim.getAnimationState('player_1_basic_attack').isPlaying){
+                    this.anim.play("player_1_basic_attack");
+                }
+            }
+            if(event.keyCode == cc.macro.KEY.l && this.progressbar.progress >= 1 && !this.skill3_Cooldown && !this.inAttack) {
+                this.inAttack = true;
+                this.skill3_Cooldown = true;
+                this.progressbar.progress = 0;
+                this.scheduleOnce(() => {
+                    this.skill3_Cooldown = false;
+                }, this.skill_time3);
+                this.skill3 = true;
+                if(!this.anim.getAnimationState('player_1_basic_attack').isPlaying){
+                    this.anim.play("player_1_basic_attack");
+                }
+            }
         }
         else{
             if(event.keyCode == cc.macro.KEY.w&&this.on_ground==true){//w jump
@@ -110,21 +171,21 @@ export default class player extends cc.Component {
                 this.left_move=false;
             }
             else if(event.keyCode==cc.macro.KEY.s){//skill
-                if(this.can_attack){
-                    this.attack=true;
-                    this.can_attack=false;
-                    this.node.getChildByName('Red power').active=true;
+                // if(this.can_attack){
+                //     this.attack=true;
+                //     this.can_attack=false;
+                //     this.node.getChildByName('Red power').active=true;
 
-                    if(!this.anim.getAnimationState('weasly_attack').isPlaying){
-                        this.anim.play("weasly_attack");
-                    } 
-                    this.scheduleOnce(function(){
-                        this.node.getChildByName('Red power').active=false;
-                    },this.skill_time);
-                    this.scheduleOnce(
-                        function(){this.can_attack=true},this.attack_time
-                    );
-                }
+                //     if(!this.anim.getAnimationState('weasly_attack').isPlaying){
+                //         this.anim.play("weasly_attack");
+                //     } 
+                //     this.scheduleOnce(function(){
+                //         this.node.getChildByName('Red power').active=false;
+                //     },this.skill_time1);
+                //     this.scheduleOnce(
+                //         function(){this.can_attack=true},this.attack_time
+                //     );
+                // }
             }
         }
         
