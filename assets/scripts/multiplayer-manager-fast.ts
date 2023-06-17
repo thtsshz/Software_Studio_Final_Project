@@ -65,11 +65,36 @@ export default class multiplayerFast extends cc.Component {
     onLoad (): void{
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyDown, this);
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_UP, this.onKeyUp, this);
-       
+        var nowdata = {
+            userID: '1',
+            roomID: 0,
+            action: {
+                left_move: false,
+                right_move: false,
+                on_ground: true,
+                jump: false,
+                attack: false
+            }
+        };
+        const request = fetch('http://192.168.50.62:8080/action', {
+            method: "POST",
+            body: JSON.stringify(nowdata),
+        }).then(res => {
+            console.log("", res)
+            return res.json()
+        }).catch(err => {
+            console.log("multiplayer manager error : ", err);
+        }).then(data => {
+            console.log("multiplayer manager receive data", data);
+            // this.nowdata = data;
+        })
     }
+
+
     onKeyDown(event){
         if(event.keyCode == cc.macro.KEY.p){
             this.camera.node.x = 3000 - this.camera.node.x;
+            console.log("key p pressed ");
         }else if(event.keyCode == cc.macro.KEY.n){
             this.role = 1;
             this.Cplayer1.role = 1;
@@ -91,12 +116,9 @@ export default class multiplayerFast extends cc.Component {
     }
 
     protected update (dt : number): void {
-        // console.log("dbtest : ", this.dbtest);
-        // if(this.dbtest) firebase.database().ref("test").set(1);
-        // else firebase.database().ref("test").set(0);
         if(this.role == 1)this.serverupdate(dt);
-        this.allupdate(dt);
-        this.playerupdate(dt);
+        // this.allupdate(dt);
+        // this.playerupdate(dt);
     }
     protected serverupdate(dt : number ): void{
 
@@ -120,15 +142,18 @@ export default class multiplayerFast extends cc.Component {
                 body: JSON.stringify(serverdata),
             }).then(res => {
                 // console.log("", res)
-                // return res.json()
+                return res.json()
             }).catch(err => {
                 console.log("multiplayer manager error : ", err);
             }).then(data => {
-                console.log("multiplayer manager receive data", data);
+                // console.log("multiplayer manager receive data", data);
                 res(data);
             });
         });
         promise.then((clientdata) => {
+            console.log("server success get status");
+            console.log(clientdata["1"].left_move);
+            console.log(clientdata["2"].left_move);
 
             this.player1.left_move = clientdata["1"].left_move;
             this.player1.right_move = clientdata["1"].right_move;

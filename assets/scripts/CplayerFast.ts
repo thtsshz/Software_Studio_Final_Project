@@ -32,6 +32,30 @@ export default class CplayerFast extends cc.Component {
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyDown, this);
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_UP, this.onKeyUp, this);    
         this.anim=this.getComponent(cc.Animation);
+
+        var nowdata = {
+            userID: '1',
+            roomID: 0,
+            action: {
+                left_move: false,
+                right_move: false,
+                on_ground: false,
+                jump: false,
+                attack: false
+            }
+        };
+        const request = fetch('http://192.168.50.62:8080/action', {
+            method: "POST",
+            body: JSON.stringify(nowdata),
+        }).then(res => {
+            console.log("", res)
+            return res.json()
+        }).catch(err => {
+            console.log("multiplayer manager error : ", err);
+        }).then(data => {
+            console.log("multiplayer manager receive data");
+            this.serverdata = data;
+        })
     }
     onKeyDown(event) {
         if(this.node.name=='player1'){
@@ -110,29 +134,35 @@ export default class CplayerFast extends cc.Component {
         });
         promise.then(() => {
             this.playerupdate(dt);
+        }).catch(() => {
+            console.log('eee');
         });
         // this.updatefromserver(dt);
         // this.playerupdate(dt);
     }
 
     updatefromserver(dt : number){
+        return ;
         // if(this.gametime < this.nextupdatetime)return ;
         // else this.nextupdatetime += 0.2;
         console.log(this.serverdata);
-        // if(this.node.name == "player1"){
+        if(this.node.name == "player1"){
+            
+            this.node.x = this.serverdata["1"].x;
+            this.node.x = this.serverdata["1"].y;
+            console.log("p1 update success");
 
-        //     this.node.x = this.serverdata["1"].x;
-        //     this.node.x = this.serverdata["1"].y;
+        }else if(this.node.name == "player2"){
 
-        // }else if(this.node.name == "player2"){
+            this.node.x = this.serverdata["2"].x;
+            this.node.x = this.serverdata["2"].y;
+            console.log("p2 update success");
 
-        //     this.node.x = this.serverdata["2"].x;
-        //     this.node.x = this.serverdata["2"].y;
-
-        // }
+        }
         
     }
     playerupdate(dt : number){
+        console.log("playerupdate");
         this.playerSpeed=0;
         if(this.left_move) {
             this.playerSpeed=-400;
@@ -163,6 +193,7 @@ export default class CplayerFast extends cc.Component {
             }
         }
         if(this.jump){
+            console.log("jump!");
             this.getComponent(cc.RigidBody).linearVelocity=cc.v2(0,650);
             // this.jump=false;
         }
@@ -191,12 +222,11 @@ export default class CplayerFast extends cc.Component {
             res(nowdata);
         });
         promise.then((data) => {
-            // console.log(data.userID);
             const request = fetch('http://192.168.50.62:8080/action', {
                 method: "POST",
                 body: JSON.stringify(data),
             }).then(res => {
-                console.log("", res)
+                // console.log("", res)
                 return res.json()
             }).catch(err => {
                 console.log("multiplayer manager error : ", err);
@@ -204,9 +234,10 @@ export default class CplayerFast extends cc.Component {
                 console.log("multiplayer manager receive data");
                 this.serverdata = data;
             })
+            this.jump = false;
         });
 
-        this.jump = false;
+        
     }
 }
 

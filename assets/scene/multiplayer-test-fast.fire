@@ -518,7 +518,9 @@
     "Cplayer2": {
       "__id__": 32
     },
-    "camera": null,
+    "camera": {
+      "__id__": 4
+    },
     "role": 0,
     "_id": "e7UbDbXaJF6rC4oq/9+QFn"
   },
@@ -569,8 +571,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 304,
-      "height": 988
+      "width": 1920,
+      "height": 1080
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -1018,8 +1020,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 304,
-      "height": 988
+      "width": 1920,
+      "height": 1080
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
