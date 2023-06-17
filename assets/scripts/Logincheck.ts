@@ -23,6 +23,19 @@ export default class NewClass extends cc.Component {
             console.log("onload check: ", res);
             // document.getElementById('response').innerHTML = JSON.stringify(res);
         })
+        data.userID = "2";
+        const request2 = fetch('http://192.168.50.62:8080/joinroom', {
+            method: "POST",
+            body: JSON.stringify(data),
+        }).then(res => {
+            console.log("", res)
+            return res.json()
+        }).catch(err => {
+            console.log(err);
+        }).then(res => {
+            console.log("onload check: ", res);
+            // document.getElementById('response').innerHTML = JSON.stringify(res);
+        })
 
     }
     Logout():void{
