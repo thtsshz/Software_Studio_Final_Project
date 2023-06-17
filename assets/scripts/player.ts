@@ -62,9 +62,11 @@ export default class player extends cc.Component {
         this.node.getChildByName('FireRay').active=false;
         this.node.getChildByName('WaterRay').active = false;
         this.node.getChildByName('HolyRay').active = false;
-        this.inAttack = false;
     }
     active_basic_attack(){
+        this.scheduleOnce(() => {
+            this.inAttack = false;
+        }, 1);
         if(this.skill1){
             this.skill1 = false;
             this.node.getChildByName('FireRay').active=true;
