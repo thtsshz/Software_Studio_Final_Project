@@ -105,14 +105,25 @@ export default class NewClass extends cc.Component {
     update (dt) {
         this.p1health.string = Math.trunc(this.player1.health).toString();
         this.p2health.string = Math.trunc(this.player2.health).toString();
+        if(!this.player1.skill1)
+            this.P1S1 = false;
 
-        if(this.player1.skill1) {
+        if(!this.player1.skill2)
+            this.P1S2 = false;
+
+        if(!this.player1.skill3)
+            this.P1S3 = false;
+
+        if(this.player1.skill1 && !this.P1S1) {
+            this.P1S1 = true;
             cc.audioEngine.playEffect(this.Incendio, false);
         }
-        if(this.player1.skill2) {
+        if(this.player1.skill2 && !this.P1S2) {
+            this.P1S2 = true;
             cc.audioEngine.playEffect(this.Glacius, false);
         }
-        if(this.player1.skill3) {
+        if(this.player1.skill3 && !this.P1S3) {
+            this.P1S3 = true;
             cc.audioEngine.playEffect(this.Expelliarmus, false);
         }
     }

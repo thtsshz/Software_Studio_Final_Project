@@ -21,13 +21,13 @@ export default class NewClass extends cc.Component {
             firebase.database().ref("rooms/0").once("value", (room) => {
                 Room = room.val();
             }).then(() => {
-                if(Room[0] == 1) {
-                    firebase.database().ref("rooms/0/0").set(uid).then(() => {
+                if(Room.P1 == 1) {
+                    firebase.database().ref("rooms/0/P1").set(uid).then(() => {
                         cc.director.loadScene("Select_character");  
                     });
                 }
-                else if(Room[1] == 1) {
-                    firebase.database().ref("rooms/0/1").set(uid).then(() => {
+                else if(Room.P2 == 1) {
+                    firebase.database().ref("rooms/0/P2").set(uid).then(() => {
                         cc.director.loadScene("Select_character");
                     });
                 }
@@ -50,18 +50,18 @@ export default class NewClass extends cc.Component {
                 DataManager.instance.UserName = this.inputemail;
                 DataManager.instance.UserUID = uid;
                 DataManager.instance.UserChar = 0;
-                
+
                 let Room;
                 firebase.database().ref("rooms/0").once("value", (room) => {
                     Room = room.val();
                 }).then(() => {
-                    if(Room[0] == 1) {
-                        firebase.database().ref("rooms/0/0").set(uid).then(() => {
+                    if(Room.P1 == 1) {
+                        firebase.database().ref("rooms/0/P1").set(uid).then(() => {
                             cc.director.loadScene("Select_character");  
                         });
                     }
-                    else if(Room[1] == 1) {
-                        firebase.database().ref("rooms/0/1").set(uid).then(() => {
+                    else if(Room.P2 == 1) {
+                        firebase.database().ref("rooms/0/P2").set(uid).then(() => {
                             cc.director.loadScene("Select_character");
                         });
                     }
