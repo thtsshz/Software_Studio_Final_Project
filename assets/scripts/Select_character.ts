@@ -53,6 +53,7 @@ export default class SelectCharacter extends cc.Component {
     private P2char = 0;
 
     Room: any;
+    Role;
     opponentID;
     opponentChar = 0;
     isReady: boolean = false;
@@ -73,9 +74,11 @@ export default class SelectCharacter extends cc.Component {
             console.log(DataManager.instance.UserName);
             if(this.Room[0] == DataManager.instance.UserUID) {
                 this.opponentID = this.Room[1];
+                this.Role = 0;
             }
             else {
                 this.opponentID = this.Room[0];
+                this.Role = 1;
             }
 
             firebase.database().ref("User/" + this.opponentID).on("value", (snap) => {
@@ -109,14 +112,37 @@ export default class SelectCharacter extends cc.Component {
                     cc.find("Canvas/All_characters/Player2Char/head").getComponent(cc.Sprite).spriteFrame = this.DinahHecat;
                     cc.find("Canvas/All_characters/Character5/DinahHecat").getComponent(cc.Sprite).spriteFrame = this.DinahHecatSelect;
                 }
+
+                if(this.oppenentReady && this.isReady) {
+                    this.scheduleOnce(() => {
+                        if(!this.Role) {
+                            firebase.database().ref("rooms/0/0").set(1);
+                        }
+                        else {
+                            firebase.database().ref("rooms/0/1").set(1);
+                        }
+                        firebase.database().ref("User/" + DataManager.instance.UserUID).update({Character: 0, isReady: false});
+                        cc.director.loadScene("Select_stage");
+                    }, 1)
+                }
             })
         })
     }
 
     update (dt) {
-        if(this.oppenentReady && this.isReady) {
-            cc.director.loadScene("Select_stage");
-        }
+        // if(this.oppenentReady && this.isReady) {
+        //     this.scheduleOnce(() => {
+        //         if(!this.Role) {
+        //             firebase.database().ref("rooms/0/0").set(1);
+        //         }
+        //         else {
+        //             firebase.database().ref("rooms/0/1").set(1);
+        //         }
+        //         firebase.database().ref("User/" + DataManager.instance.UserUID).update({Character: 0, isReady: false});
+        //         cc.director.loadScene("Select_stage");
+        //     }, 1)
+
+        // }
     }
     
     select1() {
@@ -221,8 +247,24 @@ export default class SelectCharacter extends cc.Component {
                 cc.find("Canvas/All_characters/Character5/DinahHecat").getComponent(cc.Sprite).spriteFrame = this.DinahHecatSelect;
             }
             this.isReady = true;
-            firebase.database().ref("User/" + DataManager.instance.UserUID).update({isReady: true});
+            firebase.database().ref("User/" + DataManager.instance.UserUID).update({isReady: true}).then(() => {
+                if(this.oppenentReady && this.isReady) {
+                    this.scheduleOnce(() => {
+                        if(!this.Role) {
+                            firebase.database().ref("rooms/0/0").set(1);
+                        }
+                        else {
+                            firebase.database().ref("rooms/0/1").set(1);
+                        }
+                        firebase.database().ref("User/" + DataManager.instance.UserUID).update({Character: 0, isReady: false});
+                        cc.director.loadScene("Select_stage");
+                    }, 1)
+        
+                }
+                    
+            })
         }
+        
     }
 
     // P2select() {
