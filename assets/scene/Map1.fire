@@ -3980,7 +3980,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 82.27,
+      "width": 79.76,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -3992,8 +3992,8 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        -433.783,
-        450.045,
+        -525.467,
+        423.153,
         0,
         0,
         0,
@@ -4042,7 +4042,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 22.25,
+      "width": 26.4,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -4099,8 +4099,10 @@
     "_fontSize": 40,
     "_lineHeight": 40,
     "_enableWrapText": true,
-    "_N$file": null,
-    "_isSystemFontUsed": true,
+    "_N$file": {
+      "__uuid__": "e49f2c28-a14d-4c93-a62f-9be8610cdf95"
+    },
+    "_isSystemFontUsed": false,
     "_spacingX": 0,
     "_batchAsBitmap": false,
     "_styleFlags": 0,
@@ -4132,8 +4134,10 @@
     "_fontSize": 40,
     "_lineHeight": 40,
     "_enableWrapText": true,
-    "_N$file": null,
-    "_isSystemFontUsed": true,
+    "_N$file": {
+      "__uuid__": "e49f2c28-a14d-4c93-a62f-9be8610cdf95"
+    },
+    "_isSystemFontUsed": false,
     "_spacingX": 0,
     "_batchAsBitmap": false,
     "_styleFlags": 0,
@@ -4174,7 +4178,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 82.27,
+      "width": 83.76,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -4236,7 +4240,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 22.25,
+      "width": 26.4,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -4293,8 +4297,10 @@
     "_fontSize": 40,
     "_lineHeight": 40,
     "_enableWrapText": true,
-    "_N$file": null,
-    "_isSystemFontUsed": true,
+    "_N$file": {
+      "__uuid__": "e49f2c28-a14d-4c93-a62f-9be8610cdf95"
+    },
+    "_isSystemFontUsed": false,
     "_spacingX": 0,
     "_batchAsBitmap": false,
     "_styleFlags": 0,
@@ -4326,8 +4332,10 @@
     "_fontSize": 40,
     "_lineHeight": 40,
     "_enableWrapText": true,
-    "_N$file": null,
-    "_isSystemFontUsed": true,
+    "_N$file": {
+      "__uuid__": "e49f2c28-a14d-4c93-a62f-9be8610cdf95"
+    },
+    "_isSystemFontUsed": false,
     "_spacingX": 0,
     "_batchAsBitmap": false,
     "_styleFlags": 0,

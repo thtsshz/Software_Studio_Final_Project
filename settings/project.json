@@ -38,5 +38,6 @@
     "audience": {
       "enable": false
     }
-  }
+  },
+  "start-scene": "current"
 }
