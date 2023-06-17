@@ -50,7 +50,24 @@ export default class NewClass extends cc.Component {
                 DataManager.instance.UserName = this.inputemail;
                 DataManager.instance.UserUID = uid;
                 DataManager.instance.UserChar = 0;
-                cc.director.loadScene("Select_character");
+                
+                let Room;
+                firebase.database().ref("rooms/0").once("value", (room) => {
+                    Room = room.val();
+                }).then(() => {
+                    if(Room[0] == 1) {
+                        firebase.database().ref("rooms/0/0").set(uid).then(() => {
+                            cc.director.loadScene("Select_character");  
+                        });
+                    }
+                    else if(Room[1] == 1) {
+                        firebase.database().ref("rooms/0/1").set(uid).then(() => {
+                            cc.director.loadScene("Select_character");
+                        });
+                    }
+                    cc.director.loadScene("Select_character");  
+                });
+
             })
         })
         .catch(e => {

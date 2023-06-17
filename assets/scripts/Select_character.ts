@@ -47,6 +47,9 @@ export default class SelectCharacter extends cc.Component {
     @property(cc.Button)
     ReadyButton: cc.Button = null;
 
+    @property(cc.Button)
+    WaitLabel: cc.Button = null;
+
     private P1selected = false;
     private P2selected = false;
     private P1char = 0;
@@ -58,6 +61,7 @@ export default class SelectCharacter extends cc.Component {
     opponentChar = 0;
     isReady: boolean = false;
     oppenentReady = false;
+    isWaiting: boolean = true;
 
     onLoad () {
         this.P1selected = false;
@@ -65,13 +69,89 @@ export default class SelectCharacter extends cc.Component {
         this.P1char = 0;
         this.P2char = 0;
         this.ReadyButton.node.active = false;
+        this.WaitLabel.node.active = false;
     }
 
     start () {
         firebase.database().ref("rooms/0").once("value", (room) => {
             this.Room = room.val();
         }).then(() => {
-            console.log(DataManager.instance.UserName);
+            if(this.Room[1] == 1) {
+                this.WaitLabel.node.active = true;
+                this.isWaiting = true;
+                firebase.database().ref("rooms/0").on("value", (room) => {
+                    this.Room = room.val();
+                    if(this.Room[1] != 1) {
+                        this.WaitLabel.node.active = false;
+                        this.isWaiting = false;
+                        this.getOpponent();
+                    }
+                })
+            }
+            else {
+                this.getOpponent();
+                this.isWaiting = false;
+            }
+            // console.log(DataManager.instance.UserName);
+            // if(this.Room[0] == DataManager.instance.UserUID) {
+            //     this.opponentID = this.Room[1];
+            //     this.Role = 0;
+            // }
+            // else {
+            //     this.opponentID = this.Room[0];
+            //     this.Role = 1;
+            // }
+
+            // firebase.database().ref("User/" + this.opponentID).on("value", (snap) => {
+            //     this.opponentChar = snap.val().Character;
+            //     this.oppenentReady = snap.val().isReady;
+            //     console.log(this.opponentChar);
+            //     cc.find("Canvas/All_characters/Character1/AbrahamRonen").getComponent(cc.Sprite).spriteFrame = this.AbrahamRonen;
+            //     cc.find("Canvas/All_characters/Character2/AesopSharp").getComponent(cc.Sprite).spriteFrame = this.AesopSharp;
+            //     cc.find("Canvas/All_characters/Character3/MatildaWeasly").getComponent(cc.Sprite).spriteFrame = this.MatildaWeasly;
+            //     cc.find("Canvas/All_characters/Character4/EleazarFig").getComponent(cc.Sprite).spriteFrame = this.EleazarFig;
+            //     cc.find("Canvas/All_characters/Character5/DinahHecat").getComponent(cc.Sprite).spriteFrame = this.DinahHecat;
+            //     cc.find("Canvas/All_characters/Player2Char/head").getComponent(cc.Sprite).spriteFrame = null;
+
+            //     if(this.opponentChar == 1) {
+            //         cc.find("Canvas/All_characters/Player2Char/head").getComponent(cc.Sprite).spriteFrame = this.AbrahamRonen;
+            //         cc.find("Canvas/All_characters/Character1/AbrahamRonen").getComponent(cc.Sprite).spriteFrame = this.AbrahamRonenSelect;
+            //     }
+            //     else if(this.opponentChar == 2) {
+            //         cc.find("Canvas/All_characters/Player2Char/head").getComponent(cc.Sprite).spriteFrame = this.AesopSharp;
+            //         cc.find("Canvas/All_characters/Character2/AesopSharp").getComponent(cc.Sprite).spriteFrame = this.AesopSharpSelect;
+            //     }
+            //     else if(this.opponentChar == 3) {
+            //         cc.find("Canvas/All_characters/Player2Char/head").getComponent(cc.Sprite).spriteFrame = this.MatildaWeasly;
+            //         cc.find("Canvas/All_characters/Character3/MatildaWeasly").getComponent(cc.Sprite).spriteFrame = this.MatildaWeaslySelect;
+            //     }
+            //     else if(this.opponentChar == 4) {
+            //         cc.find("Canvas/All_characters/Player2Char/head").getComponent(cc.Sprite).spriteFrame = this.EleazarFig;
+            //         cc.find("Canvas/All_characters/Character4/EleazarFig").getComponent(cc.Sprite).spriteFrame = this.EleazarFigSelect;
+            //     }
+            //     else if(this.opponentChar == 5) {
+            //         cc.find("Canvas/All_characters/Player2Char/head").getComponent(cc.Sprite).spriteFrame = this.DinahHecat;
+            //         cc.find("Canvas/All_characters/Character5/DinahHecat").getComponent(cc.Sprite).spriteFrame = this.DinahHecatSelect;
+            //     }
+
+            //     if(this.oppenentReady && this.isReady) {
+            //         this.scheduleOnce(() => {
+            //             if(!this.Role) {
+            //                 firebase.database().ref("rooms/0/0").set(1);
+            //             }
+            //             else {
+            //                 firebase.database().ref("rooms/0/1").set(1);
+            //             }
+            //             firebase.database().ref("User/" + DataManager.instance.UserUID).update({Character: 0, isReady: false});
+            //             cc.director.loadScene("Select_map");
+            //         }, 1)
+            //     }
+            // })
+        })
+    }
+
+    getOpponent() {
+        console.log(DataManager.instance.UserName);
             if(this.Room[0] == DataManager.instance.UserUID) {
                 this.opponentID = this.Room[1];
                 this.Role = 0;
@@ -81,51 +161,50 @@ export default class SelectCharacter extends cc.Component {
                 this.Role = 1;
             }
 
-            firebase.database().ref("User/" + this.opponentID).on("value", (snap) => {
-                this.opponentChar = snap.val().Character;
-                this.oppenentReady = snap.val().isReady;
-                console.log(this.opponentChar);
-                cc.find("Canvas/All_characters/Character1/AbrahamRonen").getComponent(cc.Sprite).spriteFrame = this.AbrahamRonen;
-                cc.find("Canvas/All_characters/Character2/AesopSharp").getComponent(cc.Sprite).spriteFrame = this.AesopSharp;
-                cc.find("Canvas/All_characters/Character3/MatildaWeasly").getComponent(cc.Sprite).spriteFrame = this.MatildaWeasly;
-                cc.find("Canvas/All_characters/Character4/EleazarFig").getComponent(cc.Sprite).spriteFrame = this.EleazarFig;
-                cc.find("Canvas/All_characters/Character5/DinahHecat").getComponent(cc.Sprite).spriteFrame = this.DinahHecat;
-                cc.find("Canvas/All_characters/Player2Char/head").getComponent(cc.Sprite).spriteFrame = null;
+        firebase.database().ref("User/" + this.opponentID).on("value", (snap) => {
+            this.opponentChar = snap.val().Character;
+            this.oppenentReady = snap.val().isReady;
+            console.log(this.opponentChar);
+            cc.find("Canvas/All_characters/Character1/AbrahamRonen").getComponent(cc.Sprite).spriteFrame = this.AbrahamRonen;
+            cc.find("Canvas/All_characters/Character2/AesopSharp").getComponent(cc.Sprite).spriteFrame = this.AesopSharp;
+            cc.find("Canvas/All_characters/Character3/MatildaWeasly").getComponent(cc.Sprite).spriteFrame = this.MatildaWeasly;
+            cc.find("Canvas/All_characters/Character4/EleazarFig").getComponent(cc.Sprite).spriteFrame = this.EleazarFig;
+            cc.find("Canvas/All_characters/Character5/DinahHecat").getComponent(cc.Sprite).spriteFrame = this.DinahHecat;
+            cc.find("Canvas/All_characters/Player2Char/head").getComponent(cc.Sprite).spriteFrame = null;
 
-                if(this.opponentChar == 1) {
-                    cc.find("Canvas/All_characters/Player2Char/head").getComponent(cc.Sprite).spriteFrame = this.AbrahamRonen;
-                    cc.find("Canvas/All_characters/Character1/AbrahamRonen").getComponent(cc.Sprite).spriteFrame = this.AbrahamRonenSelect;
-                }
-                else if(this.opponentChar == 2) {
-                    cc.find("Canvas/All_characters/Player2Char/head").getComponent(cc.Sprite).spriteFrame = this.AesopSharp;
-                    cc.find("Canvas/All_characters/Character2/AesopSharp").getComponent(cc.Sprite).spriteFrame = this.AesopSharpSelect;
-                }
-                else if(this.opponentChar == 3) {
-                    cc.find("Canvas/All_characters/Player2Char/head").getComponent(cc.Sprite).spriteFrame = this.MatildaWeasly;
-                    cc.find("Canvas/All_characters/Character3/MatildaWeasly").getComponent(cc.Sprite).spriteFrame = this.MatildaWeaslySelect;
-                }
-                else if(this.opponentChar == 4) {
-                    cc.find("Canvas/All_characters/Player2Char/head").getComponent(cc.Sprite).spriteFrame = this.EleazarFig;
-                    cc.find("Canvas/All_characters/Character4/EleazarFig").getComponent(cc.Sprite).spriteFrame = this.EleazarFigSelect;
-                }
-                else if(this.opponentChar == 5) {
-                    cc.find("Canvas/All_characters/Player2Char/head").getComponent(cc.Sprite).spriteFrame = this.DinahHecat;
-                    cc.find("Canvas/All_characters/Character5/DinahHecat").getComponent(cc.Sprite).spriteFrame = this.DinahHecatSelect;
-                }
+            if(this.opponentChar == 1) {
+                cc.find("Canvas/All_characters/Player2Char/head").getComponent(cc.Sprite).spriteFrame = this.AbrahamRonen;
+                cc.find("Canvas/All_characters/Character1/AbrahamRonen").getComponent(cc.Sprite).spriteFrame = this.AbrahamRonenSelect;
+            }
+            else if(this.opponentChar == 2) {
+                cc.find("Canvas/All_characters/Player2Char/head").getComponent(cc.Sprite).spriteFrame = this.AesopSharp;
+                cc.find("Canvas/All_characters/Character2/AesopSharp").getComponent(cc.Sprite).spriteFrame = this.AesopSharpSelect;
+            }
+            else if(this.opponentChar == 3) {
+                cc.find("Canvas/All_characters/Player2Char/head").getComponent(cc.Sprite).spriteFrame = this.MatildaWeasly;
+                cc.find("Canvas/All_characters/Character3/MatildaWeasly").getComponent(cc.Sprite).spriteFrame = this.MatildaWeaslySelect;
+            }
+            else if(this.opponentChar == 4) {
+                cc.find("Canvas/All_characters/Player2Char/head").getComponent(cc.Sprite).spriteFrame = this.EleazarFig;
+                cc.find("Canvas/All_characters/Character4/EleazarFig").getComponent(cc.Sprite).spriteFrame = this.EleazarFigSelect;
+            }
+            else if(this.opponentChar == 5) {
+                cc.find("Canvas/All_characters/Player2Char/head").getComponent(cc.Sprite).spriteFrame = this.DinahHecat;
+                cc.find("Canvas/All_characters/Character5/DinahHecat").getComponent(cc.Sprite).spriteFrame = this.DinahHecatSelect;
+            }
 
-                if(this.oppenentReady && this.isReady) {
-                    this.scheduleOnce(() => {
-                        if(!this.Role) {
-                            firebase.database().ref("rooms/0/0").set(1);
-                        }
-                        else {
-                            firebase.database().ref("rooms/0/1").set(1);
-                        }
-                        firebase.database().ref("User/" + DataManager.instance.UserUID).update({Character: 0, isReady: false});
-                        cc.director.loadScene("Select_map");
-                    }, 1)
-                }
-            })
+            if(this.oppenentReady && this.isReady) {
+                this.scheduleOnce(() => {
+                    if(!this.Role) {
+                        firebase.database().ref("rooms/0/0").set(1);
+                    }
+                    else {
+                        firebase.database().ref("rooms/0/1").set(1);
+                    }
+                    firebase.database().ref("User/" + DataManager.instance.UserUID).update({Character: 0, isReady: false});
+                    cc.director.loadScene("Select_map");
+                }, 1)
+            }
         })
     }
 
@@ -146,7 +225,7 @@ export default class SelectCharacter extends cc.Component {
     }
     
     select1() {
-        if(!this.P1selected && this.opponentChar!=1) {
+        if(!this.isWaiting && !this.P1selected && this.opponentChar!=1) {
             this.P1char = 1;
             let node = cc.find("Canvas/All_characters/SelectedChar/head/namebg/name");
             node.getComponent(cc.Label).string = "AbrahamRonen";
@@ -162,7 +241,7 @@ export default class SelectCharacter extends cc.Component {
     }
 
     select2() {
-        if(!this.P1selected && this.opponentChar!=2) {
+        if(!this.isWaiting && !this.P1selected && this.opponentChar!=2) {
             this.P1char = 2;
             let node = cc.find("Canvas/All_characters/SelectedChar/head/namebg/name");
             node.getComponent(cc.Label).string = "AesopSharp";
@@ -178,7 +257,7 @@ export default class SelectCharacter extends cc.Component {
     }
 
     select3() {
-        if(!this.P1selected && this.opponentChar!=3) {
+        if(!this.isWaiting && !this.P1selected && this.opponentChar!=3) {
             this.P1char = 3;
             let node = cc.find("Canvas/All_characters/SelectedChar/head/namebg/name");
             node.getComponent(cc.Label).string = "MatildaWeasly";
@@ -194,7 +273,7 @@ export default class SelectCharacter extends cc.Component {
     }
 
     select4() {
-        if(!this.P1selected && this.opponentChar!=4) {
+        if(!this.isWaiting && !this.P1selected && this.opponentChar!=4) {
             this.P1char = 4;
             let node = cc.find("Canvas/All_characters/SelectedChar/head/namebg/name");
             node.getComponent(cc.Label).string = "EleazarFig";
@@ -210,7 +289,7 @@ export default class SelectCharacter extends cc.Component {
     }
 
     select5() {
-        if(!this.P1selected && this.opponentChar!=5) {
+        if(!this.isWaiting && !this.P1selected && this.opponentChar!=5) {
             this.P1char = 5;
             let node = cc.find("Canvas/All_characters/SelectedChar/head/namebg/name");
             node.getComponent(cc.Label).string = "DinahHecat";
