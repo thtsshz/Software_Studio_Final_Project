@@ -122,7 +122,7 @@ export default class SelectCharacter extends cc.Component {
                             firebase.database().ref("rooms/0/1").set(1);
                         }
                         firebase.database().ref("User/" + DataManager.instance.UserUID).update({Character: 0, isReady: false});
-                        cc.director.loadScene("Select_stage");
+                        cc.director.loadScene("Select_map");
                     }, 1)
                 }
             })
@@ -257,7 +257,7 @@ export default class SelectCharacter extends cc.Component {
                             firebase.database().ref("rooms/0/1").set(1);
                         }
                         firebase.database().ref("User/" + DataManager.instance.UserUID).update({Character: 0, isReady: false});
-                        cc.director.loadScene("Select_stage");
+                        cc.director.loadScene("Select_map");
                     }, 1)
         
                 }
