@@ -18,6 +18,8 @@ export default class player extends cc.Component {
     @property
     text: string = 'hello';
 
+    @property(cc.Camera)
+    camera:cc.Camera=null;
     // LIFE-CYCLE CALLBACKS:
     left_move:boolean=false;
     right_move:boolean=false;
@@ -229,6 +231,11 @@ export default class player extends cc.Component {
         console.log(other.node.name);
         if(other.node.name=='BasicAttack'){
             this.health-=100;
+        }
+        else if(other.node.name=='WaterRay'||other.node.name=='FireRay'||other.node.name=='HolyRay'){
+            this.health-=200;
+            let action=cc.sequence(cc.moveBy(0.01,30,3),cc.moveBy(0.01,-30,-3)).repeat(5);
+            this.camera.node.runAction(action);
         }
     }
     update (dt) {
