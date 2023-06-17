@@ -76,12 +76,12 @@ export default class SelectCharacter extends cc.Component {
         firebase.database().ref("rooms/0").once("value", (room) => {
             this.Room = room.val();
         }).then(() => {
-            if(this.Room[1] == 1) {
+            if(this.Room.P2 == 1) {
                 this.WaitLabel.node.active = true;
                 this.isWaiting = true;
                 firebase.database().ref("rooms/0").on("value", (room) => {
                     this.Room = room.val();
-                    if(this.Room[1] != 1) {
+                    if(this.Room.P2 != 1) {
                         this.WaitLabel.node.active = false;
                         this.isWaiting = false;
                         this.getOpponent();
@@ -152,12 +152,12 @@ export default class SelectCharacter extends cc.Component {
 
     getOpponent() {
         console.log(DataManager.instance.UserName);
-            if(this.Room[0] == DataManager.instance.UserUID) {
-                this.opponentID = this.Room[1];
+            if(this.Room.P1 == DataManager.instance.UserUID) {
+                this.opponentID = this.Room.P2;
                 this.Role = 0;
             }
             else {
-                this.opponentID = this.Room[0];
+                this.opponentID = this.Room.P1;
                 this.Role = 1;
             }
 
@@ -195,15 +195,15 @@ export default class SelectCharacter extends cc.Component {
 
             if(this.oppenentReady && this.isReady) {
                 this.scheduleOnce(() => {
-                    if(!this.Role) {
-                        firebase.database().ref("rooms/0/0").set(1);
-                    }
-                    else {
-                        firebase.database().ref("rooms/0/1").set(1);
-                    }
+                    // if(!this.Role) {
+                    //     firebase.database().ref("rooms/0/0").set(1);
+                    // }
+                    // else {
+                    //     firebase.database().ref("rooms/0/1").set(1);
+                    // }
                     firebase.database().ref("User/" + DataManager.instance.UserUID).update({Character: 0, isReady: false});
                     cc.director.loadScene("Select_map");
-                }, 1)
+                }, 0.8)
             }
         })
     }
@@ -328,16 +328,20 @@ export default class SelectCharacter extends cc.Component {
             this.isReady = true;
             firebase.database().ref("User/" + DataManager.instance.UserUID).update({isReady: true}).then(() => {
                 if(this.oppenentReady && this.isReady) {
-                    this.scheduleOnce(() => {
-                        if(!this.Role) {
-                            firebase.database().ref("rooms/0/0").set(1);
-                        }
-                        else {
-                            firebase.database().ref("rooms/0/1").set(1);
-                        }
-                        firebase.database().ref("User/" + DataManager.instance.UserUID).update({Character: 0, isReady: false});
-                        cc.director.loadScene("Select_map");
-                    }, 1)
+                    //this.scheduleOnce(() => {
+                        // if(!this.Role) {
+                        //     firebase.database().ref("rooms/0/0").set(1);
+                        // }
+                        // else {
+                        //     firebase.database().ref("rooms/0/1").set(1);
+                        // }
+                        firebase.database().ref("User/" + DataManager.instance.UserUID).update({Character: 0, isReady: false}).then(() => {
+                            this.scheduleOnce(() => {
+                                cc.director.loadScene("Select_map");
+                            }, 1)
+                        });
+                        
+                    //}, 1)
         
                 }
                     
