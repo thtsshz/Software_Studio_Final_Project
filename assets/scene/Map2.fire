@@ -91,15 +91,21 @@
       },
       {
         "__id__": 64
+      },
+      {
+        "__id__": 77
       }
     ],
     "_active": true,
     "_components": [
       {
-        "__id__": 77
+        "__id__": 78
       },
       {
-        "__id__": 78
+        "__id__": 79
+      },
+      {
+        "__id__": 80
       }
     ],
     "_prefab": null,
@@ -672,7 +678,7 @@
         0,
         0,
         0,
-        0.043619387365336,
+        -0.043619387365336,
         0.9990482215818578,
         1,
         1,
@@ -683,7 +689,7 @@
       "__type__": "cc.Vec3",
       "x": 0,
       "y": 0,
-      "z": 5
+      "z": -5
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -788,7 +794,7 @@
         0,
         0,
         0,
-        -0.08715574274765817,
+        0.08715574274765817,
         0.9961946980917455,
         1,
         1,
@@ -799,7 +805,7 @@
       "__type__": "cc.Vec3",
       "x": 0,
       "y": 0,
-      "z": -10
+      "z": 10
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -3833,6 +3839,9 @@
       },
       {
         "__uuid__": "7d72d6ed-9f54-4207-b3d1-f606de26a3cb"
+      },
+      {
+        "__uuid__": "b899a608-cf45-4023-843f-93d5caadb5b2"
       }
     ],
     "playOnLoad": false,
@@ -3898,6 +3907,7 @@
     },
     "_enabled": true,
     "label": null,
+    "progressbar": null,
     "text": "hello",
     "_id": "abaR/MYglCr4c9wqxMSbEC"
   },
@@ -4041,6 +4051,7 @@
     },
     "_enabled": true,
     "label": null,
+    "progressbar": null,
     "text": "hello",
     "_id": "ebhp501Q9NeZtIsq/xvuP/"
   },
@@ -4096,6 +4107,64 @@
     "_id": "06XOD1725PrYbuCMOm3fIV"
   },
   {
+    "__type__": "cc.Node",
+    "_name": "AudioPlayer",
+    "_objFlags": 0,
+    "_parent": {
+      "__id__": 2
+    },
+    "_children": [],
+    "_active": true,
+    "_components": [],
+    "_prefab": null,
+    "_opacity": 255,
+    "_color": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    },
+    "_contentSize": {
+      "__type__": "cc.Size",
+      "width": 0,
+      "height": 0
+    },
+    "_anchorPoint": {
+      "__type__": "cc.Vec2",
+      "x": 0.5,
+      "y": 0.5
+    },
+    "_trs": {
+      "__type__": "TypedArray",
+      "ctor": "Float64Array",
+      "array": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    "_eulerAngles": {
+      "__type__": "cc.Vec3",
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "_skewX": 0,
+    "_skewY": 0,
+    "_is3DNode": false,
+    "_groupIndex": 0,
+    "groupIndex": 0,
+    "_id": "4eI9gZsntDNpfv7iIZLF58"
+  },
+  {
     "__type__": "cc.Canvas",
     "_name": "",
     "_objFlags": 0,
@@ -4138,5 +4207,53 @@
     "_originalWidth": 0,
     "_originalHeight": 0,
     "_id": "29zXboiXFBKoIV4PQ2liTe"
+  },
+  {
+    "__type__": "3bab8tJprJGFLyrmpfIQrPv",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 2
+    },
+    "_enabled": true,
+    "BGM1": null,
+    "BGM2": null,
+    "Accio": {
+      "__uuid__": "eccf6156-41c5-414a-9c10-08329eb34740"
+    },
+    "Avada_kedavra": {
+      "__uuid__": "152c473c-09d8-4b8b-9e6e-ab23ffa1d622"
+    },
+    "Confringo": {
+      "__uuid__": "4cb825d6-e164-4143-bf9c-6e42dc061693"
+    },
+    "Depulso": {
+      "__uuid__": "b3ef0182-8d37-4a89-b7ef-29b2370cf3c0"
+    },
+    "Crucio": {
+      "__uuid__": "bc54f5ce-1152-4a15-ac14-690396b28d8f"
+    },
+    "Diffindo": {
+      "__uuid__": "19d003c0-8cef-4aa3-9e93-c18a1583ce69"
+    },
+    "Disillusion": {
+      "__uuid__": "d89d80b7-8d2f-4fa5-9e6e-7286c132606e"
+    },
+    "Expelliarmus": {
+      "__uuid__": "b02fb587-bfc7-4c0c-98d8-3324cbef61af"
+    },
+    "Glacius": {
+      "__uuid__": "445a3c59-ffa6-4b05-b04a-962bccb0d9c1"
+    },
+    "Incendio": {
+      "__uuid__": "0941fc36-b6eb-40e9-a46d-34062e11cb52"
+    },
+    "Levioso": {
+      "__uuid__": "b06565d3-839c-4c0f-8a99-465fa69d1695"
+    },
+    "Stupefy": {
+      "__uuid__": "6f7e2b2e-885f-44ae-8bef-67a3084a5add"
+    },
+    "_id": "e5wdVBZpdMaZVVPgib0n67"
   }
 ]
