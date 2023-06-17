@@ -1,0 +1,38 @@
+{
+  "ver": "2.3.7",
+  "uuid": "f7ac55be-c970-4fce-93fa-22bf58a22cda",
+  "importer": "texture",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 1920,
+  "height": 1080,
+  "platformSettings": {},
+  "subMetas": {
+    "GhostBloodyBaron_walk5": {
+      "ver": "1.0.6",
+      "uuid": "9572fea5-bacc-4759-a1bf-b8de8d5522f8",
+      "importer": "sprite-frame",
+      "rawTextureUuid": "f7ac55be-c970-4fce-93fa-22bf58a22cda",
+      "trimType": "none",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 1920,
+      "height": 1080,
+      "rawWidth": 1920,
+      "rawHeight": 1080,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

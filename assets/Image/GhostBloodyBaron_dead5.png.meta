@@ -1,0 +1,38 @@
+{
+  "ver": "2.3.7",
+  "uuid": "c0f465f7-54cd-4dc9-b475-97634f8788f0",
+  "importer": "texture",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 1920,
+  "height": 1080,
+  "platformSettings": {},
+  "subMetas": {
+    "GhostBloodyBaron_dead5": {
+      "ver": "1.0.6",
+      "uuid": "67a860b8-3f67-4ffb-9d8c-ea8cad678b21",
+      "importer": "sprite-frame",
+      "rawTextureUuid": "c0f465f7-54cd-4dc9-b475-97634f8788f0",
+      "trimType": "none",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 1920,
+      "height": 1080,
+      "rawWidth": 1920,
+      "rawHeight": 1080,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}
