@@ -12,15 +12,44 @@ import { DataManager } from "./DataManager";
 @ccclass
 export default class Lobby extends cc.Component {
 
-    uid: any;
+    @property(cc.SpriteFrame)
+    greenwifi : cc.SpriteFrame = null;
+    @property(cc.SpriteFrame)
+    redx : cc.SpriteFrame = null;
 
-    // onLoad () {}
+    uid: any;
+    
+    private pingserver : number = 0;
+    private serveravailable : boolean = false;
+
+    onLoad () {
+        cc.find("Canvas/Connection").getComponent(cc.Sprite).spriteFrame = this.redx;
+        cc.find("Canvas/MultiPlayer").getComponent(cc.Button).interactable= false;
+    }
 
     start () {
         this.uid = DataManager.instance.UserUID;
     }
 
-    // update (dt) {}
+    update (dt) {
+        if(this.pingserver >= 1){
+            this.pingserver = 0;
+            fetch("http://192.168.50.62:8080/ping").then((response: Response) => {
+                return response.text()
+            }).then((value) => {
+                // console.log("res : ", value);
+                this.serveravailable = true;
+                cc.find("Canvas/Connection").getComponent(cc.Sprite).spriteFrame = this.greenwifi;
+                cc.find("Canvas/MultiPlayer").getComponent(cc.Button).interactable = true;
+            }).catch((err) => {
+                console.log(err);
+                this.serveravailable = false;
+                cc.find("Canvas/Connection").getComponent(cc.Sprite).spriteFrame = this.redx;
+                cc.find("Canvas/MultiPlayer").getComponent(cc.Button).interactable = false;
+            });
+        }else this.pingserver += dt;
+
+    }
 
     Single() {
         cc.director.loadScene("Single_Select_Character");
