@@ -1,0 +1,38 @@
+{
+  "ver": "2.3.7",
+  "uuid": "62700f3d-bb2f-482a-b85f-22ce85f9bd07",
+  "importer": "texture",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 1920,
+  "height": 1080,
+  "platformSettings": {},
+  "subMetas": {
+    "MudiwaOnai_attack5": {
+      "ver": "1.0.6",
+      "uuid": "9493f9de-a6da-44fa-9106-1519892700b2",
+      "importer": "sprite-frame",
+      "rawTextureUuid": "62700f3d-bb2f-482a-b85f-22ce85f9bd07",
+      "trimType": "none",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 1920,
+      "height": 1080,
+      "rawWidth": 1920,
+      "rawHeight": 1080,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

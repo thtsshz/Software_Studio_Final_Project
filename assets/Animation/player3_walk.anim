@@ -1,9 +1,9 @@
 {
   "__type__": "cc.AnimationClip",
-  "_name": "GhostBloodyBaron_walk",
+  "_name": "player3_walk",
   "_objFlags": 0,
   "_native": "",
-  "_duration": 0.9,
+  "_duration": 1.0833333333333333,
   "sample": 60,
   "speed": 1,
   "wrapMode": 2,
@@ -18,57 +18,51 @@
             }
           },
           {
-            "frame": 0.1,
+            "frame": 0.13333333333333333,
             "value": {
               "__uuid__": "802b0c95-ecae-4879-92b1-b2c2eac30f99"
             }
           },
           {
-            "frame": 0.2,
+            "frame": 0.26666666666666666,
             "value": {
               "__uuid__": "3c127d03-84ed-4ca0-8e73-b20002b6a937"
-            }
-          },
-          {
-            "frame": 0.3,
-            "value": {
-              "__uuid__": "7e29ec18-0181-4a0f-9f60-eb2d6ceec069"
             }
           },
           {
             "frame": 0.4,
             "value": {
+              "__uuid__": "7e29ec18-0181-4a0f-9f60-eb2d6ceec069"
+            }
+          },
+          {
+            "frame": 0.5333333333333333,
+            "value": {
               "__uuid__": "9572fea5-bacc-4759-a1bf-b8de8d5522f8"
             }
           },
           {
-            "frame": 0.5,
+            "frame": 0.6666666666666666,
             "value": {
               "__uuid__": "7e29ec18-0181-4a0f-9f60-eb2d6ceec069"
             }
           },
           {
-            "frame": 0.6,
+            "frame": 0.8,
             "value": {
               "__uuid__": "3c127d03-84ed-4ca0-8e73-b20002b6a937"
             }
           },
           {
-            "frame": 0.7,
+            "frame": 0.9333333333333333,
             "value": {
               "__uuid__": "802b0c95-ecae-4879-92b1-b2c2eac30f99"
             }
           },
           {
-            "frame": 0.8,
+            "frame": 1.0666666666666667,
             "value": {
               "__uuid__": "802b0c95-ecae-4879-92b1-b2c2eac30f99"
-            }
-          },
-          {
-            "frame": 0.8833333333333333,
-            "value": {
-              "__uuid__": "3a7d4082-1b6e-46de-b572-434b479a35c9"
             }
           }
         ]

@@ -26,10 +26,12 @@ export default class Single_SelectMap extends cc.Component {
     }
 
     Select1() {
-        cc.director.loadScene("Map1");
+        DataManager.instance.Map = 1;
+        cc.director.loadScene("BattleIntro");
     }
 
     Select2() {
-        cc.director.loadScene("Map2");
+        DataManager.instance.Map = 2;
+        cc.director.loadScene("BattleIntro");
     }
 }

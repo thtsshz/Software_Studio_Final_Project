@@ -20,8 +20,12 @@ export class DataManager {
     public UserChar : number = 10;
     public UserChar2;
     public UserRole=10;
+    public opponentChar: number;
+    public Map;
 
     public BackgroundVolume = 0.5;
     public EffectVolume = 0.5;
     public MultiplayerRoomID : number = -1;
+
+    public Result: boolean = false; //True if player1 win
 }
