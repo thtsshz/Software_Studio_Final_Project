@@ -4,7 +4,7 @@ import { DataManager } from "./DataManager";
 const {ccclass, property} = cc._decorator;
 declare const firebase : any;
 @ccclass
-export default class NewClass extends cc.Component {
+export default class Login extends cc.Component {
 
     private inputemail: string = "";
     private inputpassword: string = "";
@@ -17,24 +17,24 @@ export default class NewClass extends cc.Component {
             DataManager.instance.UserUID = uid;
             DataManager.instance.UserChar = 0;
             //console.log(DataManager.instance.UserName);
-            let Room;
-            firebase.database().ref("rooms/0").once("value", (room) => {
-                Room = room.val();
-            }).then(() => {
-                if(Room.P1 == 1) {
-                    firebase.database().ref("rooms/0/P1").set(uid).then(() => {
-                        cc.director.loadScene("Select_character");  
-                    });
-                }
-                else if(Room.P2 == 1) {
-                    firebase.database().ref("rooms/0/P2").set(uid).then(() => {
-                        cc.director.loadScene("Select_character");
-                    });
-                }
-                cc.director.loadScene("Select_character");  
-            });
+            // let Room;
+            // firebase.database().ref("rooms/0").once("value", (room) => {
+            //     Room = room.val();
+            // }).then(() => {
+            //     if(Room.P1 == 1) {
+            //         firebase.database().ref("rooms/0/P1").set(uid).then(() => {
+            //             cc.director.loadScene("Select_character");  
+            //         });
+            //     }
+            //     else if(Room.P2 == 1) {
+            //         firebase.database().ref("rooms/0/P2").set(uid).then(() => {
+            //             cc.director.loadScene("Select_character");
+            //         });
+            //     }
+            //     cc.director.loadScene("Select_character");  
+            // });
             
-            //cc.director.loadScene("Select_character");
+            cc.director.loadScene("Lobby");
         })
         .catch(e => {
             alert('Invalid Email or Password');
@@ -51,22 +51,23 @@ export default class NewClass extends cc.Component {
                 DataManager.instance.UserUID = uid;
                 DataManager.instance.UserChar = 0;
 
-                let Room;
-                firebase.database().ref("rooms/0").once("value", (room) => {
-                    Room = room.val();
-                }).then(() => {
-                    if(Room.P1 == 1) {
-                        firebase.database().ref("rooms/0/P1").set(uid).then(() => {
-                            cc.director.loadScene("Select_character");  
-                        });
-                    }
-                    else if(Room.P2 == 1) {
-                        firebase.database().ref("rooms/0/P2").set(uid).then(() => {
-                            cc.director.loadScene("Select_character");
-                        });
-                    }
-                    cc.director.loadScene("Select_character");  
-                });
+                // let Room;
+                // firebase.database().ref("rooms/0").once("value", (room) => {
+                //     Room = room.val();
+                // }).then(() => {
+                //     if(Room.P1 == 1) {
+                //         firebase.database().ref("rooms/0/P1").set(uid).then(() => {
+                //             cc.director.loadScene("Select_character");  
+                //         });
+                //     }
+                //     else if(Room.P2 == 1) {
+                //         firebase.database().ref("rooms/0/P2").set(uid).then(() => {
+                //             cc.director.loadScene("Select_character");
+                //         });
+                //     }
+                //     cc.director.loadScene("Select_character");  
+                // });
+                cc.director.loadScene("Lobby");
 
             })
         })
