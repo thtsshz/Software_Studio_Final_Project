@@ -165,6 +165,8 @@ export default class SelectCharacter extends cc.Component {
             this.opponentChar = snap.val().Character;
             this.oppenentReady = snap.val().isReady;
             console.log(this.opponentChar);
+            if(this.opponentChar != 0)
+                DataManager.instance.opponentChar = this.opponentChar;
             cc.find("Canvas/All_characters/Character1/AbrahamRonen").getComponent(cc.Sprite).spriteFrame = this.AbrahamRonen;
             cc.find("Canvas/All_characters/Character2/AesopSharp").getComponent(cc.Sprite).spriteFrame = this.AesopSharp;
             cc.find("Canvas/All_characters/Character3/MatildaWeasly").getComponent(cc.Sprite).spriteFrame = this.MatildaWeasly;
