@@ -59,25 +59,26 @@ export default class player extends cc.Component {
         console.log('cancel_basic_attack');
         
         this.node.getChildByName('BasicAttack').active=false;
-        this.node.getChildByName('FireRay').active=false;
-        this.node.getChildByName('WaterRay').active = false;
-        this.node.getChildByName('HolyRay').active = false;
+        this.node.getChildByName('J').active=false;
+        this.node.getChildByName('K').active = false;
+        this.node.getChildByName('L').active = false;
     }
     active_basic_attack(){
+        console.log('active_basic_attack');
         this.scheduleOnce(() => {
             this.inAttack = false;
         }, 1);
         if(this.skill1){
             this.skill1 = false;
-            this.node.getChildByName('FireRay').active=true;
+            this.node.getChildByName('J').active=true;
         }
         else if(this.skill2) {
             this.skill2 = false;
-            this.node.getChildByName('WaterRay').active=true;
+            this.node.getChildByName('K').active=true;
         }
         else if(this.skill3) {
             this.skill3 = false;
-            this.node.getChildByName('HolyRay').active=true;
+            this.node.getChildByName('L').active=true;
         }
         else{
             this.normal_attack = false;
@@ -90,7 +91,7 @@ export default class player extends cc.Component {
         // if(event.keyCode == cc.macro.KEY.u){
         //     this.health += 10;
         // }
-        if(this.node.name=='player1'){
+        if(this.node.name=='player1'||this.node.name=='player3'){
             if(event.keyCode == cc.macro.KEY.up&&this.on_ground==true){//jump
                 this.jump=true;
                 this.on_ground=false;
@@ -110,9 +111,9 @@ export default class player extends cc.Component {
                     this.can_attack=false;
                     this.normal_attack = true;
                     // this.node.getChildByName('BasicAttack').active=true;
-
-                    if(!this.anim.getAnimationState('player_1_basic_attack').isPlaying){
-                        this.anim.play("player_1_basic_attack");
+                    
+                    if(!this.anim.getAnimationState(this.node.name+'_basic_attack').isPlaying){
+                        this.anim.play(this.node.name+'_basic_attack');
                     }
                     // this.scheduleOnce(function(){
                     //     this.node.getChildByName('BasicAttack').active=false;
@@ -134,8 +135,8 @@ export default class player extends cc.Component {
                     this.skill1_Cooldown = false;
                 }, this.skill_time1);
                 this.skill1 = true;
-                if(!this.anim.getAnimationState('player_1_basic_attack').isPlaying){
-                    this.anim.play("player_1_basic_attack");
+                if(!this.anim.getAnimationState(this.node.name+'_basic_attack').isPlaying){
+                    this.anim.play(this.node.name+'_basic_attack');
                 }
             }
             if(event.keyCode == cc.macro.KEY.k && !this.skill2_Cooldown && !this.inAttack) {
@@ -145,8 +146,8 @@ export default class player extends cc.Component {
                     this.skill2_Cooldown = false;
                 }, this.skill_time2);
                 this.skill2 = true;
-                if(!this.anim.getAnimationState('player_1_basic_attack').isPlaying){
-                    this.anim.play("player_1_basic_attack");
+                if(!this.anim.getAnimationState(this.node.name+'_basic_attack').isPlaying){
+                    this.anim.play(this.node.name+'_basic_attack');
                 }
             }
             if(event.keyCode == cc.macro.KEY.l && this.progressbar.progress >= 1 && !this.skill3_Cooldown && !this.inAttack) {
@@ -157,8 +158,8 @@ export default class player extends cc.Component {
                     this.skill3_Cooldown = false;
                 }, this.skill_time3);
                 this.skill3 = true;
-                if(!this.anim.getAnimationState('player_1_basic_attack').isPlaying){
-                    this.anim.play("player_1_basic_attack");
+                if(!this.anim.getAnimationState(this.node.name+'_basic_attack').isPlaying){
+                    this.anim.play(this.node.name+'_basic_attack');
                 }
             }
         }
@@ -175,38 +176,80 @@ export default class player extends cc.Component {
                 this.right_move=true;
                 this.left_move=false;
             }
-            else if(event.keyCode==cc.macro.KEY.s){//skill
-                // if(this.can_attack){
-                //     this.attack=true;
-                //     this.can_attack=false;
-                //     this.node.getChildByName('Red power').active=true;
-
-                //     if(!this.anim.getAnimationState('weasly_attack').isPlaying){
-                //         this.anim.play("weasly_attack");
-                //     } 
-                //     this.scheduleOnce(function(){
-                //         this.node.getChildByName('Red power').active=false;
-                //     },this.skill_time1);
-                //     this.scheduleOnce(
-                //         function(){this.can_attack=true},this.attack_time
-                //     );
-                // }
+            if(event.keyCode==cc.macro.KEY.s && !this.inAttack){//skill
+                if(this.can_attack){
+                    this.inAttack = true;
+                    this.attack=true;
+                    this.can_attack=false;
+                    this.normal_attack = true;
+                    // this.node.getChildByName('BasicAttack').active=true;
+                    
+                    if(!this.anim.getAnimationState(this.node.name+'_basic_attack').isPlaying){
+                        this.anim.play(this.node.name+'_basic_attack');
+                    }
+                    // this.scheduleOnce(function(){
+                    //     this.node.getChildByName('BasicAttack').active=false;
+                    // },this.skill_time);
+                    this.scheduleOnce(
+                        function(){this.can_attack=true},this.attack_time
+                    );
+                }
             }
+            // if(event.keyCode==cc.macro.KEY.ctrl){
+            //     // console.log('gather');
+            //     // this.progressbar.getComponent('ProgressBar').progressbar
+            //     this.progressbar.progress+=0.02;
+            // }
+            if(event.keyCode == cc.macro.KEY.r && !this.skill1_Cooldown && !this.inAttack) {
+                this.inAttack = true;
+                this.skill1_Cooldown = true;
+                this.scheduleOnce(() => {
+                    this.skill1_Cooldown = false;
+                }, this.skill_time1);
+                this.skill1 = true;
+                if(!this.anim.getAnimationState(this.node.name+'_basic_attack').isPlaying){
+                    this.anim.play(this.node.name+'_basic_attack');
+                }
+            }
+            if(event.keyCode == cc.macro.KEY.t && !this.skill2_Cooldown && !this.inAttack) {
+                this.inAttack = true;
+                this.skill2_Cooldown = true;
+                this.scheduleOnce(() => {
+                    this.skill2_Cooldown = false;
+                }, this.skill_time2);
+                this.skill2 = true;
+                if(!this.anim.getAnimationState(this.node.name+'_basic_attack').isPlaying){
+                    this.anim.play(this.node.name+'_basic_attack');
+                }
+            }
+            if(event.keyCode == cc.macro.KEY.y && this.progressbar.progress >= 1 && !this.skill3_Cooldown && !this.inAttack) {
+                this.inAttack = true;
+                this.skill3_Cooldown = true;
+                this.progressbar.progress = 0;
+                this.scheduleOnce(() => {
+                    this.skill3_Cooldown = false;
+                }, this.skill_time3);
+                this.skill3 = true;
+                if(!this.anim.getAnimationState(this.node.name+'_basic_attack').isPlaying){
+                    this.anim.play(this.node.name+'_basic_attack');
+                }
+            }
+
         }
         
     }
     onKeyUp(event){
-        if(this.node.name=='player1'){
+        if(this.node.name=='player1'||this.node.name=='player3'){
             if(event.keyCode == cc.macro.KEY.up){//jump
                 this.jump=false;
             }
             else if(event.keyCode==cc.macro.KEY.left){//left
                 this.left_move=false;
-                this.anim.stop("player_1_walk");
+                this.anim.stop(this.node.name+"_walk");
             }
             else if(event.keyCode==cc.macro.KEY.right){//right
                 this.right_move=false;
-                this.anim.stop("player_1_walk");
+                this.anim.stop(this.node.name+"_walk");
             }
         }
         else{
@@ -215,11 +258,11 @@ export default class player extends cc.Component {
             }
             else if(event.keyCode==cc.macro.KEY.a){//left
                 this.left_move=false;
-                this.anim.stop("weasly_walk");
+                this.anim.stop(this.node.name+"_walk");
             }
             else if(event.keyCode==cc.macro.KEY.d){//right
                 this.right_move=false;
-                this.anim.stop("weasly_walk");
+                this.anim.stop(this.node.name+"_walk");
             }
         }
         
@@ -234,10 +277,12 @@ export default class player extends cc.Component {
         console.log(other.node.name);
         if(other.node.name=='BasicAttack'){
             this.health-=100;
-        }
-        else if(other.node.name=='WaterRay'||other.node.name=='FireRay'||other.node.name=='HolyRay'){
-            this.health-=200;
             let action=cc.sequence(cc.moveBy(0.01,30,3),cc.moveBy(0.01,-30,-3)).repeat(5);
+            this.camera.node.runAction(action);
+        }
+        else if(other.node.name=='J'||other.node.name=='K'||other.node.name=='L'){
+            this.health-=200;
+            let action=cc.sequence(cc.moveBy(0.01,50,5),cc.moveBy(0.01,-50,-5)).repeat(8);
             this.camera.node.runAction(action);
             if(other.node.name=='WaterRay'){
                 this.dizzy=true;
@@ -251,45 +296,26 @@ export default class player extends cc.Component {
     update (dt) {
         this.playerSpeed=0;
         if(this.left_move) {
+            console.log(
+                'left_move'
+            );
             this.playerSpeed=-400;
             this.node.scaleX=-0.2;  // modify node's X scale value to change facing direction
-            if(this.node.name=='player1'){
-                if(!this.anim.getAnimationState('player_1_walk').isPlaying&&!this.anim.getAnimationState('player_1_basic_attack').isPlaying){
-                    this.anim.play("player_1_walk");
-                }
+            console.log(this.node.name+'_walk');
+            if(!this.anim.getAnimationState(this.node.name+'_walk').isPlaying&&!this.anim.getAnimationState(this.node.name+'_basic_attack').isPlaying){
+                this.anim.play(this.node.name+'_walk');
             }
-            else{
-                if(!this.anim.getAnimationState('weasly_walk').isPlaying){
-                    this.anim.play("weasly_walk");
-                } 
-            }
-            
-            
         } 
         else if(this.right_move) {
             this.playerSpeed=400;
             this.node.scaleX=0.2;  
-            if(this.node.name=='player1'){
-                if(!this.anim.getAnimationState('player_1_walk').isPlaying&&!this.anim.getAnimationState('player_1_basic_attack').isPlaying){
-                    this.anim.play("player_1_walk");
-                }
-            }
-            else{
-                if(!this.anim.getAnimationState('weasly_walk').isPlaying){
-                    this.anim.play("weasly_walk");
-                } 
+            if(!this.anim.getAnimationState(this.node.name+'_walk').isPlaying&&!this.anim.getAnimationState(this.node.name+'_basic_attack').isPlaying){
+                this.anim.play(this.node.name+'_walk');
             }
         }
         else{
-            if(this.node.name=='player1'){
-                if(!this.anim.getAnimationState('player_1_basic_attack').isPlaying){
-                    this.anim.play("player_1_idle");
-                }
-            }
-            else{
-                if(!this.anim.getAnimationState('weasly_idle').isPlaying){
-                    this.anim.play("weasly_idle");
-                } 
+            if(!this.anim.getAnimationState(this.node.name+'_basic_attack').isPlaying){
+                this.anim.play(this.node.name+"_idle");
             }
         }
         if(this.dizzy)

@@ -1,6 +1,6 @@
 {
   "__type__": "cc.AnimationClip",
-  "_name": "GhostBloodyBaron_basic_attack",
+  "_name": "player3_basic_attack",
   "_objFlags": 0,
   "_native": "",
   "_duration": 1.0166666666666666,
@@ -63,5 +63,21 @@
       }
     }
   },
-  "events": []
+  "events": [
+    {
+      "frame": 0,
+      "func": "",
+      "params": []
+    },
+    {
+      "frame": 0.3333333333333333,
+      "func": "active_basic_attack",
+      "params": []
+    },
+    {
+      "frame": 0.8333333333333334,
+      "func": "cancel_basic_attack",
+      "params": []
+    }
+  ]
 }
