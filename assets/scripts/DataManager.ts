@@ -26,4 +26,6 @@ export class DataManager {
     public BackgroundVolume = 0.5;
     public EffectVolume = 0.5;
     public MultiplayerRoomID : number = -1;
+
+    public Result: boolean = false; //True if player1 win
 }
