@@ -136,8 +136,8 @@ export default class CplayerFast extends cc.Component {
         });
         promise.then(() => {
             this.playerupdate(dt);
-        }).catch(() => {
-            console.log('eee');
+        }).catch((err) => {
+            console.log('eee', err);
         });
         // this.updatefromserver(dt);
         // this.playerupdate(dt);
@@ -185,30 +185,30 @@ export default class CplayerFast extends cc.Component {
         if(this.left_move) {
             this.playerSpeed=-400;
             this.node.scaleX=-0.1;  // modify node's X scale value to change facing direction
-            if(this.node.name=='player1'){
-                if(!this.anim.getAnimationState('player_1_walk').isPlaying){
-                    this.anim.play("player_1_walk");
-                }
-            }
-            else{
-                if(!this.anim.getAnimationState('weasly_walk').isPlaying){
-                    this.anim.play("weasly_walk");
-                } 
-            }
+            // if(this.node.name=='player1'){
+            //     if(!this.anim.getAnimationState('player_1_walk').isPlaying){
+            //         this.anim.play("player_1_walk");
+            //     }
+            // }
+            // else{
+            //     if(!this.anim.getAnimationState('weasly_walk').isPlaying){
+            //         this.anim.play("weasly_walk");
+            //     } 
+            // }
         } 
         else if(this.right_move) {
             this.playerSpeed=400;
             this.node.scaleX=0.1;  
-            if(this.node.name=='player1'){
-                if(!this.anim.getAnimationState('player_1_walk').isPlaying){
-                    this.anim.play("player_1_walk");
-                }
-            }
-            else{
-                if(!this.anim.getAnimationState('weasly_walk').isPlaying){
-                    this.anim.play("weasly_walk");
-                } 
-            }
+            // if(this.node.name=='player1'){
+            //     if(!this.anim.getAnimationState('player_1_walk').isPlaying){
+            //         this.anim.play("player_1_walk");
+            //     }
+            // }
+            // else{
+            //     if(!this.anim.getAnimationState('weasly_walk').isPlaying){
+            //         this.anim.play("weasly_walk");
+            //     } 
+            // }
         }
         if(this.jump){
             console.log("jump!");
