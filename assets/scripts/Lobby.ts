@@ -24,6 +24,7 @@ export default class Lobby extends cc.Component {
 
     onLoad () {
         cc.find("Canvas/Connection").getComponent(cc.Sprite).spriteFrame = this.redx;
+        cc.find("Canvas/MultiPlayer").getComponent(cc.Button).interactable= false;
     }
 
     start () {
@@ -36,7 +37,7 @@ export default class Lobby extends cc.Component {
             fetch("http://192.168.50.62:8080/ping").then((response: Response) => {
                 return response.text()
             }).then((value) => {
-                console.log("res : ", value);
+                // console.log("res : ", value);
                 this.serveravailable = true;
                 cc.find("Canvas/Connection").getComponent(cc.Sprite).spriteFrame = this.greenwifi;
                 cc.find("Canvas/MultiPlayer").getComponent(cc.Button).interactable = true;
