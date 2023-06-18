@@ -37,10 +37,34 @@ export default class Single_SelectCharacter extends cc.Component {
     EleazarFigSelect: cc.SpriteFrame = null;
 
     @property(cc.SpriteFrame)
-    DinahHecat: cc.SpriteFrame = null;
+    MudiwaOnai: cc.SpriteFrame = null;
 
     @property(cc.SpriteFrame)
-    DinahHecatSelect: cc.SpriteFrame = null;
+    MudiwaOnaiSelect: cc.SpriteFrame = null;
+
+    @property(cc.SpriteFrame)
+    ProfessorBlack: cc.SpriteFrame = null;
+
+    @property(cc.SpriteFrame)
+    ProfessorBlackSelect: cc.SpriteFrame = null;
+
+    @property(cc.SpriteFrame)
+    RookWood: cc.SpriteFrame = null;
+
+    @property(cc.SpriteFrame)
+    RookWoodSelect: cc.SpriteFrame = null;
+
+    @property(cc.SpriteFrame)
+    GhostNick: cc.SpriteFrame = null;
+
+    @property(cc.SpriteFrame)
+    GhostNickSelect: cc.SpriteFrame = null;
+
+    @property(cc.SpriteFrame)
+    GhostBloodyBaron: cc.SpriteFrame = null;
+
+    @property(cc.SpriteFrame)
+    GhostBloodyBaronSelect: cc.SpriteFrame = null;
 
 
 
@@ -141,14 +165,74 @@ export default class Single_SelectCharacter extends cc.Component {
         if(!this.P1selected) {
             this.P1char = 5;
             let node = cc.find("Canvas/All_characters/SelectedChar/head/namebg/name");
-            node.getComponent(cc.Label).string = "DinahHecat";
-            cc.find("Canvas/All_characters/SelectedChar/head").getComponent(cc.Sprite).spriteFrame = this.DinahHecat;
+            node.getComponent(cc.Label).string = "MudiwaOnai";
+            cc.find("Canvas/All_characters/SelectedChar/head").getComponent(cc.Sprite).spriteFrame = this.MudiwaOnai;
         }
         else if(this.P1char != 5 && !this.P2selected){
             this.P2char = 5;
             let node = cc.find("Canvas/All_characters/Player2Char/head/namebg/name");
-            node.getComponent(cc.Label).string = "DinahHecat";
-            cc.find("Canvas/All_characters/Player2Char/head").getComponent(cc.Sprite).spriteFrame = this.DinahHecat;
+            node.getComponent(cc.Label).string = "MudiwaOnai";
+            cc.find("Canvas/All_characters/Player2Char/head").getComponent(cc.Sprite).spriteFrame = this.MudiwaOnai;
+        }
+    }
+
+    select6() {
+        if(!this.P1selected) {
+            this.P1char = 6;
+            let node = cc.find("Canvas/All_characters/SelectedChar/head/namebg/name");
+            node.getComponent(cc.Label).string = "Professor Black";
+            cc.find("Canvas/All_characters/SelectedChar/head").getComponent(cc.Sprite).spriteFrame = this.ProfessorBlack;
+        }
+        else if(this.P1char != 6 && !this.P2selected){
+            this.P2char = 6;
+            let node = cc.find("Canvas/All_characters/Player2Char/head/namebg/name");
+            node.getComponent(cc.Label).string = "Professor Black";
+            cc.find("Canvas/All_characters/Player2Char/head").getComponent(cc.Sprite).spriteFrame = this.ProfessorBlack;
+        }
+    }
+
+    select7() {
+        if(!this.P1selected) {
+            this.P1char = 7;
+            let node = cc.find("Canvas/All_characters/SelectedChar/head/namebg/name");
+            node.getComponent(cc.Label).string = "RookWood";
+            cc.find("Canvas/All_characters/SelectedChar/head").getComponent(cc.Sprite).spriteFrame = this.RookWood;
+        }
+        else if(this.P1char != 7 && !this.P2selected){
+            this.P2char = 7;
+            let node = cc.find("Canvas/All_characters/Player2Char/head/namebg/name");
+            node.getComponent(cc.Label).string = "RookWood";
+            cc.find("Canvas/All_characters/Player2Char/head").getComponent(cc.Sprite).spriteFrame = this.RookWood;
+        }
+    }
+
+    select8() {
+        if(!this.P1selected) {
+            this.P1char = 8;
+            let node = cc.find("Canvas/All_characters/SelectedChar/head/namebg/name");
+            node.getComponent(cc.Label).string = "Ghost Nick";
+            cc.find("Canvas/All_characters/SelectedChar/head").getComponent(cc.Sprite).spriteFrame = this.GhostNick;
+        }
+        else if(this.P1char != 8 && !this.P2selected){
+            this.P2char = 8;
+            let node = cc.find("Canvas/All_characters/Player2Char/head/namebg/name");
+            node.getComponent(cc.Label).string = "Ghost Nick";
+            cc.find("Canvas/All_characters/Player2Char/head").getComponent(cc.Sprite).spriteFrame = this.GhostNick;
+        }
+    }
+
+    select9() {
+        if(!this.P1selected) {
+            this.P1char = 9;
+            let node = cc.find("Canvas/All_characters/SelectedChar/head/namebg/name");
+            node.getComponent(cc.Label).string = "Ghost Bloody Baron";
+            cc.find("Canvas/All_characters/SelectedChar/head").getComponent(cc.Sprite).spriteFrame = this.GhostBloodyBaron;
+        }
+        else if(this.P1char != 9 && !this.P2selected){
+            this.P2char = 9;
+            let node = cc.find("Canvas/All_characters/Player2Char/head/namebg/name");
+            node.getComponent(cc.Label).string = "Ghost Bloody Baron";
+            cc.find("Canvas/All_characters/Player2Char/head").getComponent(cc.Sprite).spriteFrame = this.GhostBloodyBaron;
         }
     }
 
@@ -171,7 +255,19 @@ export default class Single_SelectCharacter extends cc.Component {
                 cc.find("Canvas/All_characters/Character4/EleazarFig").getComponent(cc.Sprite).spriteFrame = this.EleazarFigSelect;
             }
             else if(this.P1char == 5) {
-                cc.find("Canvas/All_characters/Character5/DinahHecat").getComponent(cc.Sprite).spriteFrame = this.DinahHecatSelect;
+                cc.find("Canvas/All_characters/Character5/MudiwaOnai").getComponent(cc.Sprite).spriteFrame = this.MudiwaOnaiSelect;
+            }
+            else if(this.P1char == 6) {
+                cc.find("Canvas/All_characters/Character6/MudiwaOnai").getComponent(cc.Sprite).spriteFrame = this.ProfessorBlackSelect;
+            }
+            else if(this.P1char == 7) {
+                cc.find("Canvas/All_characters/Character7/AesopSharp").getComponent(cc.Sprite).spriteFrame = this.RookWoodSelect;
+            }
+            else if(this.P1char == 8) {
+                cc.find("Canvas/All_characters/Character8/MatildaWeasly").getComponent(cc.Sprite).spriteFrame = this.GhostNickSelect;
+            }
+            else if(this.P1char == 9) {
+                cc.find("Canvas/All_characters/Character9/EleazarFig").getComponent(cc.Sprite).spriteFrame = this.GhostBloodyBaronSelect;
             }
         }
     }
@@ -195,8 +291,20 @@ export default class Single_SelectCharacter extends cc.Component {
             else if(this.P2char == 4) {
                 cc.find("Canvas/All_characters/Character4/EleazarFig").getComponent(cc.Sprite).spriteFrame = this.EleazarFigSelect;
             }
-            else if(this.P2char == 5) {
-                cc.find("Canvas/All_characters/Character5/DinahHecat").getComponent(cc.Sprite).spriteFrame = this.DinahHecatSelect;
+            else if(this.P1char == 5) {
+                cc.find("Canvas/All_characters/Character5/MudiwaOnai").getComponent(cc.Sprite).spriteFrame = this.MudiwaOnaiSelect;
+            }
+            else if(this.P1char == 6) {
+                cc.find("Canvas/All_characters/Character6/MudiwaOnai").getComponent(cc.Sprite).spriteFrame = this.ProfessorBlackSelect;
+            }
+            else if(this.P1char == 7) {
+                cc.find("Canvas/All_characters/Character7/AesopSharp").getComponent(cc.Sprite).spriteFrame = this.RookWoodSelect;
+            }
+            else if(this.P1char == 8) {
+                cc.find("Canvas/All_characters/Character8/MatildaWeasly").getComponent(cc.Sprite).spriteFrame = this.GhostNickSelect;
+            }
+            else if(this.P1char == 9) {
+                cc.find("Canvas/All_characters/Character9/EleazarFig").getComponent(cc.Sprite).spriteFrame = this.GhostBloodyBaronSelect;
             }
 
             this.ReadyButton.node.active = true;
