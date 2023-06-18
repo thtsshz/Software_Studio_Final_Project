@@ -17,8 +17,11 @@ export class DataManager {
 
     public UserUID;
     public UserName;
-    public UserChar;
+    public UserChar : number = 10;
+    public UserChar2;
+    public UserRole=10;
 
     public BackgroundVolume = 0.5;
     public EffectVolume = 0.5;
+    public MultiplayerRoomID : number = -1;
 }

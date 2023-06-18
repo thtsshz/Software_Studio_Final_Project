@@ -73,13 +73,13 @@ export default class SelectCharacter extends cc.Component {
     }
 
     start () {
-        firebase.database().ref("rooms/0").once("value", (room) => {
+        firebase.database().ref("rooms/" + DataManager.instance.MultiplayerRoomID.toString()).once("value", (room) => {
             this.Room = room.val();
         }).then(() => {
             if(this.Room.P2 == 1) {
                 this.WaitLabel.node.active = true;
                 this.isWaiting = true;
-                firebase.database().ref("rooms/0").on("value", (room) => {
+                firebase.database().ref("rooms/" + DataManager.instance.MultiplayerRoomID.toString()).on("value", (room) => {
                     this.Room = room.val();
                     if(this.Room.P2 != 1) {
                         this.WaitLabel.node.active = false;
@@ -309,6 +309,7 @@ export default class SelectCharacter extends cc.Component {
             this.P1selected = true;
             cc.find("Canvas/All_characters/SelectedChar/P1Select").getComponent(cc.Button).interactable = false;
             firebase.database().ref("/").update({P1: this.P1char});
+            DataManager.instance.UserChar = this.P1char;
 
             if(this.P1char == 1) {
                 cc.find("Canvas/All_characters/Character1/AbrahamRonen").getComponent(cc.Sprite).spriteFrame = this.AbrahamRonenSelect;

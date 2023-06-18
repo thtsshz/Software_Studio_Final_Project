@@ -24,6 +24,7 @@ export default class Lobby extends cc.Component {
 
     onLoad () {
         cc.find("Canvas/Connection").getComponent(cc.Sprite).spriteFrame = this.redx;
+        cc.find("Canvas/MultiPlayer").getComponent(cc.Button).interactable= false;
     }
 
     start () {
@@ -36,7 +37,7 @@ export default class Lobby extends cc.Component {
             fetch("http://192.168.50.62:8080/ping").then((response: Response) => {
                 return response.text()
             }).then((value) => {
-                console.log("res : ", value);
+                // console.log("res : ", value);
                 this.serveravailable = true;
                 cc.find("Canvas/Connection").getComponent(cc.Sprite).spriteFrame = this.greenwifi;
                 cc.find("Canvas/MultiPlayer").getComponent(cc.Button).interactable = true;
@@ -55,26 +56,28 @@ export default class Lobby extends cc.Component {
     }
 
     Multi() {
-        let Room;
-        firebase.database().ref("rooms/0").once("value", (room) => {
-            Room = room.val();
-        }).then(() => {
-            if(Room.P1 == 1) {
-                firebase.database().ref("rooms/0/P1").set(this.uid).then(() => {
-                    cc.director.loadScene("Select_character");  
-                });
-            }
-            else if(Room.P2 == 1) {
-                firebase.database().ref("rooms/0/P2").set(this.uid).then(() => {
-                    cc.director.loadScene("Select_character");
-                });
-            }
-            else {
-                alert("Room is full!!");
-            }
-        });
+        // let Room;
+        // firebase.database().ref("rooms/0").once("value", (room) => {
+        //     Room = room.val();
+        // }).then(() => {
+        //     if(Room.P1 == 1) {
+        //         firebase.database().ref("rooms/0/P1").set(this.uid).then(() => {
+        //             cc.director.loadScene("Select_character");  
+        //         });
+        //     }
+        //     else if(Room.P2 == 1) {
+        //         firebase.database().ref("rooms/0/P2").set(this.uid).then(() => {
+        //             cc.director.loadScene("Select_character");
+        //         });
+        //     }
+        //     else {
+        //         alert("Room is full!!");
+        //     }
+        // }).catch(err => {
+        //     console.log(err);
+        // });
 
-        //cc.director.loadScene("Select_character");
+        cc.director.loadScene("Join_room");
     }
 
     Setting() {

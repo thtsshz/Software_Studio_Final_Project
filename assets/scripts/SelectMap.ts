@@ -19,19 +19,21 @@ export default class SelectMap extends cc.Component {
     isLoad: boolean = false;
 
     start () {
-        firebase.database().ref("rooms/0").once("value", (room) => {
+        firebase.database().ref("rooms/" + DataManager.instance.MultiplayerRoomID.toString()).once("value", (room) => {
             this.Room = room.val();
             console.log(this.Room);
         }).then(() => {
             if(this.Room.P1 == DataManager.instance.UserUID) {
                 this.Role = 0;
+                DataManager.instance.UserRole = 0;
             }
             else {
                 this.Role = 1;
+                DataManager.instance.UserRole = 1;
             }
             alert(this.Role);
             this.Map = this.Room.Map;
-            firebase.database().ref("rooms/0/Map").on("value", (room) => {
+            firebase.database().ref("rooms/" + DataManager.instance.MultiplayerRoomID.toString() +"/Map").on("value", (room) => {
                 this.Map = room.val();
                 //console.log(this.Room);
             })
@@ -45,12 +47,12 @@ export default class SelectMap extends cc.Component {
             alert("CC");
             cc.director.loadScene("Map1");
             if(this.Role == 0) 
-                firebase.database().ref("rooms/0/P1").set(1);
+                firebase.database().ref("rooms/" + DataManager.instance.MultiplayerRoomID.toString() + "/P1").set(1);
             else
-                firebase.database().ref("rooms/0/P2").set(1);
+                firebase.database().ref("rooms/" + DataManager.instance.MultiplayerRoomID.toString() + "/P2").set(1);
 
             this.scheduleOnce(() =>{
-                firebase.database().ref("rooms/0/Map").set(0);
+                firebase.database().ref("rooms/" + DataManager.instance.MultiplayerRoomID.toString() + "/Map").set(0);
             }, 1)
         }
         else if(this.Map == 2 && !this.isLoad) {
@@ -58,19 +60,19 @@ export default class SelectMap extends cc.Component {
             alert("BB");
             cc.director.loadScene("Map2");
             if(this.Role == 0)
-                firebase.database().ref("rooms/0/P1").set(1);
+                firebase.database().ref("rooms/" + DataManager.instance.MultiplayerRoomID.toString() + "/P1").set(1);
             else
-                firebase.database().ref("rooms/0/P2").set(1);
+                firebase.database().ref("rooms/" + DataManager.instance.MultiplayerRoomID.toString() + "/P2").set(1);
 
             this.scheduleOnce(() =>{
-                firebase.database().ref("rooms/0/Map").set(0);
+                firebase.database().ref("rooms/" + DataManager.instance.MultiplayerRoomID.toString() + "/Map").set(0);
             }, 1)
         }
     }
 
     Select1() {
         if(this.Role == 0) {
-            firebase.database().ref("rooms/0/Map").set(1);
+            firebase.database().ref("rooms/" + DataManager.instance.MultiplayerRoomID.toString() + "/Map").set(1);
             alert("AAA");
         }
     }

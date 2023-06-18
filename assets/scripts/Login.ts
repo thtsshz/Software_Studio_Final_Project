@@ -34,7 +34,7 @@ export default class Login extends cc.Component {
             //     cc.director.loadScene("Select_character");  
             // });
             
-            cc.director.loadScene("Lobby");
+            cc.director.loadScene("change_scene");
         })
         .catch(e => {
             alert('Invalid Email or Password');
@@ -80,6 +80,26 @@ export default class Login extends cc.Component {
         firebase.auth().signInWithEmailAndPassword("aaa@gmail.com", "123456")
         .then((userCredential) => {
             cc.director.loadScene("Login-check");
+        })
+        .catch(e => {
+            alert('Invalid Email or Password');
+            console.log(e.message);
+        });
+    }
+    loginA():void{
+        firebase.auth().signInWithEmailAndPassword("a@gmail.com", "aaaaaa")
+        .then((userCredential) => {
+            cc.director.loadScene("Lobby");
+        })
+        .catch(e => {
+            alert('Invalid Email or Password');
+            console.log(e.message);
+        });
+    }
+    loginB():void{
+        firebase.auth().signInWithEmailAndPassword("b@gmail.com", "bbbbbb")
+        .then((userCredential) => {
+            cc.director.loadScene("Lobby");
         })
         .catch(e => {
             alert('Invalid Email or Password');
