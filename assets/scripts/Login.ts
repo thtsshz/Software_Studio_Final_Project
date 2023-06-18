@@ -89,6 +89,10 @@ export default class Login extends cc.Component {
     loginA():void{
         firebase.auth().signInWithEmailAndPassword("a@gmail.com", "aaaaaa")
         .then((userCredential) => {
+            let uid = firebase.auth().currentUser.uid
+            DataManager.instance.UserName = this.inputemail;
+            DataManager.instance.UserUID = uid;
+            DataManager.instance.UserChar = 0;
             cc.director.loadScene("Lobby");
         })
         .catch(e => {
@@ -99,6 +103,10 @@ export default class Login extends cc.Component {
     loginB():void{
         firebase.auth().signInWithEmailAndPassword("b@gmail.com", "bbbbbb")
         .then((userCredential) => {
+            let uid = firebase.auth().currentUser.uid
+            DataManager.instance.UserName = this.inputemail;
+            DataManager.instance.UserUID = uid;
+            DataManager.instance.UserChar = 0;
             cc.director.loadScene("Lobby");
         })
         .catch(e => {
