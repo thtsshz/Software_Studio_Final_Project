@@ -25,9 +25,11 @@ export default class SelectMap extends cc.Component {
         }).then(() => {
             if(this.Room.P1 == DataManager.instance.UserUID) {
                 this.Role = 0;
+                DataManager.instance.UserRole = 0;
             }
             else {
                 this.Role = 1;
+                DataManager.instance.UserRole = 1;
             }
             alert(this.Role);
             this.Map = this.Room.Map;

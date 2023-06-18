@@ -1,5 +1,7 @@
 const {ccclass, property} = cc._decorator;
+import { DataManager } from "./DataManager";
 import player from "./player";
+
 @ccclass
 export default class NewClass extends cc.Component {
 
@@ -80,6 +82,8 @@ export default class NewClass extends cc.Component {
             //cc.audioEngine.playEffect(this.BGM2, false);
         })
 
+        
+
         if(this.P1char == 1 || this.P2char == 1) {
 
         }
@@ -98,8 +102,40 @@ export default class NewClass extends cc.Component {
     }
 
     start () {
+        cc.find("Canvas/Player/player1").active = false;        
+        cc.find("Canvas/Player/player2").active = false; 
+        cc.find("Canvas/Player/player3").active = false; 
+        cc.find("Canvas/Player/player4").active = false; 
+
         this.P1char = 4;
         this.P2char = 3;
+        let s = "player";
+        if(DataManager.instance.UserRole == 10) {
+            let char1 = DataManager.instance.UserChar.toString();
+            cc.find("Canvas/Player/player"+char1).active = true;
+            char1 = DataManager.instance.UserChar2.toString();
+            let char2 = cc.find("Canvas/Player/player"+char1);
+            char2.active = true;
+            char2.setPosition(422,273);
+            char2.scaleX = -0.2;
+            console.log(s+DataManager.instance.UserChar.toString())
+            console.log(s+DataManager.instance.UserChar2.toString())
+        }
+        else {
+            if(DataManager.instance.UserRole == 1) {
+                let char1 = DataManager.instance.UserChar.toString();
+                let char2 = cc.find("Canvas/Player/player"+char1);
+                char2.active = true;
+                char2.setPosition(422,273);
+                char2.scaleX = -0.2;
+            }
+            else if(DataManager.instance.UserRole == 0) {
+                let char1 = DataManager.instance.UserChar.toString();
+                let char2 = cc.find("Canvas/Player/player"+char1);
+                char2.active = true;
+            }
+            console.log(s+DataManager.instance.UserChar.toString())
+        }
     }
 
     update (dt) {

@@ -309,6 +309,7 @@ export default class SelectCharacter extends cc.Component {
             this.P1selected = true;
             cc.find("Canvas/All_characters/SelectedChar/P1Select").getComponent(cc.Button).interactable = false;
             firebase.database().ref("/").update({P1: this.P1char});
+            DataManager.instance.UserChar = this.P1char;
 
             if(this.P1char == 1) {
                 cc.find("Canvas/All_characters/Character1/AbrahamRonen").getComponent(cc.Sprite).spriteFrame = this.AbrahamRonenSelect;

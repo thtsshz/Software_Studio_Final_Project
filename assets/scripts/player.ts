@@ -6,6 +6,8 @@
 //  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
 // Scene 1:403.952 268.994
 const {ccclass, property} = cc._decorator;
+import { DataManager } from "./DataManager";
+
 @ccclass
 export default class player extends cc.Component {
 
@@ -14,6 +16,8 @@ export default class player extends cc.Component {
 
     @property(cc.ProgressBar)
     progressbar:cc.ProgressBar=null;
+    @property(cc.ProgressBar)
+    progressbar2:cc.ProgressBar=null;
     @property
     text: string = 'hello';
 
@@ -90,7 +94,7 @@ export default class player extends cc.Component {
         // if(event.keyCode == cc.macro.KEY.u){
         //     this.health += 10;
         // }
-        if(this.node.name=='player1'||this.node.name=='player3'){
+        if(this.node.name==('player' + DataManager.instance.UserChar.toString())){
             if(event.keyCode == cc.macro.KEY.up&&this.on_ground==true){//jump
                 this.jump=true;
                 this.on_ground=false;
@@ -194,11 +198,11 @@ export default class player extends cc.Component {
                     );
                 }
             }
-            // if(event.keyCode==cc.macro.KEY.ctrl){
-            //     // console.log('gather');
-            //     // this.progressbar.getComponent('ProgressBar').progressbar
-            //     this.progressbar.progress+=0.02;
-            // }
+            if(event.keyCode==cc.macro.KEY.z){
+                // console.log('gather');
+                // this.progressbar.getComponent('ProgressBar').progressbar
+                this.progressbar2.progress+=0.02;
+            }
             if(event.keyCode == cc.macro.KEY.r && !this.skill1_Cooldown && !this.inAttack) {
                 this.inAttack = true;
                 this.skill1_Cooldown = true;
@@ -221,10 +225,10 @@ export default class player extends cc.Component {
                     this.anim.play(this.node.name+'_basic_attack');
                 }
             }
-            if(event.keyCode == cc.macro.KEY.y && this.progressbar.progress >= 1 && !this.skill3_Cooldown && !this.inAttack) {
+            if(event.keyCode == cc.macro.KEY.y && this.progressbar2.progress >= 1 && !this.skill3_Cooldown && !this.inAttack) {
                 this.inAttack = true;
                 this.skill3_Cooldown = true;
-                this.progressbar.progress = 0;
+                this.progressbar2.progress = 0;
                 this.scheduleOnce(() => {
                     this.skill3_Cooldown = false;
                 }, this.skill_time3);
@@ -238,7 +242,7 @@ export default class player extends cc.Component {
         
     }
     onKeyUp(event){
-        if(this.node.name=='player1'||this.node.name=='player3'){
+        if(this.node.name==('player' + DataManager.instance.UserChar.toString())){
             if(event.keyCode == cc.macro.KEY.up){//jump
                 this.jump=false;
             }
@@ -267,7 +271,7 @@ export default class player extends cc.Component {
         
     }
     start () {
-
+        
     }
     onBeginContact(contact,self,other){
         // console.log(contact.getWorldManifold().normal.y);
