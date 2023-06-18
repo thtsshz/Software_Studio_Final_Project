@@ -24,31 +24,31 @@ export default class player extends cc.Component {
     @property(cc.Camera)
     camera:cc.Camera=null;
     // LIFE-CYCLE CALLBACKS:
-    left_move:boolean=false;
-    right_move:boolean=false;
-    jump:boolean=false;
-    on_ground:boolean=false;
-    attack:boolean=false;
-    can_attack:boolean=true;
-    dizzy:boolean=false;
+    left_move : boolean = false;
+    right_move : boolean = false;
+    jump : boolean = false;
+    on_ground : boolean = false;
+    attack : boolean = false;
+    can_attack : boolean = true;
+    moveable : boolean = true;
 
-    playerSpeed:number=0;
-    attack_time:number=1.5;
-    skill_time1:number=3;
-    skill_time2:number=4;
-    skill_time3:number=5;
-    private anim=null;
+    playerSpeed : number = 0;
+    attack_time : number = 1.5;
+    skill_time1 : number = 3;
+    skill_time2 : number = 4;
+    skill_time3 : number = 5;
+    private anim = null;
 
     health : number = 500;
 
-    skill1: boolean = false;
-    skill2: boolean = false;
-    skill3: boolean = false;
+    skill1 : boolean = false;
+    skill2 : boolean = false;
+    skill3 : boolean = false;
     normal_attack: boolean = false;
 
-    skill1_Cooldown: boolean = false;
-    skill2_Cooldown: boolean = false;
-    skill3_Cooldown: boolean = false;
+    skill1_Cooldown : boolean = false;
+    skill2_Cooldown : boolean = false;
+    skill3_Cooldown : boolean = false;
     
     inAttack: boolean = false;
 
@@ -287,10 +287,16 @@ export default class player extends cc.Component {
             this.health-=200;
             let action=cc.sequence(cc.moveBy(0.01,50,5),cc.moveBy(0.01,-50,-5)).repeat(8);
             this.camera.node.runAction(action);
-            if(other.node.name=='WaterRay'){
-                this.dizzy=true;
+            if(other.node.name=='J'){
+                this.moveable = false;
                 this.scheduleOnce(function(){
-                    this.dizzy=false;
+                    this.moveable = true;
+                }
+                ,2);
+            }else if(other.node.name == 'K'){
+                this.can_attack = false;
+                this.scheduleOnce(function(){
+                    this.can_attack = true;
                 }
                 ,2);
             }
@@ -327,7 +333,7 @@ export default class player extends cc.Component {
                 this.anim.play(this.node.name+"_idle");
             }
         }
-        if(this.dizzy)
+        if(this.moveable == false)
             return;
         if(this.jump){
             this.getComponent(cc.RigidBody).linearVelocity=cc.v2(0,950);
