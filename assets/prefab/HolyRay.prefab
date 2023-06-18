@@ -13,7 +13,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "HolyRay",
+    "_name": "K",
     "_objFlags": 0,
     "_parent": null,
     "_children": [],
@@ -54,16 +54,16 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        -21.112,
-        -211.121,
+        845.151,
+        409.485,
         0,
         0,
         0,
         0,
         1,
-        0.622,
-        0.622,
-        0.622
+        1.191,
+        1.191,
+        1.191
       ]
     },
     "_eulerAngles": {

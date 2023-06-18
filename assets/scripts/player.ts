@@ -274,10 +274,20 @@ export default class player extends cc.Component {
         
     }
     onBeginContact(contact,self,other){
-        // console.log(contact.getWorldManifold().normal.y);
-        if(contact.getWorldManifold().normal.y==-1&&other.node.group=='Ground')
+        console.log(contact.getWorldManifold().normal.y);
+        if(contact.getWorldManifold().normal.y>0.9){
+            console.log(other.node.name);
+
+            if(other.node.name=='House1'||other.node.name=='Collider1_1'||other.node.name=='Collider1_2'||other.node.name=='Collider2_1'||other.node.name=='Collider2_2'||other.node.name=='Collider2_3'||other.node.name=='Collider2_4'||other.node.name=='Collider2_5'){
+                contact.disabled=true;
+                console.log(contact.disable);
+                console.log('disable');
+
+                return;
+            }
+        }
+        if(contact.getWorldManifold().normal.y<-0.9&&other.node.group=='Ground')
             this.on_ground=true;
-        console.log(other.node.name);
         if(other.node.name=='BasicAttack'){
             this.health-=100;
             let action=cc.sequence(cc.moveBy(0.01,30,3),cc.moveBy(0.01,-30,-3)).repeat(5);
@@ -302,9 +312,22 @@ export default class player extends cc.Component {
             }
         }
     }
+    // onPreSolve(contact,self,other){
+    //     if(contact.getWorldManifold().normal.y>0.9){
+    //         console.log(other.node.name);
+
+    //         if(other.node.name=='House1'||other.node.name=='Collider1_1'||other.node.name=='Collider1_2'||other.node.name=='Collider2_1'||other.node.name=='Collider2_2'||other.node.name=='Collider2_3'||other.node.name=='Collider2_4'||other.node.name=='Collider2_5'){
+    //             contact.disabled=true;
+    //             console.log(contact.disable);
+    //             console.log('disable');
+    //             return;
+    //         }
+    //     }
+
+    // }
     onEndContact(contact,self,other){
-        console.log(other.node.group);
-        console.log(other.node.name);
+        // console.log(other.node.group);
+        // console.log(other.node.name);
         if(other.node.group=='Ground')
             this.on_ground=false;
     }
