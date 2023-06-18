@@ -1,0 +1,61 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "Black_attack",
+  "_objFlags": 0,
+  "_native": "",
+  "_duration": 1.0166666666666666,
+  "sample": 60,
+  "speed": 1,
+  "wrapMode": 1,
+  "curveData": {
+    "comps": {
+      "cc.Sprite": {
+        "spriteFrame": [
+          {
+            "frame": 0,
+            "value": {
+              "__uuid__": "cb6922bf-8a79-4852-b821-f879786b9155"
+            }
+          },
+          {
+            "frame": 0.08333333333333333,
+            "value": {
+              "__uuid__": "7b62305b-aa58-42af-928c-3524cf4c2d29"
+            }
+          },
+          {
+            "frame": 0.16666666666666666,
+            "value": {
+              "__uuid__": "67c00d9b-0386-400a-bf65-28849083146b"
+            }
+          },
+          {
+            "frame": 0.25,
+            "value": {
+              "__uuid__": "5c202420-70b7-4dc2-9699-e37b7a53c415"
+            }
+          },
+          {
+            "frame": 0.8333333333333334,
+            "value": {
+              "__uuid__": "67c00d9b-0386-400a-bf65-28849083146b"
+            }
+          },
+          {
+            "frame": 0.9166666666666666,
+            "value": {
+              "__uuid__": "7b62305b-aa58-42af-928c-3524cf4c2d29"
+            }
+          },
+          {
+            "frame": 1,
+            "value": {
+              "__uuid__": "cb6922bf-8a79-4852-b821-f879786b9155"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "events": []
+}

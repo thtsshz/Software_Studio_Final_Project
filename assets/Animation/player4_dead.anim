@@ -1,9 +1,9 @@
 {
   "__type__": "cc.AnimationClip",
-  "_name": "GhostNick_dead",
+  "_name": "player4_dead",
   "_objFlags": 0,
   "_native": "",
-  "_duration": 0.5166666666666667,
+  "_duration": 0.85,
   "sample": 60,
   "speed": 1,
   "wrapMode": 1,
@@ -49,6 +49,12 @@
           },
           {
             "frame": 0.5,
+            "value": {
+              "__uuid__": "2993f485-fa07-419d-892b-262d1c32cd3b"
+            }
+          },
+          {
+            "frame": 0.8333333333333334,
             "value": {
               "__uuid__": "2993f485-fa07-419d-892b-262d1c32cd3b"
             }

@@ -15,9 +15,6 @@
     "_children": [
       {
         "__id__": 2
-      },
-      {
-        "__id__": 7
       }
     ],
     "_active": true,
@@ -73,15 +70,18 @@
     "_children": [
       {
         "__id__": 3
+      },
+      {
+        "__id__": 5
       }
     ],
     "_active": true,
     "_components": [
       {
-        "__id__": 5
+        "__id__": 8
       },
       {
-        "__id__": 6
+        "__id__": 9
       }
     ],
     "_prefab": null,
@@ -231,6 +231,103 @@
     "_id": "81GN3uXINKVLeW4+iKSlim"
   },
   {
+    "__type__": "cc.Node",
+    "_name": "videoplayer",
+    "_objFlags": 0,
+    "_parent": {
+      "__id__": 2
+    },
+    "_children": [],
+    "_active": true,
+    "_components": [
+      {
+        "__id__": 6
+      },
+      {
+        "__id__": 7
+      }
+    ],
+    "_prefab": null,
+    "_opacity": 255,
+    "_color": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    },
+    "_contentSize": {
+      "__type__": "cc.Size",
+      "width": 428,
+      "height": 240
+    },
+    "_anchorPoint": {
+      "__type__": "cc.Vec2",
+      "x": 0.5,
+      "y": 0.5
+    },
+    "_trs": {
+      "__type__": "TypedArray",
+      "ctor": "Float64Array",
+      "array": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        4.659,
+        4.659,
+        4.659
+      ]
+    },
+    "_eulerAngles": {
+      "__type__": "cc.Vec3",
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "_skewX": 0,
+    "_skewY": 0,
+    "_is3DNode": false,
+    "_groupIndex": 0,
+    "groupIndex": 0,
+    "_id": "c8TURyHc5C0IaOlkWsszKJ"
+  },
+  {
+    "__type__": "cc.VideoPlayer",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 5
+    },
+    "_enabled": true,
+    "_resourceType": 1,
+    "_remoteURL": "",
+    "_clip": {
+      "__uuid__": "d4a5d6f9-4829-46f5-91cf-94aa6aa8cf57"
+    },
+    "_volume": 1,
+    "_mute": false,
+    "_isFullscreen": false,
+    "_N$isFullscreen": false,
+    "_stayOnBottom": false,
+    "videoPlayerEvent": [],
+    "_N$keepAspectRatio": true,
+    "_id": "3b8006VKVEk5thtuOqwgxY"
+  },
+  {
+    "__type__": "9af9cWVgzpLaZ0LJ/H7nwv2",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 5
+    },
+    "_enabled": true,
+    "_id": "b8QCAr17lFlqphTmGvSkEb"
+  },
+  {
     "__type__": "cc.Canvas",
     "_name": "",
     "_objFlags": 0,
@@ -273,104 +370,5 @@
     "_originalWidth": 0,
     "_originalHeight": 0,
     "_id": "29zXboiXFBKoIV4PQ2liTe"
-  },
-  {
-    "__type__": "cc.Node",
-    "_name": "videoplayer",
-    "_objFlags": 0,
-    "_parent": {
-      "__id__": 1
-    },
-    "_children": [],
-    "_active": true,
-    "_components": [
-      {
-        "__id__": 8
-      },
-      {
-        "__id__": 9
-      }
-    ],
-    "_prefab": null,
-    "_opacity": 255,
-    "_color": {
-      "__type__": "cc.Color",
-      "r": 255,
-      "g": 255,
-      "b": 255,
-      "a": 255
-    },
-    "_contentSize": {
-      "__type__": "cc.Size",
-      "width": 428,
-      "height": 240
-    },
-    "_anchorPoint": {
-      "__type__": "cc.Vec2",
-      "x": 0.5,
-      "y": 0.5
-    },
-    "_trs": {
-      "__type__": "TypedArray",
-      "ctor": "Float64Array",
-      "array": [
-        920.3,
-        567.353,
-        0,
-        0,
-        0,
-        0,
-        1,
-        4.659,
-        4.659,
-        4.659
-      ]
-    },
-    "_eulerAngles": {
-      "__type__": "cc.Vec3",
-      "x": 0,
-      "y": 0,
-      "z": 0
-    },
-    "_skewX": 0,
-    "_skewY": 0,
-    "_is3DNode": false,
-    "_groupIndex": 0,
-    "groupIndex": 0,
-    "_id": "c8TURyHc5C0IaOlkWsszKJ"
-  },
-  {
-    "__type__": "cc.VideoPlayer",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 7
-    },
-    "_enabled": true,
-    "_resourceType": 1,
-    "_remoteURL": "",
-    "_clip": {
-      "__uuid__": "d4a5d6f9-4829-46f5-91cf-94aa6aa8cf57"
-    },
-    "_volume": 1,
-    "_mute": false,
-    "_isFullscreen": false,
-    "_N$isFullscreen": false,
-    "_stayOnBottom": false,
-    "videoPlayerEvent": [],
-    "_N$keepAspectRatio": true,
-    "_id": "3b8006VKVEk5thtuOqwgxY"
-  },
-  {
-    "__type__": "9af9cWVgzpLaZ0LJ/H7nwv2",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 7
-    },
-    "_enabled": true,
-    "label": null,
-    "text": "hello",
-    "_id": "b8QCAr17lFlqphTmGvSkEb"
   }
 ]

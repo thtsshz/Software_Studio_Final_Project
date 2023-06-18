@@ -86,6 +86,26 @@ export default class Login extends cc.Component {
             console.log(e.message);
         });
     }
+    loginA():void{
+        firebase.auth().signInWithEmailAndPassword("a@gmail.com", "aaaaaa")
+        .then((userCredential) => {
+            cc.director.loadScene("Lobby");
+        })
+        .catch(e => {
+            alert('Invalid Email or Password');
+            console.log(e.message);
+        });
+    }
+    loginB():void{
+        firebase.auth().signInWithEmailAndPassword("b@gmail.com", "bbbbbb")
+        .then((userCredential) => {
+            cc.director.loadScene("Lobby");
+        })
+        .catch(e => {
+            alert('Invalid Email or Password');
+            console.log(e.message);
+        });
+    }
     updateemail(text, editbox, custom):void{
         this.inputemail = text;
     }

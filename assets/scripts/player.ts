@@ -296,6 +296,12 @@ export default class player extends cc.Component {
             }
         }
     }
+    onEndContact(contact,self,other){
+        console.log(other.node.group);
+        console.log(other.node.name);
+        if(other.node.group=='Ground')
+            this.on_ground=false;
+    }
     update (dt) {
         this.playerSpeed=0;
         if(this.left_move) {

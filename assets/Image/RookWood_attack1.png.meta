@@ -1,0 +1,38 @@
+{
+  "ver": "2.3.7",
+  "uuid": "417a5502-cecc-4bdb-938a-d2cb0105ee1e",
+  "importer": "texture",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 1920,
+  "height": 1080,
+  "platformSettings": {},
+  "subMetas": {
+    "RookWood_attack1": {
+      "ver": "1.0.6",
+      "uuid": "f78a2690-5038-4b5d-9c1d-8e052a77ba27",
+      "importer": "sprite-frame",
+      "rawTextureUuid": "417a5502-cecc-4bdb-938a-d2cb0105ee1e",
+      "trimType": "none",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 1920,
+      "height": 1080,
+      "rawWidth": 1920,
+      "rawHeight": 1080,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}
