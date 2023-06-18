@@ -3318,7 +3318,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "DinahHecat",
+    "_name": "MudiwaOnai",
     "_objFlags": 0,
     "_parent": {
       "__id__": 61
@@ -3476,7 +3476,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 1169.28,
+      "width": 1241.94,
       "height": 277.2
     },
     "_anchorPoint": {
@@ -3528,8 +3528,8 @@
     ],
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
-    "_string": "Dinah Hecat",
-    "_N$string": "Dinah Hecat",
+    "_string": "Mudiwa Onai",
+    "_N$string": "Mudiwa Onai",
     "_fontSize": 210,
     "_lineHeight": 220,
     "_enableWrapText": true,
@@ -3690,7 +3690,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "14df0309-4560-4cf8-a081-4e6c1007645b"
+      "__uuid__": "1b085a36-0847-4f6f-84ee-1920f9dd5313"
     },
     "_type": 0,
     "_sizeMode": 0,
@@ -3964,7 +3964,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 1241.94,
+      "width": 1446.06,
       "height": 277.2
     },
     "_anchorPoint": {
@@ -4016,8 +4016,8 @@
     ],
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
-    "_string": "Mudiwa Onai",
-    "_N$string": "Mudiwa Onai",
+    "_string": "Professor Black",
+    "_N$string": "Professor Black",
     "_fontSize": 210,
     "_lineHeight": 220,
     "_enableWrapText": true,
@@ -4178,7 +4178,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "1b085a36-0847-4f6f-84ee-1920f9dd5313"
+      "__uuid__": "f1b983b7-8108-4844-a673-af67408dc0ea"
     },
     "_type": 0,
     "_sizeMode": 0,
@@ -4452,7 +4452,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 507.99,
+      "width": 1060.29,
       "height": 277.2
     },
     "_anchorPoint": {
@@ -4504,8 +4504,8 @@
     ],
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
-    "_string": "name",
-    "_N$string": "name",
+    "_string": "Rook Wood",
+    "_N$string": "Rook Wood",
     "_fontSize": 210,
     "_lineHeight": 220,
     "_enableWrapText": true,
@@ -4666,7 +4666,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "dc8a3ad4-2b08-4ad5-a1a8-390dd4d331a0"
+      "__uuid__": "360bb049-6e9f-4b3d-8f8d-3977df0f4c45"
     },
     "_type": 0,
     "_sizeMode": 0,
@@ -4940,7 +4940,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 507.99,
+      "width": 1036.56,
       "height": 277.2
     },
     "_anchorPoint": {
@@ -4992,8 +4992,8 @@
     ],
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
-    "_string": "name",
-    "_N$string": "name",
+    "_string": "Ghost Nick",
+    "_N$string": "Ghost Nick",
     "_fontSize": 210,
     "_lineHeight": 220,
     "_enableWrapText": true,
@@ -5154,7 +5154,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "ea294718-3f73-48de-9e4a-8a677e862167"
+      "__uuid__": "82089d6c-bf32-45c8-a521-ec661964889e"
     },
     "_type": 0,
     "_sizeMode": 0,
@@ -5428,7 +5428,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 507.99,
+      "width": 1593.18,
       "height": 277.2
     },
     "_anchorPoint": {
@@ -5480,9 +5480,9 @@
     ],
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
-    "_string": "name",
-    "_N$string": "name",
-    "_fontSize": 210,
+    "_string": "Ghost Bloody Baron",
+    "_N$string": "Ghost Bloody Baron",
+    "_fontSize": 180,
     "_lineHeight": 220,
     "_enableWrapText": true,
     "_N$file": {
@@ -5642,7 +5642,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "8ff2fe32-313d-4f9a-b03b-81c8a406a582"
+      "__uuid__": "29df4919-4202-49b1-aa04-557bdb9521fb"
     },
     "_type": 0,
     "_sizeMode": 0,
@@ -9109,7 +9109,7 @@
         "__id__": 185
       }
     ],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 190
@@ -9496,7 +9496,7 @@
         "__id__": 193
       }
     ],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 198
