@@ -277,10 +277,12 @@ export default class player extends cc.Component {
         console.log(other.node.name);
         if(other.node.name=='BasicAttack'){
             this.health-=100;
-        }
-        else if(other.node.name=='WaterRay'||other.node.name=='FireRay'||other.node.name=='HolyRay'){
-            this.health-=200;
             let action=cc.sequence(cc.moveBy(0.01,30,3),cc.moveBy(0.01,-30,-3)).repeat(5);
+            this.camera.node.runAction(action);
+        }
+        else if(other.node.name=='J'||other.node.name=='K'||other.node.name=='L'){
+            this.health-=200;
+            let action=cc.sequence(cc.moveBy(0.01,50,5),cc.moveBy(0.01,-50,-5)).repeat(8);
             this.camera.node.runAction(action);
             if(other.node.name=='WaterRay'){
                 this.dizzy=true;
