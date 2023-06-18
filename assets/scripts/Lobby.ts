@@ -29,6 +29,13 @@ export default class Lobby extends cc.Component {
 
     start () {
         this.uid = DataManager.instance.UserUID;
+        DataManager.instance.Map = -1;
+        DataManager.instance.MultiplayerRoomID = -1
+        DataManager.instance.Result = false;
+        DataManager.instance.UserChar = -1;
+        DataManager.instance.UserChar2 = -1;
+        DataManager.instance.UserRole = 10;
+        DataManager.instance.opponentChar = -1;
     }
 
     update (dt) {
@@ -87,6 +94,7 @@ export default class Lobby extends cc.Component {
     Logout() {
         firebase.auth().signOut()
         .then(() => {
+            DataManager.instance.UserUID = 0;
             alert('logout success!');
             cc.director.loadScene("Login");
         })
