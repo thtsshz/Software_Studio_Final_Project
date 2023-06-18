@@ -73,13 +73,13 @@ export default class SelectCharacter extends cc.Component {
     }
 
     start () {
-        firebase.database().ref("rooms/0").once("value", (room) => {
+        firebase.database().ref("rooms/" + DataManager.instance.MultiplayerRoomID.toString()).once("value", (room) => {
             this.Room = room.val();
         }).then(() => {
             if(this.Room.P2 == 1) {
                 this.WaitLabel.node.active = true;
                 this.isWaiting = true;
-                firebase.database().ref("rooms/0").on("value", (room) => {
+                firebase.database().ref("rooms/" + DataManager.instance.MultiplayerRoomID.toString()).on("value", (room) => {
                     this.Room = room.val();
                     if(this.Room.P2 != 1) {
                         this.WaitLabel.node.active = false;

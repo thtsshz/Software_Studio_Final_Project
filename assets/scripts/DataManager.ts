@@ -23,4 +23,5 @@ export class DataManager {
 
     public BackgroundVolume = 0.5;
     public EffectVolume = 0.5;
+    public MultiplayerRoomID : number = -1;
 }
