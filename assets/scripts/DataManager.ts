@@ -18,4 +18,7 @@ export class DataManager {
     public UserUID;
     public UserName;
     public UserChar;
+
+    public BackgroundVolume = 0.5;
+    public EffectVolume = 0.5;
 }
