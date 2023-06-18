@@ -1,6 +1,6 @@
 {
   "__type__": "cc.AnimationClip",
-  "_name": "RookWood_dead",
+  "_name": "GhostBloodyBaron_dead",
   "_objFlags": 0,
   "_native": "",
   "_duration": 0.85,
@@ -14,43 +14,49 @@
           {
             "frame": 0,
             "value": {
-              "__uuid__": "690034b3-27c8-4da5-baea-b7eaf0e9663f"
+              "__uuid__": "1d9ff829-e0d7-4aef-9bde-a814edf7f052"
             }
           },
           {
             "frame": 0.08333333333333333,
             "value": {
-              "__uuid__": "dab08d1d-985d-4553-8882-1da394a7ac36"
+              "__uuid__": "7bfb83bb-db5d-4dd5-bf80-d63505488147"
             }
           },
           {
             "frame": 0.16666666666666666,
             "value": {
-              "__uuid__": "d902d580-b6bb-4be1-b0cd-424379d176bf"
+              "__uuid__": "d46d05c3-3b55-4a5f-9c89-7154c17e4273"
             }
           },
           {
             "frame": 0.25,
             "value": {
-              "__uuid__": "da3c2d64-4600-4a87-8bac-67e172fc985a"
+              "__uuid__": "67a860b8-3f67-4ffb-9d8c-ea8cad678b21"
             }
           },
           {
             "frame": 0.3333333333333333,
             "value": {
-              "__uuid__": "ab4ca02b-2e8e-4338-b17e-277a82fcd0c7"
+              "__uuid__": "a6abd723-7c21-487b-895d-ea579aa9d2af"
             }
           },
           {
             "frame": 0.4166666666666667,
             "value": {
-              "__uuid__": "a73f998a-7169-4f8b-b6ed-29eea29f34bf"
+              "__uuid__": "f13d0360-4d82-4cf2-a0c7-e4ab7df155cf"
+            }
+          },
+          {
+            "frame": 0.5,
+            "value": {
+              "__uuid__": "67a860b8-3f67-4ffb-9d8c-ea8cad678b21"
             }
           },
           {
             "frame": 0.8333333333333334,
             "value": {
-              "__uuid__": "50857cb2-ccad-4cdd-aba8-94565be1de92"
+              "__uuid__": "67a860b8-3f67-4ffb-9d8c-ea8cad678b21"
             }
           }
         ]

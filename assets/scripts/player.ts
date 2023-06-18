@@ -5,6 +5,7 @@
 // Learn life-cycle callbacks:
 //  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
 // Scene 1:403.952 268.994
+// Scene 2:622.9 275.859
 const {ccclass, property} = cc._decorator;
 import { DataManager } from "./DataManager";
 

@@ -112,6 +112,11 @@ export default class NewClass extends cc.Component {
         cc.find("Canvas/Player/player2").active = false; 
         cc.find("Canvas/Player/player3").active = false; 
         cc.find("Canvas/Player/player4").active = false; 
+        cc.find("Canvas/Player/player5").active = false;        
+        cc.find("Canvas/Player/player6").active = false; 
+        cc.find("Canvas/Player/player7").active = false; 
+        cc.find("Canvas/Player/player8").active = false; 
+        cc.find("Canvas/Player/player9").active = false; 
 
         this.P1char = 4;
         this.P2char = 3;

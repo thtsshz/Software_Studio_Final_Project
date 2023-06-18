@@ -125,7 +125,7 @@ export default class NewClass extends cc.Component {
             char1 = DataManager.instance.UserChar2.toString();
             let char2 = cc.find("Canvas/Player/player"+char1);
             char2.active = true;
-            char2.setPosition(422,273);
+            char2.setPosition(622.9,275.859);
             char2.scaleX = -0.2;
             this.Player2 = char2;
             this.player2 = this.Player2.getComponent(player);
@@ -139,7 +139,7 @@ export default class NewClass extends cc.Component {
                 this.Player2 = char2;
                 this.player2 = this.Player2.getComponent(player);
                 char2.active = true;
-                char2.setPosition(422,273);
+                char2.setPosition(622.9,275.859);
                 char2.scaleX = -0.2;
 
                 char1 = DataManager.instance.opponentChar.toString();
