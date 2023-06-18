@@ -127,6 +127,8 @@ export default class CplayerFast extends cc.Component {
     }
     update (dt) {
         this.gametime += dt;
+        if(this.gametime > this.nextupdatetime)this.nextupdatetime += 0.033;
+        else return ;
         const promise = new Promise((res, rej) => {
             this.updatefromserver(dt);
             var tmp = 0;
@@ -142,27 +144,43 @@ export default class CplayerFast extends cc.Component {
     }
 
     updatefromserver(dt : number){
-        return ;
-        // if(this.gametime < this.nextupdatetime)return ;
-        // else this.nextupdatetime += 0.2;
-        console.log(this.serverdata);
-        if(this.node.name == "player1"){
-            
-            this.node.x = this.serverdata["1"].x;
-            this.node.x = this.serverdata["1"].y;
-            console.log("p1 update success");
-
-        }else if(this.node.name == "player2"){
-
-            this.node.x = this.serverdata["2"].x;
-            this.node.x = this.serverdata["2"].y;
-            console.log("p2 update success");
-
-        }
         
+        var tmp = {
+            roomID: 0
+        }
+
+        const request = fetch('http://192.168.50.62:8080/getstatuses', {
+            method: "POST",
+            body: JSON.stringify(tmp),
+        }).then(res => {
+            return res.json()
+        }).catch(err => {
+            console.log("multiplayer manager error : ", err);
+        }).then(data => {
+            // console.log("multiplayer manager receive data");
+            // console.log(data);
+            if(this.node.name == "player1"){
+                
+                this.node.x = data["1"].x;
+                this.node.y = data["1"].y;
+                // var nx = this.node.getComponent(cc.RigidBody).linearVelocity.x;
+                // var ny = this.node.getComponent(cc.RigidBody).linearVelocity.y;
+                this.node.getComponent(cc.RigidBody).linearVelocity = cc.v2(data["1"].vx, data["1"].vy);
+                console.log("p1 update success");
+
+            }else if(this.node.name == "player2"){
+
+                this.node.x = data["2"].x;
+                this.node.y = data["2"].y;
+                this.node.getComponent(cc.RigidBody).linearVelocity = cc.v2(data["2"].vx, data["2"].vy);
+                console.log("p2 update success");
+
+            }
+
+        })
     }
     playerupdate(dt : number){
-        console.log("playerupdate");
+        // console.log("playerupdate");
         this.playerSpeed=0;
         if(this.left_move) {
             this.playerSpeed=-400;
@@ -231,7 +249,7 @@ export default class CplayerFast extends cc.Component {
             }).catch(err => {
                 console.log("multiplayer manager error : ", err);
             }).then(data => {
-                console.log("multiplayer manager receive data");
+                // console.log("multiplayer manager receive data");
                 this.serverdata = data;
             })
             this.jump = false;

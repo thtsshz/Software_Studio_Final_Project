@@ -35,10 +35,14 @@ class serversend {
         '1' : {
             x : number;
             y : number;
+            vx : number;
+            vy : number;
         },
         '2' : {
             x : number;
             y : number;
+            vx : number;
+            vy : number;
         }
     }
 }
@@ -61,6 +65,8 @@ export default class multiplayerFast extends cc.Component {
     private roomnumber : number = 0;
     
     private dbtest : boolean = false;
+    private gametime : number = 0;
+    private nextupdatetime : number = 0;
 
     onLoad (): void{
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyDown, this);
@@ -116,30 +122,52 @@ export default class multiplayerFast extends cc.Component {
     }
 
     protected update (dt : number): void {
+        this.gametime += dt;
+        if(this.gametime > this.nextupdatetime)this.nextupdatetime += 0.033;
+        else return ;
+
         if(this.role == 1)this.serverupdate(dt);
         // this.allupdate(dt);
         // this.playerupdate(dt);
     }
     protected serverupdate(dt : number ): void{
-
-        const promise = new Promise((res, rej) => {
-            var serverdata : serversend = {
-                userID : "1",
-                roomID : 0,
-                statuses : {
-                    "1" : {
-                        x : this.player1.node.x,
-                        y : this.player1.node.y
-                    },
-                    "2" : {
-                        x : this.player2.node.x,
-                        y : this.player2.node.y
-                    }
+        var serverdata : serversend = {
+            userID : "1",
+            roomID : 0,
+            statuses : {
+                "1" : {
+                    x : this.player1.node.x,
+                    y : this.player1.node.y,
+                    vx : this.player1.getComponent(cc.RigidBody).linearVelocity.x,
+                    vy : this.player1.getComponent(cc.RigidBody).linearVelocity.y
+                },
+                "2" : {
+                    x : this.player2.node.x,
+                    y : this.player2.node.y,
+                    vx : this.player2.getComponent(cc.RigidBody).linearVelocity.x,
+                    vy : this.player2.getComponent(cc.RigidBody).linearVelocity.y
                 }
             }
-            const request = fetch('http://192.168.50.62:8080/update', {
+        }
+        const request1 = fetch('http://192.168.50.62:8080/update', {
+            method: "POST",
+            body: JSON.stringify(serverdata),
+        }).then(res => {
+            return res.json()
+        }).catch(err => {
+            console.log("multiplayer manager error : ", err);
+        }).then(data => {
+            console.log("server success upload data");
+        });
+
+        const promise = new Promise((res, rej) => {
+            
+            var data2 = {
+                roomID : 0
+            }
+            const request = fetch('http://192.168.50.62:8080/getactions', {
                 method: "POST",
-                body: JSON.stringify(serverdata),
+                body: JSON.stringify(data2),
             }).then(res => {
                 // console.log("", res)
                 return res.json()
@@ -151,7 +179,7 @@ export default class multiplayerFast extends cc.Component {
             });
         });
         promise.then((clientdata) => {
-            console.log("server success get status");
+            // console.log("server success get status");
             console.log(clientdata["1"].left_move);
             console.log(clientdata["2"].left_move);
 
