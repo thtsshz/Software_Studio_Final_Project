@@ -4,9 +4,8 @@
 //  - https://docs.cocos.com/creator/manual/en/scripting/reference/attributes.html
 // Learn life-cycle callbacks:
 //  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
-
+// Scene 1:403.952 268.994
 const {ccclass, property} = cc._decorator;
-//825.613 585.964
 @ccclass
 export default class player extends cc.Component {
 
