@@ -3771,7 +3771,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "progressBar",
+    "_name": "progressBar2",
     "_objFlags": 0,
     "_parent": {
       "__id__": 2
