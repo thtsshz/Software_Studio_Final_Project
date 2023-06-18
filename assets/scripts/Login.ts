@@ -34,7 +34,7 @@ export default class Login extends cc.Component {
             //     cc.director.loadScene("Select_character");  
             // });
             
-            cc.director.loadScene("Lobby");
+            cc.director.loadScene("change_scene");
         })
         .catch(e => {
             alert('Invalid Email or Password');
