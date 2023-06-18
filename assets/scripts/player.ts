@@ -25,31 +25,34 @@ export default class player extends cc.Component {
     @property(cc.Camera)
     camera:cc.Camera=null;
     // LIFE-CYCLE CALLBACKS:
-    left_move:boolean=false;
-    right_move:boolean=false;
-    jump:boolean=false;
-    on_ground:boolean=false;
-    attack:boolean=false;
-    can_attack:boolean=true;
-    dizzy:boolean=false;
+    left_move : boolean = false;
+    right_move : boolean = false;
+    jump : boolean = false;
+    on_ground : boolean = false;
+    attack : boolean = false;
+    can_attack : boolean = true;
+    moveable : boolean = true;
+    floating : boolean = false;
+    continuedamage : boolean = false;
+    skillpush : boolean = false;
 
-    playerSpeed:number=0;
-    attack_time:number=1.5;
-    skill_time1:number=3;
-    skill_time2:number=4;
-    skill_time3:number=5;
-    private anim=null;
+    playerSpeed : number = 0;
+    attack_time : number = 1.5;
+    skill_time1 : number = 3;
+    skill_time2 : number = 4;
+    skill_time3 : number = 5;
+    private anim = null;
 
     health : number = 500;
 
-    skill1: boolean = false;
-    skill2: boolean = false;
-    skill3: boolean = false;
+    skill1 : boolean = false;
+    skill2 : boolean = false;
+    skill3 : boolean = false;
     normal_attack: boolean = false;
 
-    skill1_Cooldown: boolean = false;
-    skill2_Cooldown: boolean = false;
-    skill3_Cooldown: boolean = false;
+    skill1_Cooldown : boolean = false;
+    skill2_Cooldown : boolean = false;
+    skill3_Cooldown : boolean = false;
     
     inAttack: boolean = false;
 
@@ -271,6 +274,7 @@ export default class player extends cc.Component {
         }
         
     }
+    
     start () {
         
     }
@@ -287,24 +291,74 @@ export default class player extends cc.Component {
                 return;
             }
         }
-        if(contact.getWorldManifold().normal.y<-0.9&&other.node.group=='Ground')
+        if(contact.getWorldManifold().normal.y < -0.9 && other.node.group == 'Ground')
             this.on_ground=true;
+
         if(other.node.name=='BasicAttack'){
-            this.health-=100;
-            let action=cc.sequence(cc.moveBy(0.01,30,3),cc.moveBy(0.01,-30,-3)).repeat(5);
-            this.camera.node.runAction(action);
+            this.contactskill(1);
+        }else if(other.node.name=='J'){
+            this.contactskill(6);
+        }else if(other.node.name == 'K'){
+            this.contactskill(3);
+        }else if(other.node.name == 'L'){
+            this.contactskill(4);
         }
-        else if(other.node.name=='J'||other.node.name=='K'||other.node.name=='L'){
-            this.health-=200;
-            let action=cc.sequence(cc.moveBy(0.01,50,5),cc.moveBy(0.01,-50,-5)).repeat(8);
-            this.camera.node.runAction(action);
-            if(other.node.name=='WaterRay'){
-                this.dizzy=true;
-                this.scheduleOnce(function(){
-                    this.dizzy=false;
-                }
-                ,2);
-            }
+        
+    }
+    contactskill(skilltype : number): void{
+        let action=cc.sequence(cc.moveBy(0.01,30,3),cc.moveBy(0.01,-30,-3)).repeat(5);
+        this.camera.node.runAction(action);
+        if(skilltype == 1){       // basic attack
+            this.health-=100;
+        }else if(skilltype == 2){ // cannot move + damage
+            this.health -= 200;
+            this.moveable = false;
+            this.scheduleOnce(function(){
+                this.moveable = true;
+            },2);
+        }else if(skilltype == 3){ // continue damage
+            this.schedule(function() {
+                this.health -= 30;
+            }, 0.5, 10, 0);
+        }else if(skilltype == 4){ // cannnot attack + damage
+            this.health -= 100;
+            this.inAttack = true;
+            this.scheduleOnce(function(){
+                this.inAttack = false;
+            },4);
+        }else if(skilltype == 5){ // floating
+            this.moveable = false;
+            this.floating = true;
+            this.scheduleOnce(function(){
+                this.moveable = true;
+                this.floating = false;
+            },2);
+        }else if(skilltype == 6){ // damage + push right
+            this.health -= 100;
+            this.skillpush = true;
+            this.scheduleOnce(() => {
+                this.skillpush = false;
+            }, 0.2)
+            this.playerSpeed = 6000;
+        }else if(skilltype == 7){ // damage + push left
+            this.health -= 100;
+            this.skillpush = true;
+            this.scheduleOnce(() => {
+                this.skillpush = false;
+            }, 0.2)
+            this.playerSpeed = -6000;
+        }else if(skilltype == 8){ // kill
+            this.health = 0;
+        }else if(skilltype == 9){ // stunn + damage
+            this.health -= 150;
+            this.inAttack = true;
+            this.moveable = false;
+            this.scheduleOnce(function(){
+                this.inAttack = false;
+                this.moveable = true;
+            },3);
+        }else if(skilltype == 10){ // high damage
+            this.health -= 500;
         }
     }
     // onPreSolve(contact,self,other){
@@ -327,12 +381,12 @@ export default class player extends cc.Component {
             this.on_ground=false;
     }
     update (dt) {
-        this.playerSpeed=0;
+        if(!this.skillpush)this.playerSpeed = 0;
         if(this.left_move) {
             console.log(
                 'left_move'
             );
-            this.playerSpeed=-400;
+            this.playerSpeed -= 400;
             this.node.scaleX=-0.2;  // modify node's X scale value to change facing direction
             console.log(this.node.name+'_walk');
             if(!this.anim.getAnimationState(this.node.name+'_walk').isPlaying&&!this.anim.getAnimationState(this.node.name+'_basic_attack').isPlaying){
@@ -340,7 +394,7 @@ export default class player extends cc.Component {
             }
         } 
         else if(this.right_move) {
-            this.playerSpeed=400;
+            this.playerSpeed += 400;
             this.node.scaleX=0.2;  
             if(!this.anim.getAnimationState(this.node.name+'_walk').isPlaying&&!this.anim.getAnimationState(this.node.name+'_basic_attack').isPlaying){
                 this.anim.play(this.node.name+'_walk');
@@ -351,12 +405,20 @@ export default class player extends cc.Component {
                 this.anim.play(this.node.name+"_idle");
             }
         }
-        if(this.dizzy)
+        if(this.floating){
+            console.log("floating!");
+            this.getComponent(cc.RigidBody).linearVelocity = cc.v2(0, 300);
+        }
+        if(this.moveable == false){
+            this.getComponent(cc.RigidBody).linearVelocity=cc.v2(0, this.getComponent(cc.RigidBody).linearVelocity.y);
             return;
+        }
+            
         if(this.jump){
             this.getComponent(cc.RigidBody).linearVelocity=cc.v2(0,950);
             this.jump=false;
         }
+        
         //this.node.x += this.playerSpeed *dt; 
         this.getComponent(cc.RigidBody).linearVelocity=cc.v2(this.playerSpeed, this.getComponent(cc.RigidBody).linearVelocity.y);
     }

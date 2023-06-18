@@ -17,8 +17,8 @@ export class DataManager {
 
     public UserUID;
     public UserName;
-    public UserChar : number = 10;
-    public UserChar2;
+    public UserChar : number = 1;
+    public UserChar2 : number = 2;
     public UserRole=10;
     public opponentChar: number;
     public Map;
