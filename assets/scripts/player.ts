@@ -304,40 +304,60 @@ export default class player extends cc.Component {
         }
         
     }
-    contactskill(type : number): void{
+    contactskill(skilltype : number): void{
         let action=cc.sequence(cc.moveBy(0.01,30,3),cc.moveBy(0.01,-30,-3)).repeat(5);
         this.camera.node.runAction(action);
-        if(type == 1){       // basic attack
+        if(skilltype == 1){       // basic attack
             this.health-=100;
-        }else if(type == 2){ // cannot move + damage
+        }else if(skilltype == 2){ // cannot move + damage
             this.health -= 200;
             this.moveable = false;
             this.scheduleOnce(function(){
                 this.moveable = true;
             },2);
-        }else if(type == 3){ // continue damage
+        }else if(skilltype == 3){ // continue damage
             this.schedule(function() {
                 this.health -= 30;
             }, 0.5, 10, 0);
-        }else if(type == 4){ // cannnot attack
+        }else if(skilltype == 4){ // cannnot attack + damage
+            this.health -= 100;
             this.inAttack = true;
             this.scheduleOnce(function(){
                 this.inAttack = false;
             },4);
-        }else if(type == 5){ // floating
+        }else if(skilltype == 5){ // floating
             this.moveable = false;
             this.floating = true;
             this.scheduleOnce(function(){
                 this.moveable = true;
                 this.floating = false;
             },2);
-        }else if(type == 6){ // push
-            console.log("push");
+        }else if(skilltype == 6){ // damage + push right
+            this.health -= 100;
             this.skillpush = true;
             this.scheduleOnce(() => {
                 this.skillpush = false;
             }, 0.2)
             this.playerSpeed = 6000;
+        }else if(skilltype == 7){ // damage + push left
+            this.health -= 100;
+            this.skillpush = true;
+            this.scheduleOnce(() => {
+                this.skillpush = false;
+            }, 0.2)
+            this.playerSpeed = -6000;
+        }else if(skilltype == 8){ // kill
+            this.health = 0;
+        }else if(skilltype == 9){ // stunn + damage
+            this.health -= 150;
+            this.inAttack = true;
+            this.moveable = false;
+            this.scheduleOnce(function(){
+                this.inAttack = false;
+                this.moveable = true;
+            },3);
+        }else if(skilltype == 10){ // high damage
+            this.health -= 500;
         }
     }
     // onPreSolve(contact,self,other){
