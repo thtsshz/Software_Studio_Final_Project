@@ -5,10 +5,16 @@ import player from "./player";
 @ccclass
 export default class NewClass extends cc.Component {
 
+    
+    Player1: cc.Node = null;
+    Player2: cc.Node = null;
+    player1: player = null;
+    player2: player = null;
+
     @property(player)
-    player1 : player = null;
+    Char1 : player = null;
     @property(player)
-    player2 : player = null;
+    Char2 : player = null;
 
     @property(cc.Label)
     p1health : cc.Label = null;
@@ -113,11 +119,16 @@ export default class NewClass extends cc.Component {
         if(DataManager.instance.UserRole == 10) {
             let char1 = DataManager.instance.UserChar.toString();
             cc.find("Canvas/Player/player"+char1).active = true;
+            this.Player1 = cc.find("Canvas/Player/player"+char1);
+            this.player1 = this.Player1.getComponent(player);
+
             char1 = DataManager.instance.UserChar2.toString();
             let char2 = cc.find("Canvas/Player/player"+char1);
             char2.active = true;
             char2.setPosition(422,273);
             char2.scaleX = -0.2;
+            this.Player2 = char2;
+            this.player2 = this.Player2.getComponent(player);
             console.log(s+DataManager.instance.UserChar.toString())
             console.log(s+DataManager.instance.UserChar2.toString())
         }
@@ -125,14 +136,32 @@ export default class NewClass extends cc.Component {
             if(DataManager.instance.UserRole == 1) {
                 let char1 = DataManager.instance.UserChar.toString();
                 let char2 = cc.find("Canvas/Player/player"+char1);
+                this.Player2 = char2;
+                this.player2 = this.Player2.getComponent(player);
                 char2.active = true;
                 char2.setPosition(422,273);
                 char2.scaleX = -0.2;
+
+                char1 = DataManager.instance.opponentChar.toString();
+                char2 = cc.find("Canvas/Player/player"+char1);
+                this.Player1 = char2;
+                this.player1 = this.Player1.getComponent(player);
+                char2.active = true;
             }
             else if(DataManager.instance.UserRole == 0) {
                 let char1 = DataManager.instance.UserChar.toString();
                 let char2 = cc.find("Canvas/Player/player"+char1);
+                this.Player1 = cc.find("Canvas/Player/player"+char1);
+                this.player1 = this.Player1.getComponent(player);
                 char2.active = true;
+
+                char1 = DataManager.instance.opponentChar.toString();
+                char2 = cc.find("Canvas/Player/player"+char1);
+                this.Player2 = char2;
+                this.player2 = this.Player2.getComponent(player);
+                char2.active = true;
+                char2.setPosition(422,273);
+                char2.scaleX = -0.2;
             }
             console.log(s+DataManager.instance.UserChar.toString())
         }
@@ -160,6 +189,29 @@ export default class NewClass extends cc.Component {
         }
         if(this.player1.skill3 && !this.P1S3) {
             this.P1S3 = true;
+            cc.audioEngine.playEffect(this.Expelliarmus, false);
+        }
+
+
+        if(!this.player2.skill1)
+            this.P2S1 = false;
+
+        if(!this.player2.skill2)
+            this.P2S2 = false;
+
+        if(!this.player2.skill3)
+            this.P2S3 = false;
+
+        if(this.player2.skill1 && !this.P2S1) {
+            this.P2S1 = true;
+            cc.audioEngine.playEffect(this.Incendio, false);
+        }
+        if(this.player2.skill2 && !this.P2S2) {
+            this.P2S2 = true;
+            cc.audioEngine.playEffect(this.Glacius, false);
+        }
+        if(this.player2.skill3 && !this.P2S3) {
+            this.P2S3 = true;
             cc.audioEngine.playEffect(this.Expelliarmus, false);
         }
     }
