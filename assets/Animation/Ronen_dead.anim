@@ -1,6 +1,6 @@
 {
   "__type__": "cc.AnimationClip",
-  "_name": "player4_dead",
+  "_name": "Ronen_dead",
   "_objFlags": 0,
   "_native": "",
   "_duration": 0.85,
@@ -14,49 +14,43 @@
           {
             "frame": 0,
             "value": {
-              "__uuid__": "b7483895-bac1-4e49-b0f1-6bace6182385"
+              "__uuid__": "f0d2a01c-aa64-48b2-bc69-23c1c6086298"
             }
           },
           {
             "frame": 0.08333333333333333,
             "value": {
-              "__uuid__": "992e1974-b989-43fb-9580-46575ddb6a60"
+              "__uuid__": "12661b97-f8c6-4b09-b255-9c919f598d7c"
             }
           },
           {
             "frame": 0.16666666666666666,
             "value": {
-              "__uuid__": "4681b54f-1e1c-4945-89f1-9d0073cc48ce"
+              "__uuid__": "de81eec3-dedf-49cb-9d89-874f6df02ed8"
             }
           },
           {
             "frame": 0.25,
             "value": {
-              "__uuid__": "432576ee-0847-44b4-a314-7e8d8c4bd906"
+              "__uuid__": "1a4255e0-f86a-48c9-acd7-82286b2146e4"
             }
           },
           {
             "frame": 0.3333333333333333,
             "value": {
-              "__uuid__": "2993f485-fa07-419d-892b-262d1c32cd3b"
+              "__uuid__": "5c9b39b4-4ad2-4643-90ba-b9b1e8e7a6cc"
             }
           },
           {
             "frame": 0.4166666666666667,
             "value": {
-              "__uuid__": "ad52c885-2a50-47dc-acfe-436b2da7a503"
-            }
-          },
-          {
-            "frame": 0.5,
-            "value": {
-              "__uuid__": "2993f485-fa07-419d-892b-262d1c32cd3b"
+              "__uuid__": "43e6e9be-d2dd-4894-9889-6d7a65d95a1f"
             }
           },
           {
             "frame": 0.8333333333333334,
             "value": {
-              "__uuid__": "2993f485-fa07-419d-892b-262d1c32cd3b"
+              "__uuid__": "43e6e9be-d2dd-4894-9889-6d7a65d95a1f"
             }
           }
         ]

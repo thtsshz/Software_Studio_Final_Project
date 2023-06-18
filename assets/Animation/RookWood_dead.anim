@@ -1,6 +1,6 @@
 {
   "__type__": "cc.AnimationClip",
-  "_name": "player4_dead",
+  "_name": "RookWood_dead",
   "_objFlags": 0,
   "_native": "",
   "_duration": 0.85,
@@ -14,49 +14,43 @@
           {
             "frame": 0,
             "value": {
-              "__uuid__": "b7483895-bac1-4e49-b0f1-6bace6182385"
+              "__uuid__": "690034b3-27c8-4da5-baea-b7eaf0e9663f"
             }
           },
           {
             "frame": 0.08333333333333333,
             "value": {
-              "__uuid__": "992e1974-b989-43fb-9580-46575ddb6a60"
+              "__uuid__": "dab08d1d-985d-4553-8882-1da394a7ac36"
             }
           },
           {
             "frame": 0.16666666666666666,
             "value": {
-              "__uuid__": "4681b54f-1e1c-4945-89f1-9d0073cc48ce"
+              "__uuid__": "d902d580-b6bb-4be1-b0cd-424379d176bf"
             }
           },
           {
             "frame": 0.25,
             "value": {
-              "__uuid__": "432576ee-0847-44b4-a314-7e8d8c4bd906"
+              "__uuid__": "da3c2d64-4600-4a87-8bac-67e172fc985a"
             }
           },
           {
             "frame": 0.3333333333333333,
             "value": {
-              "__uuid__": "2993f485-fa07-419d-892b-262d1c32cd3b"
+              "__uuid__": "ab4ca02b-2e8e-4338-b17e-277a82fcd0c7"
             }
           },
           {
             "frame": 0.4166666666666667,
             "value": {
-              "__uuid__": "ad52c885-2a50-47dc-acfe-436b2da7a503"
-            }
-          },
-          {
-            "frame": 0.5,
-            "value": {
-              "__uuid__": "2993f485-fa07-419d-892b-262d1c32cd3b"
+              "__uuid__": "a73f998a-7169-4f8b-b6ed-29eea29f34bf"
             }
           },
           {
             "frame": 0.8333333333333334,
             "value": {
-              "__uuid__": "2993f485-fa07-419d-892b-262d1c32cd3b"
+              "__uuid__": "50857cb2-ccad-4cdd-aba8-94565be1de92"
             }
           }
         ]
