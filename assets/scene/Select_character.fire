@@ -3806,7 +3806,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "AbrahamRonen",
+    "_name": "MudiwaOnai",
     "_objFlags": 0,
     "_parent": {
       "__id__": 74
@@ -3964,7 +3964,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 507.99,
+      "width": 1241.94,
       "height": 277.2
     },
     "_anchorPoint": {
@@ -4016,8 +4016,8 @@
     ],
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
-    "_string": "name",
-    "_N$string": "name",
+    "_string": "Mudiwa Onai",
+    "_N$string": "Mudiwa Onai",
     "_fontSize": 210,
     "_lineHeight": 220,
     "_enableWrapText": true,
@@ -4178,7 +4178,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "cd48b2fe-77b0-458b-96ca-cefd36e8cfef"
+      "__uuid__": "1b085a36-0847-4f6f-84ee-1920f9dd5313"
     },
     "_type": 0,
     "_sizeMode": 0,
@@ -9637,9 +9637,9 @@
     "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",
-      "r": 0,
-      "g": 0,
-      "b": 0,
+      "r": 255,
+      "g": 255,
+      "b": 255,
       "a": 255
     },
     "_contentSize": {
