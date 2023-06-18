@@ -24,7 +24,7 @@ export default class Settings extends cc.Component {
     }
 
     loadSelectStage() {
-        cc.director.loadScene("Select_map");
+        cc.director.loadScene("Lobby");
     }
 
 }
