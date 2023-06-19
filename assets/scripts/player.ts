@@ -561,7 +561,10 @@ export default class player extends cc.Component {
     }
     update(dt) {
 
-        if (DataManager.instance.gameover) return;
+        if (DataManager.instance.gameover) {
+            this.getComponent(cc.RigidBody).linearVelocity = cc.v2(0,0);
+            return;
+        }
 
         if (this.health <= 0) {
             DataManager.instance.gameover = true;
