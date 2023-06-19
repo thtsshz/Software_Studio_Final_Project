@@ -14742,6 +14742,48 @@
     "Stupefy": {
       "__uuid__": "6f7e2b2e-885f-44ae-8bef-67a3084a5add"
     },
+    "NormalAttack": {
+      "__uuid__": "4d2a4cef-4faa-4fee-a866-7efb20d03278"
+    },
+    "K": {
+      "__uuid__": "729ffaa8-c073-48d4-9296-e52033eb5f17"
+    },
+    "J": {
+      "__uuid__": "7f13ea20-0269-4532-87bd-6bdcfda71f7b"
+    },
+    "AccioLine": {
+      "__uuid__": "7ba10c69-312a-4d75-9ba9-8022a5dcaac4"
+    },
+    "Avada_kedavraLine": {
+      "__uuid__": "731d87cf-9b38-4a35-afc0-627c30f66dd0"
+    },
+    "ConfringoLine": {
+      "__uuid__": "ec290c0c-a797-42c3-a1d4-c8ca7ab3e630"
+    },
+    "DepulsoLine": {
+      "__uuid__": "441e5935-1c24-4a72-87a0-ebf15716d390"
+    },
+    "CrucioLine": {
+      "__uuid__": "346c1647-08a8-40af-9efa-f6291bcb7975"
+    },
+    "DiffindoLine": {
+      "__uuid__": "7e5fec02-dc77-4a31-9391-03d36aa437cf"
+    },
+    "ExpelliarmusLine": {
+      "__uuid__": "ecbaf1fe-5e0b-4782-b5a8-a51af2be4609"
+    },
+    "GlaciusLine": {
+      "__uuid__": "fbdeeb6c-8669-43db-89a4-ad9844d5a747"
+    },
+    "IncendioLine": {
+      "__uuid__": "841bb322-d570-46cd-a5a8-dcfbdc421435"
+    },
+    "LeviosoLine": {
+      "__uuid__": "c6eb4d6f-e9a7-4324-b74d-658a401c0879"
+    },
+    "StupefyLine": {
+      "__uuid__": "b936472b-9962-49e8-b1ab-c3613c679f5d"
+    },
     "_id": "fe6NLrUCJH24SKqQJRaSGP"
   }
 ]
