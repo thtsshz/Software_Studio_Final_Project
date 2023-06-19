@@ -213,28 +213,62 @@ export default class player extends cc.Component {
                 }
             }
             if (event.keyCode == cc.macro.KEY.l && this.progressbar.progress >= 1 && !this.skill3_Cooldown && !this.inAttack) {
-                this.inAttack = true;
-                this.skill3_Cooldown = true;
-                this.progressbar.progress = 0;
-                this.scheduleOnce(() => {
-                    this.skill3_Cooldown = false;
-                }, this.skill_time3);
-                this.skill3 = true;
-                if (!this.anim.getAnimationState(this.node.name + '_basic_attack').isPlaying) {
-                    this.anim.play(this.node.name + '_basic_attack');
+                if(DataManager.instance.UserChar == 7) {
+                    DataManager.instance.gameover = true;
+                    let Vplay = cc.find("Canvas/VideoPlayer");
+                    Vplay.active = true;
+                    Vplay.getComponent(cc.VideoPlayer).play();
+                    this.scheduleOnce(() => {
+                        DataManager.instance.gameover = false;
+                        Vplay.active = false;
+                        this.inAttack = true;
+                        this.skill3_Cooldown = true;
+                        this.progressbar.progress = 0;
+                        this.scheduleOnce(() => {
+                            this.skill3_Cooldown = false;
+                        }, this.skill_time3);
+                        this.skill3 = true;
+                        if (!this.anim.getAnimationState(this.node.name + '_basic_attack').isPlaying) {
+                            this.anim.play(this.node.name + '_basic_attack');
+                        }
+                        //particle system
+                        this.scheduleOnce(
+                            function () {
+                                console.log(this.GatherParticleL);
+                                this.GatherParticleL.resetSystem();
+                            }, 0.15
+                        );
+                        this.scheduleOnce(
+                            function () {
+                                this.GatherParticleL.stopSystem();
+                            }, 0.5
+                        );
+                    }, 7.5);
                 }
-                //particle system
-                this.scheduleOnce(
-                    function () {
-                        console.log(this.GatherParticleL);
-                        this.GatherParticleL.resetSystem();
-                    }, 0.15
-                );
-                this.scheduleOnce(
-                    function () {
-                        this.GatherParticleL.stopSystem();
-                    }, 0.5
-                );
+                else {
+                    this.inAttack = true;
+                    this.skill3_Cooldown = true;
+                    this.progressbar.progress = 0;
+                    this.scheduleOnce(() => {
+                        this.skill3_Cooldown = false;
+                    }, this.skill_time3);
+                    this.skill3 = true;
+                    if (!this.anim.getAnimationState(this.node.name + '_basic_attack').isPlaying) {
+                        this.anim.play(this.node.name + '_basic_attack');
+                    }
+                    //particle system
+                    this.scheduleOnce(
+                        function () {
+                            console.log(this.GatherParticleL);
+                            this.GatherParticleL.resetSystem();
+                        }, 0.15
+                    );
+                    this.scheduleOnce(
+                        function () {
+                            this.GatherParticleL.stopSystem();
+                        }, 0.5
+                    );
+                }
             }
         }
         else {
@@ -318,28 +352,62 @@ export default class player extends cc.Component {
                 }
             }
             if (event.keyCode == cc.macro.KEY.y && this.progressbar2.progress >= 1 && !this.skill3_Cooldown && !this.inAttack) {
-                this.inAttack = true;
-                this.skill3_Cooldown = true;
-                this.progressbar2.progress = 0;
-                this.scheduleOnce(() => {
-                    this.skill3_Cooldown = false;
-                }, this.skill_time3);
-                this.skill3 = true;
-                if (!this.anim.getAnimationState(this.node.name + '_basic_attack').isPlaying) {
-                    this.anim.play(this.node.name + '_basic_attack');
+                if(DataManager.instance.UserChar2 == 7) {
+                    DataManager.instance.gameover = true;
+                    let Vplay = cc.find("Canvas/VideoPlayer");
+                    Vplay.active = true;
+                    Vplay.getComponent(cc.VideoPlayer).play();
+                    this.scheduleOnce(() => {
+                        DataManager.instance.gameover = false;
+                        Vplay.active = false;
+                        this.inAttack = true;
+                        this.skill3_Cooldown = true;
+                        this.progressbar2.progress = 0;
+                        this.scheduleOnce(() => {
+                            this.skill3_Cooldown = false;
+                        }, this.skill_time3);
+                        this.skill3 = true;
+                        if (!this.anim.getAnimationState(this.node.name + '_basic_attack').isPlaying) {
+                            this.anim.play(this.node.name + '_basic_attack');
+                        }
+                        //particle system
+                        this.scheduleOnce(
+                            function () {
+                                console.log(this.GatherParticleL);
+                                this.GatherParticleL.resetSystem();
+                            }, 0.15
+                        );
+                        this.scheduleOnce(
+                            function () {
+                                this.GatherParticleL.stopSystem();
+                            }, 0.5
+                        );
+                    }, 7.5);
                 }
-                //particle system
-                this.scheduleOnce(
-                    function () {
-                        console.log(this.GatherParticleL);
-                        this.GatherParticleL.resetSystem();
-                    }, 0
-                );
-                this.scheduleOnce(
-                    function () {
-                        this.GatherParticleL.stopSystem();
-                    }, 0.5
-                );
+                else {
+                    this.inAttack = true;
+                    this.skill3_Cooldown = true;
+                    this.progressbar2.progress = 0;
+                    this.scheduleOnce(() => {
+                        this.skill3_Cooldown = false;
+                    }, this.skill_time3);
+                    this.skill3 = true;
+                    if (!this.anim.getAnimationState(this.node.name + '_basic_attack').isPlaying) {
+                        this.anim.play(this.node.name + '_basic_attack');
+                    }
+                    //particle system
+                    this.scheduleOnce(
+                        function () {
+                            console.log(this.GatherParticleL);
+                            this.GatherParticleL.resetSystem();
+                        }, 0.15
+                    );
+                    this.scheduleOnce(
+                        function () {
+                            this.GatherParticleL.stopSystem();
+                        }, 0.5
+                    );
+                }
             }
 
         }
@@ -431,7 +499,7 @@ export default class player extends cc.Component {
                 return;
             }
         }
-        if (contact.getWorldManifold().normal.y < -0.9 && other.node.group == 'Ground')
+        if (contact.getWorldManifold().normal.y < -0.5 && other.node.group == 'Ground')
             this.on_ground = true;
 
         if (other.node.name == 'BasicAttack') {

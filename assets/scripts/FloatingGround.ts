@@ -33,7 +33,7 @@ export default class FloatingGround extends cc.Component {
     }
 
     update (dt) {
-        console.log(this.node.position.x, this.node.position.y);
+        //console.log(this.node.position.x, this.node.position.y);
     }
 
     onBeginContact(contact, self, other) {

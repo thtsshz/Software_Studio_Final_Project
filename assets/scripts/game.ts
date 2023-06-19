@@ -33,13 +33,13 @@ export default class game extends cc.Component {
         // 屏幕宽高比，用于纠正坐标
         this._materi.effect.setProperty("wh_ratio", ratio);  
         // 光源半径
-        this._materi.effect.setProperty("light_radius", 0.2);   
+        this._materi.effect.setProperty("light_radius", 0.6);   
         // 光源中心点，默认设置到屏幕外
         this._materi.effect.setProperty("light_center", cc.v2(2.0, 2.0)); 
         // 环境光强度，就是光源没照到的地方亮度。
-        this._materi.effect.setProperty("ambient_strength", 0.1);  
+        this._materi.effect.setProperty("ambient_strength", 0.2);  
         // 光源强度，这里设置为最大1。
-        this._materi.effect.setProperty("light_strength", 0.8); 
+        this._materi.effect.setProperty("light_strength", 0.9); 
         // 光源颜色，这里设置为白光
         this._materi.effect.setProperty("light_color", new cc.Vec4(1, 1, 1, 1)); 
 

@@ -13,10 +13,10 @@ CCEffect %{
       properties:
         texture: { value: white }
         alphaThreshold: { value: 0.5 }
-        light_radius: { value: 0.2 } 
+        light_radius: { value: 0.5 } 
         light_center: {value: [0.5, 0.5]}
         ambient_strength: {value: 0.1}
-        light_strength: {value: 1.0}
+        light_strength: {value: 1.5}
         light_color: {value: [1.0, 1.0, 1.0, 1.0]}
         wh_ratio: {value: 1.0}
 }%

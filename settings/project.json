@@ -1,5 +1,4 @@
 {
-  "start-scene": "38353095-96fb-4383-b012-fe794f612ecc",
   "group-list": [
     "default",
     "Ground"
@@ -18,8 +17,8 @@
     "3D Physics/Builtin"
   ],
   "preview-port": 7456,
-  "design-resolution-width": 960,
-  "design-resolution-height": 640,
+  "design-resolution-width": 1920,
+  "design-resolution-height": 1080,
   "fit-width": false,
   "fit-height": true,
   "use-project-simulator-setting": false,
@@ -27,7 +26,7 @@
   "use-customize-simulator": true,
   "simulator-resolution": {
     "width": 960,
-    "height": 640
+    "height": 1080
   },
   "clear-simulator-cache": true,
   "facebook": {
@@ -39,5 +38,6 @@
     "audience": {
       "enable": false
     }
-  }
+  },
+  "start-scene": "bdc22366-1c2f-42ab-9823-72e051b2167f"
 }
