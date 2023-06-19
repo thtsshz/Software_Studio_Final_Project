@@ -1,6 +1,6 @@
 {
   "__type__": "cc.AnimationClip",
-  "_name": "RookWood_basic_attack",
+  "_name": "player7_basic_attack",
   "_objFlags": 0,
   "_native": "",
   "_duration": 1.0166666666666666,
@@ -63,5 +63,16 @@
       }
     }
   },
-  "events": []
+  "events": [
+    {
+      "frame": 0.3333333333333333,
+      "func": "active_basic_attack",
+      "params": []
+    },
+    {
+      "frame": 0.8333333333333334,
+      "func": "cancel_basic_attack",
+      "params": []
+    }
+  ]
 }

@@ -1,6 +1,6 @@
 {
   "__type__": "cc.AnimationClip",
-  "_name": "Ronen_idle",
+  "_name": "GhostNick_idle",
   "_objFlags": 0,
   "_native": "",
   "_duration": 0.1,
@@ -14,13 +14,13 @@
           {
             "frame": 0,
             "value": {
-              "__uuid__": "657f9167-5fac-4d4b-8416-a2934c2b0e6f"
+              "__uuid__": "28559d2e-244e-4c48-a47e-7528cb04d0a4"
             }
           },
           {
             "frame": 0.08333333333333333,
             "value": {
-              "__uuid__": "657f9167-5fac-4d4b-8416-a2934c2b0e6f"
+              "__uuid__": "28559d2e-244e-4c48-a47e-7528cb04d0a4"
             }
           }
         ]

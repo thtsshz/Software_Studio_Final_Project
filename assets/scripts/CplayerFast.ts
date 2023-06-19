@@ -136,8 +136,8 @@ export default class CplayerFast extends cc.Component {
         });
         promise.then(() => {
             this.playerupdate(dt);
-        }).catch(() => {
-            console.log('eee');
+        }).catch((err) => {
+            console.log('eee', err);
         });
         // this.updatefromserver(dt);
         // this.playerupdate(dt);
@@ -161,18 +161,18 @@ export default class CplayerFast extends cc.Component {
             // console.log(data);
             if(this.node.name == "player1"){
                 
-                this.node.x = data["1"].x;
-                this.node.y = data["1"].y;
+                this.node.x = data.players["1"].x;
+                this.node.y = data.players["1"].y;
                 // var nx = this.node.getComponent(cc.RigidBody).linearVelocity.x;
                 // var ny = this.node.getComponent(cc.RigidBody).linearVelocity.y;
-                this.node.getComponent(cc.RigidBody).linearVelocity = cc.v2(data["1"].vx, data["1"].vy);
+                this.node.getComponent(cc.RigidBody).linearVelocity = cc.v2(data.players["1"].vx, data.players["1"].vy);
                 console.log("p1 update success");
 
             }else if(this.node.name == "player2"){
 
-                this.node.x = data["2"].x;
-                this.node.y = data["2"].y;
-                this.node.getComponent(cc.RigidBody).linearVelocity = cc.v2(data["2"].vx, data["2"].vy);
+                this.node.x = data.players["2"].x;
+                this.node.y = data.players["2"].y;
+                this.node.getComponent(cc.RigidBody).linearVelocity = cc.v2(data.players["2"].vx, data.players["2"].vy);
                 console.log("p2 update success");
 
             }
@@ -185,30 +185,30 @@ export default class CplayerFast extends cc.Component {
         if(this.left_move) {
             this.playerSpeed=-400;
             this.node.scaleX=-0.1;  // modify node's X scale value to change facing direction
-            if(this.node.name=='player1'){
-                if(!this.anim.getAnimationState('player_1_walk').isPlaying){
-                    this.anim.play("player_1_walk");
-                }
-            }
-            else{
-                if(!this.anim.getAnimationState('weasly_walk').isPlaying){
-                    this.anim.play("weasly_walk");
-                } 
-            }
+            // if(this.node.name=='player1'){
+            //     if(!this.anim.getAnimationState('player_1_walk').isPlaying){
+            //         this.anim.play("player_1_walk");
+            //     }
+            // }
+            // else{
+            //     if(!this.anim.getAnimationState('weasly_walk').isPlaying){
+            //         this.anim.play("weasly_walk");
+            //     } 
+            // }
         } 
         else if(this.right_move) {
             this.playerSpeed=400;
             this.node.scaleX=0.1;  
-            if(this.node.name=='player1'){
-                if(!this.anim.getAnimationState('player_1_walk').isPlaying){
-                    this.anim.play("player_1_walk");
-                }
-            }
-            else{
-                if(!this.anim.getAnimationState('weasly_walk').isPlaying){
-                    this.anim.play("weasly_walk");
-                } 
-            }
+            // if(this.node.name=='player1'){
+            //     if(!this.anim.getAnimationState('player_1_walk').isPlaying){
+            //         this.anim.play("player_1_walk");
+            //     }
+            // }
+            // else{
+            //     if(!this.anim.getAnimationState('weasly_walk').isPlaying){
+            //         this.anim.play("weasly_walk");
+            //     } 
+            // }
         }
         if(this.jump){
             console.log("jump!");
