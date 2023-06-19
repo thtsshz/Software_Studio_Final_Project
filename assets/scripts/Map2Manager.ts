@@ -135,15 +135,15 @@ export default class Map2Manager extends cc.Component {
     // LIFE-CYCLE CALLBACKS:
 
     onLoad() {
-        // cc.loader.loadRes("BGM/hogwarts-legacy-all-roads-lead-to-hogsmeade", (err, bgm) => {
-        //     this.BGM1 = bgm;
-        //     cc.audioEngine.playMusic(this.BGM1, true);
-        // })
-        // cc.loader.loadRes("BGM/BGM_anticipate_RookWood",() => {}, (err, bgm2) => {
-        //     this.BGM2 = bgm2;
-        //     //console.log(err);
-        //     //cc.audioEngine.playEffect(this.BGM2, false);
-        // })
+        cc.loader.loadRes("BGM/hogwarts-legacy-all-roads-lead-to-hogsmeade", (err, bgm) => {
+            this.BGM1 = bgm;
+            cc.audioEngine.playMusic(this.BGM1, true);
+        })
+        cc.loader.loadRes("BGM/BGM_anticipate_RookWood",() => {}, (err, bgm2) => {
+            this.BGM2 = bgm2;
+            //console.log(err);
+            //cc.audioEngine.playEffect(this.BGM2, false);
+        })
 
         this.P1LineAudio2 = null;
         this.P2LineAudio2 = null;
