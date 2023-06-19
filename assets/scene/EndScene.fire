@@ -555,7 +555,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 251.9,
+      "width": 201.7,
       "height": 126
     },
     "_anchorPoint": {
@@ -567,8 +567,8 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        -386.559,
-        320,
+        -389.559,
+        322,
         0,
         0,
         0,
@@ -607,8 +607,8 @@
     ],
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
-    "_string": "WIN!!",
-    "_N$string": "WIN!!",
+    "_string": "WIN",
+    "_N$string": "WIN",
     "_fontSize": 100,
     "_lineHeight": 100,
     "_enableWrapText": true,
@@ -877,9 +877,9 @@
     "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",
-      "r": 0,
-      "g": 0,
-      "b": 0,
+      "r": 255,
+      "g": 255,
+      "b": 255,
       "a": 255
     },
     "_contentSize": {
