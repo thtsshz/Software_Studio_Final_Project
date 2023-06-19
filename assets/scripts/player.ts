@@ -30,6 +30,8 @@ export default class player extends cc.Component {
     // LIFE-CYCLE CALLBACKS:
     left_move: boolean = false;
     right_move: boolean = false;
+    down_move: boolean = false;
+    up_move: boolean = false;
     jump: boolean = false;
     on_ground: boolean = false;
     attack: boolean = false;
@@ -38,8 +40,10 @@ export default class player extends cc.Component {
     floating: boolean = false;
     continuedamage: boolean = false;
     skillpush: boolean = false;
+    on_broom: boolean = false;
 
     playerSpeed: number = 0;
+    playerSpeed_y: number = 0;
     attack_time: number = 1.5;
     skill_time1: number = 3;
     skill_time2: number = 4;
@@ -111,6 +115,10 @@ export default class player extends cc.Component {
                 this.jump = true;
                 this.on_ground = false;
             }
+            else if(event.keyCode == cc.macro.KEY.up && this.on_broom){
+                this.down_move=false;
+                this.up_move=true;
+            }
             else if (event.keyCode == cc.macro.KEY.left) {//left
                 this.right_move = false;
                 this.left_move = true;
@@ -119,7 +127,11 @@ export default class player extends cc.Component {
                 this.right_move = true;
                 this.left_move = false;
             }
-            if (event.keyCode == cc.macro.KEY.down && !this.inAttack) {//skill
+            if(event.keyCode == cc.macro.KEY.down && this.on_broom){
+                this.down_move = true;
+                this.up_move=false;
+            }
+            else if (event.keyCode == cc.macro.KEY.down && !this.inAttack) {//skill
                 if (this.can_attack) {
                     this.inAttack = true;
                     this.attack = true;
@@ -196,6 +208,10 @@ export default class player extends cc.Component {
                 this.jump = true;
                 this.on_ground = false;
             }
+            else if(event.keyCode == cc.macro.KEY.w && this.on_broom){
+                this.down_move=false;
+                this.up_move=true;
+            }
             else if (event.keyCode == cc.macro.KEY.a) {//left
                 this.right_move = false;
                 this.left_move = true;
@@ -204,7 +220,11 @@ export default class player extends cc.Component {
                 this.right_move = true;
                 this.left_move = false;
             }
-            if (event.keyCode == cc.macro.KEY.s && !this.inAttack) {//skill
+            if(event.keyCode == cc.macro.KEY.s && this.on_broom){
+                this.down_move = true;
+                this.up_move=false;
+            }
+            else if (event.keyCode == cc.macro.KEY.s && !this.inAttack) {//skill
                 if (this.can_attack) {
                     this.inAttack = true;
                     this.attack = true;
@@ -283,6 +303,7 @@ export default class player extends cc.Component {
         if (this.node.name == ('player' + DataManager.instance.UserChar.toString())) {
             if (event.keyCode == cc.macro.KEY.up) {//jump
                 this.jump = false;
+                this.up_move=false;
             }
             else if (event.keyCode == cc.macro.KEY.left) {//left
                 this.left_move = false;
@@ -292,10 +313,15 @@ export default class player extends cc.Component {
                 this.right_move = false;
                 this.anim.stop(this.node.name + "_walk");
             }
+            else if (event.keyCode == cc.macro.KEY.down){
+                this.down_move=false;
+            }
         }
         else {
             if (event.keyCode == cc.macro.KEY.w) {//w jump
                 this.jump = false;
+                this.up_move=false;
+
             }
             else if (event.keyCode == cc.macro.KEY.a) {//left
                 this.left_move = false;
@@ -304,6 +330,9 @@ export default class player extends cc.Component {
             else if (event.keyCode == cc.macro.KEY.d) {//right
                 this.right_move = false;
                 this.anim.stop(this.node.name + "_walk");
+            }
+            else if(event.keyCode == cc.macro.KEY.s){
+                this.down_move=false;
             }
         }
 
@@ -314,6 +343,15 @@ export default class player extends cc.Component {
     }
     onBeginContact(contact, self, other) {
         // console.log(contact.getWorldManifold().normal.y);
+        if(other.node.name=='Broom'&&this.on_broom==false){
+            this.on_broom=true;
+            console.log('contact broom');
+            this.getComponent(cc.RigidBody).linearVelocity=cc.v2(0,0);
+            this.scheduleOnce(function(){
+                this.on_broom=false;
+                console.log('discontact broom');
+            },5);
+        }
         if(other.node.name=='floor'){
             this.health = 0;
             return ;
@@ -464,28 +502,56 @@ export default class player extends cc.Component {
         }
 
         if (!this.skillpush) this.playerSpeed = 0;
-        if (this.left_move) {
-            console.log(
-                'left_move'
-            );
-            this.playerSpeed -= 400;
-            this.node.scaleX = -0.2;  // modify node's X scale value to change facing direction
-            console.log(this.node.name + '_walk');
-            if (!this.anim.getAnimationState(this.node.name + '_walk').isPlaying && !this.anim.getAnimationState(this.node.name + '_basic_attack').isPlaying) {
-                this.anim.play(this.node.name + '_walk');
-            }
-        }
-        else if (this.right_move) {
-            this.playerSpeed += 400;
-            this.node.scaleX = 0.2;
-            if (!this.anim.getAnimationState(this.node.name + '_walk').isPlaying && !this.anim.getAnimationState(this.node.name + '_basic_attack').isPlaying) {
-                this.anim.play(this.node.name + '_walk');
-            }
-        }
-        else {
+        if(this.on_broom){
             if (!this.anim.getAnimationState(this.node.name + '_basic_attack').isPlaying) {
                 this.anim.play(this.node.name + "_idle");
             }
+
+            this.getComponent(cc.RigidBody).gravityScale=0;
+            if(this.left_move){
+                this.playerSpeed -= 200;
+                this.node.scaleX = -0.2;
+            }
+            else if(this.right_move){
+                this.playerSpeed += 200;
+                this.node.scaleX = 0.2;
+
+            }
+            console.log('update: on broom');
+            if(this.down_move){
+                this.playerSpeed_y=-200;
+            }
+            else if(this.up_move){
+                this.playerSpeed_y=200;
+            }
+            // this.node.x+=this.playerSpeed*dt;
+            // this.node.y+=this.playerSpeed_y*dt;
+            this.getComponent(cc.RigidBody).linearVelocity = cc.v2(this.playerSpeed, this.playerSpeed_y);
+            return;
+        }
+        else{
+            this.getComponent(cc.RigidBody).gravityScale=3;
+            if (this.left_move) {
+                this.playerSpeed -= 400;
+                this.node.scaleX = -0.2;  // modify node's X scale value to change facing direction
+                console.log(this.node.name + '_walk');
+                if (!this.anim.getAnimationState(this.node.name + '_walk').isPlaying && !this.anim.getAnimationState(this.node.name + '_basic_attack').isPlaying) {
+                    this.anim.play(this.node.name + '_walk');
+                }
+            }
+            else if (this.right_move) {
+                this.playerSpeed += 400;
+                this.node.scaleX = 0.2;
+                if (!this.anim.getAnimationState(this.node.name + '_walk').isPlaying && !this.anim.getAnimationState(this.node.name + '_basic_attack').isPlaying) {
+                    this.anim.play(this.node.name + '_walk');
+                }
+            }
+            else {
+                if (!this.anim.getAnimationState(this.node.name + '_basic_attack').isPlaying) {
+                    this.anim.play(this.node.name + "_idle");
+                }
+            }
+
         }
         if (this.floating) {
             console.log("floating!");
