@@ -6,6 +6,7 @@
 //  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
 import { DataManager } from "./DataManager";
 const {ccclass, property} = cc._decorator;
+declare const firebase : any;
 
 @ccclass
 export default class WinScene extends cc.Component {
@@ -148,6 +149,12 @@ export default class WinScene extends cc.Component {
         if(DataManager.instance.Result) {
             this.WinLabel.node.setPosition(-386, 320);
             this.LoseLabel.node.setPosition(457, 320);
+            if(DataManager.instance.UserRole == 0 || DataManager.instance.UserRole == 1) {
+                firebase.database().ref("User/" + DataManager.instance.UserUID).update({WinCount: DataManager.instance.WinCount+1})
+                .then().catch((e) => {console.log(e.message)});
+                alert("AA");
+            }
+
         }
         else{
             this.WinLabel.node.setPosition(457, 320);
