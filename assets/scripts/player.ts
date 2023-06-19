@@ -293,7 +293,7 @@ export default class player extends cc.Component {
             if (event.keyCode == cc.macro.KEY.z) {
                 // console.log('gather');
                 // this.progressbar.getComponent('ProgressBar').progressbar
-                this.progressbar2.progress += 0.02;
+                this.progressbar2.progress += 0.004;
             }
             if (event.keyCode == cc.macro.KEY.r && !this.skill1_Cooldown && !this.inAttack) {
                 this.inAttack = true;
