@@ -190,6 +190,12 @@ export default class Map1mgrMultiplayerF extends cc.Component {
                 else this.Splayer2.onKeyUp(this.keyboarddata.key);
             }
             
+            // if(DataManager.instance.UserRole == 0 && this.keyboarddata.name == 1){
+            //     if(this.keyboarddata.key == "s")this.player2.CustomKeyDown(cc.macro.KEY.s);
+            // }
+            // if(DataManager.instance.UserRole == 1 && this.keyboarddata.name == 0){
+            //     if(this.keyboarddata.key == "down")this.player1.CustomKeyDown(cc.macro.KEY.down);
+            // }
         }
     }
 

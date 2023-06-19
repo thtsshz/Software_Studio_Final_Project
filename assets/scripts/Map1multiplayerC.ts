@@ -114,7 +114,7 @@ export default class Map1multiplayerC extends cc.Component {
             // console.log("[server][recv]", e.data, performance.now() - JSON.parse(e.data).ts);
             // var tmp : playerstatus = JSON.parse(e.data);
             this.serverplayerstatus = JSON.parse(e.data);
-            
+            console.log("client get data");
             //update splayers.
         }
     }
@@ -164,64 +164,65 @@ export default class Map1multiplayerC extends cc.Component {
         }
 
     }
-    onKeyDown(event) {  // #multi
-        // if(event.keyCode == cc.macro.KEY.u){
+    
+    CustomKeyDown(keyCode){
+         // if(event.keyCode == cc.macro.KEY.u){
         //     this.health += 10;
         // }
         if(DataManager.instance.UserRole == 0){
-            // if(event.keyCode == cc.macro.KEY.w)this.sendatatodb("w", 0);
-            // else if(event.keyCode == cc.macro.KEY.a)this.sendatatodb("a", 0);
-            // else if(event.keyCode == cc.macro.KEY.s)this.sendatatodb("s", 0);
-            // else if(event.keyCode == cc.macro.KEY.d)this.sendatatodb("d", 0);
-            // else if(event.keyCode == cc.macro.KEY.r)this.sendatatodb("r", 0);
-            // else if(event.keyCode == cc.macro.KEY.t)this.sendatatodb("t", 0);
-            // else if(event.keyCode == cc.macro.KEY.y)this.sendatatodb("y", 0);
+            // if(keyCode == cc.macro.KEY.w)this.sendatatodb("w", 0);
+            // else if(keyCode == cc.macro.KEY.a)this.sendatatodb("a", 0);
+            // else if(keyCode == cc.macro.KEY.s)this.sendatatodb("s", 0);
+            // else if(keyCode == cc.macro.KEY.d)this.sendatatodb("d", 0);
+            // else if(keyCode == cc.macro.KEY.r)this.sendatatodb("r", 0);
+            // else if(keyCode == cc.macro.KEY.t)this.sendatatodb("t", 0);
+            // else if(keyCode == cc.macro.KEY.y)this.sendatatodb("y", 0);
             // else 
-            if(event.keyCode == cc.macro.KEY.up)this.sendatatodb("up", 0);
-            else if(event.keyCode == cc.macro.KEY.down)this.sendatatodb("down", 0);
-            else if(event.keyCode == cc.macro.KEY.left)this.sendatatodb("left", 0);
-            else if(event.keyCode == cc.macro.KEY.right)this.sendatatodb("right", 0);
-            else if(event.keyCode == cc.macro.KEY.j)this.sendatatodb("j", 0);
-            else if(event.keyCode == cc.macro.KEY.k)this.sendatatodb("k", 0);
-            else if(event.keyCode == cc.macro.KEY.l)this.sendatatodb("l", 0);
-            else if(event.keyCode == cc.macro.KEY.z)this.sendatatodb("z", 0);
-            else if(event.keyCode == cc.macro.KEY.ctrl)this.sendatatodb("ctrl", 0);
+            if(keyCode == cc.macro.KEY.up)this.sendatatodb("up", 0);
+            else if(keyCode == cc.macro.KEY.down)this.sendatatodb("down", 0);
+            else if(keyCode == cc.macro.KEY.left)this.sendatatodb("left", 0);
+            else if(keyCode == cc.macro.KEY.right)this.sendatatodb("right", 0);
+            else if(keyCode == cc.macro.KEY.j)this.sendatatodb("j", 0);
+            else if(keyCode == cc.macro.KEY.k)this.sendatatodb("k", 0);
+            else if(keyCode == cc.macro.KEY.l)this.sendatatodb("l", 0);
+            else if(keyCode == cc.macro.KEY.z)this.sendatatodb("z", 0);
+            else if(keyCode == cc.macro.KEY.ctrl)this.sendatatodb("ctrl", 0);
         }else{
-            if(event.keyCode == cc.macro.KEY.up)this.sendatatodb("w", 0);
-            else if(event.keyCode == cc.macro.KEY.down)this.sendatatodb("s", 0);
-            else if(event.keyCode == cc.macro.KEY.left)this.sendatatodb("a", 0);
-            else if(event.keyCode == cc.macro.KEY.right)this.sendatatodb("d", 0);
-            else if(event.keyCode == cc.macro.KEY.j)this.sendatatodb("r", 0);
-            else if(event.keyCode == cc.macro.KEY.k)this.sendatatodb("t", 0);
-            else if(event.keyCode == cc.macro.KEY.l)this.sendatatodb("y", 0);
-            else if(event.keyCode == cc.macro.KEY.z)this.sendatatodb("z", 0);
-            else if(event.keyCode == cc.macro.KEY.ctrl)this.sendatatodb("ctrl", 0);
+            if(keyCode == cc.macro.KEY.up)this.sendatatodb("w", 0);
+            else if(keyCode == cc.macro.KEY.down)this.sendatatodb("s", 0);
+            else if(keyCode == cc.macro.KEY.left)this.sendatatodb("a", 0);
+            else if(keyCode == cc.macro.KEY.right)this.sendatatodb("d", 0);
+            else if(keyCode == cc.macro.KEY.j)this.sendatatodb("r", 0);
+            else if(keyCode == cc.macro.KEY.k)this.sendatatodb("t", 0);
+            else if(keyCode == cc.macro.KEY.l)this.sendatatodb("y", 0);
+            else if(keyCode == cc.macro.KEY.z)this.sendatatodb("z", 0);
+            else if(keyCode == cc.macro.KEY.ctrl)this.sendatatodb("ctrl", 0);
         }
 
         if(DataManager.instance.gameover) return ;
 
         if (this.node.name == ('player' + DataManager.instance.UserChar.toString())) {
-            if (event.keyCode == cc.macro.KEY.up && this.on_ground == true) {//jump
+            if (keyCode == cc.macro.KEY.up && this.on_ground == true) {//jump
                 this.jump = true;
                 this.on_ground = false;
             }
-            else if(event.keyCode == cc.macro.KEY.up && this.on_broom){
+            else if(keyCode == cc.macro.KEY.up && this.on_broom){
                 this.down_move=false;
                 this.up_move=true;
             }
-            else if (event.keyCode == cc.macro.KEY.left) {//left
+            else if (keyCode == cc.macro.KEY.left) {//left
                 this.right_move = false;
                 this.left_move = true;
             }
-            else if (event.keyCode == cc.macro.KEY.right) {//right
+            else if (keyCode == cc.macro.KEY.right) {//right
                 this.right_move = true;
                 this.left_move = false;
             }
-            if(event.keyCode == cc.macro.KEY.down && this.on_broom){
+            if(keyCode == cc.macro.KEY.down && this.on_broom){
                 this.down_move = true;
                 this.up_move=false;
             }
-            else if (event.keyCode == cc.macro.KEY.down && !this.inAttack) {//skill
+            else if (keyCode == cc.macro.KEY.down && !this.inAttack) {//skill
                 if (this.can_attack) {
                     this.inAttack = true;
                     this.attack = true;
@@ -253,17 +254,17 @@ export default class Map1multiplayerC extends cc.Component {
                     );
                 }
             }
-            if (event.keyCode == cc.macro.KEY.ctrl && DataManager.instance.UserRole == 0) {
+            if (keyCode == cc.macro.KEY.ctrl && DataManager.instance.UserRole == 0) {
                 // console.log('gather');
                 // this.progressbar.getComponent('ProgressBar').progressbar
                 this.progressbar.progress += 0.02;
             }
-            if (event.keyCode == cc.macro.KEY.ctrl && DataManager.instance.UserRole == 1) {
+            if (keyCode == cc.macro.KEY.ctrl && DataManager.instance.UserRole == 1) {
                 // console.log('gather');
                 // this.progressbar.getComponent('ProgressBar').progressbar
                 this.progressbar2.progress += 0.02;
             }
-            if (event.keyCode == cc.macro.KEY.j && !this.skill1_Cooldown && !this.inAttack) {
+            if (keyCode == cc.macro.KEY.j && !this.skill1_Cooldown && !this.inAttack) {
                 this.inAttack = true;
                 this.skill1_Cooldown = true;
                 this.scheduleOnce(() => {
@@ -274,7 +275,7 @@ export default class Map1multiplayerC extends cc.Component {
                     this.anim.play(this.node.name + '_basic_attack');
                 }
             }
-            if (event.keyCode == cc.macro.KEY.k && !this.skill2_Cooldown && !this.inAttack) {
+            if (keyCode == cc.macro.KEY.k && !this.skill2_Cooldown && !this.inAttack) {
                 this.inAttack = true;
                 this.skill2_Cooldown = true;
                 this.scheduleOnce(() => {
@@ -285,7 +286,7 @@ export default class Map1multiplayerC extends cc.Component {
                     this.anim.play(this.node.name + '_basic_attack');
                 }
             }
-            if(event.keyCode == cc.macro.KEY.l) {
+            if(keyCode == cc.macro.KEY.l) {
                 if(DataManager.instance.UserRole == 0) {
                     if (this.progressbar.progress >= 1 && !this.skill3_Cooldown && !this.inAttack) {
                         this.inAttack = true;
@@ -315,7 +316,7 @@ export default class Map1multiplayerC extends cc.Component {
                     }
                 }
             }
-            // if (event.keyCode == cc.macro.KEY.l && this.progressbar.progress >= 1 && !this.skill3_Cooldown && !this.inAttack) {
+            // if (keyCode == cc.macro.KEY.l && this.progressbar.progress >= 1 && !this.skill3_Cooldown && !this.inAttack) {
             //     this.inAttack = true;
             //     this.skill3_Cooldown = true;
             //     this.progressbar.progress = 0;
@@ -329,27 +330,27 @@ export default class Map1multiplayerC extends cc.Component {
             // }
         }
         else {
-            if (event.keyCode == cc.macro.KEY.w && this.on_ground == true) {//w jump
+            if (keyCode == cc.macro.KEY.w && this.on_ground == true) {//w jump
                 this.jump = true;
                 this.on_ground = false;
             }
-            else if(event.keyCode == cc.macro.KEY.w && this.on_broom){
+            else if(keyCode == cc.macro.KEY.w && this.on_broom){
                 this.down_move=false;
                 this.up_move=true;
             }
-            else if (event.keyCode == cc.macro.KEY.a) {//left
+            else if (keyCode == cc.macro.KEY.a) {//left
                 this.right_move = false;
                 this.left_move = true;
             }
-            else if (event.keyCode == cc.macro.KEY.d) {//right
+            else if (keyCode == cc.macro.KEY.d) {//right
                 this.right_move = true;
                 this.left_move = false;
             }
-            if(event.keyCode == cc.macro.KEY.s && this.on_broom){
+            if(keyCode == cc.macro.KEY.s && this.on_broom){
                 this.down_move = true;
                 this.up_move=false;
             }
-            else if (event.keyCode == cc.macro.KEY.s && !this.inAttack) {//skill
+            else if (keyCode == cc.macro.KEY.s && !this.inAttack) {//skill
                 if (this.can_attack) {
                     this.inAttack = true;
                     this.attack = true;
@@ -381,12 +382,12 @@ export default class Map1multiplayerC extends cc.Component {
                     );
                 }
             }
-            if (event.keyCode == cc.macro.KEY.z) {
+            if (keyCode == cc.macro.KEY.z) {
                 // console.log('gather');
                 // this.progressbar.getComponent('ProgressBar').progressbar
                 this.progressbar2.progress += 0.02;
             }
-            if (event.keyCode == cc.macro.KEY.r && !this.skill1_Cooldown && !this.inAttack) {
+            if (keyCode == cc.macro.KEY.r && !this.skill1_Cooldown && !this.inAttack) {
                 this.inAttack = true;
                 this.skill1_Cooldown = true;
                 this.scheduleOnce(() => {
@@ -397,7 +398,7 @@ export default class Map1multiplayerC extends cc.Component {
                     this.anim.play(this.node.name + '_basic_attack');
                 }
             }
-            if (event.keyCode == cc.macro.KEY.t && !this.skill2_Cooldown && !this.inAttack) {
+            if (keyCode == cc.macro.KEY.t && !this.skill2_Cooldown && !this.inAttack) {
                 this.inAttack = true;
                 this.skill2_Cooldown = true;
                 this.scheduleOnce(() => {
@@ -408,7 +409,7 @@ export default class Map1multiplayerC extends cc.Component {
                     this.anim.play(this.node.name + '_basic_attack');
                 }
             }
-            if (event.keyCode == cc.macro.KEY.y && this.progressbar2.progress >= 1 && !this.skill3_Cooldown && !this.inAttack) {
+            if (keyCode == cc.macro.KEY.y && this.progressbar2.progress >= 1 && !this.skill3_Cooldown && !this.inAttack) {
                 this.inAttack = true;
                 this.skill3_Cooldown = true;
                 this.progressbar2.progress = 0;
@@ -422,7 +423,10 @@ export default class Map1multiplayerC extends cc.Component {
             }
 
         }
+    }
 
+    onKeyDown(event) {  // #multi
+        this.CustomKeyDown(event.keyCode);
     }
     onKeyUp(event) {  // #multi
 
@@ -645,27 +649,30 @@ export default class Map1multiplayerC extends cc.Component {
             this.nextconnectiontime = this.nowtime + 1;
             console.log("connection failed, trying to connect to server...");
             this.client_connect_to_db();
+            return ;
         }
-
-        if(DataManager.instance.UserRole == 0){
-            if(this.node.name == ('player' + DataManager.instance.UserChar.toString())){ // player 1
-                this.node.x = this.serverplayerstatus["0"].x;
-                this.node.y = this.serverplayerstatus["0"].y;
-                this.health = this.serverplayerstatus["0"].health;
+        // return ;
+        if(this.serverplayerstatus){
+            if(DataManager.instance.UserRole == 0){
+                if(this.node.name == ('player' + DataManager.instance.UserChar.toString())){ // player 1
+                    this.node.x = this.serverplayerstatus["0"].x;
+                    this.node.y = this.serverplayerstatus["0"].y;
+                    this.health = this.serverplayerstatus["0"].health;
+                }else{
+                    this.node.x = this.serverplayerstatus["1"].x;
+                    this.node.y = this.serverplayerstatus["1"].y;
+                    this.health = this.serverplayerstatus["1"].health;
+                }
             }else{
-                this.node.x = this.serverplayerstatus["1"].x;
-                this.node.y = this.serverplayerstatus["1"].y;
-                this.health = this.serverplayerstatus["1"].health;
-            }
-        }else{
-            if(this.node.name == ('player' + DataManager.instance.UserChar.toString())){ 
-                this.node.x = this.serverplayerstatus["1"].x;
-                this.node.y = this.serverplayerstatus["1"].y;
-                this.health = this.serverplayerstatus["1"].health;
-            }else{
-                this.node.x = this.serverplayerstatus["0"].x;
-                this.node.y = this.serverplayerstatus["0"].y;
-                this.health = this.serverplayerstatus["0"].health;
+                if(this.node.name == ('player' + DataManager.instance.UserChar.toString())){ 
+                    this.node.x = this.serverplayerstatus["1"].x;
+                    this.node.y = this.serverplayerstatus["1"].y;
+                    this.health = this.serverplayerstatus["1"].health;
+                }else{
+                    this.node.x = this.serverplayerstatus["0"].x;
+                    this.node.y = this.serverplayerstatus["0"].y;
+                    this.health = this.serverplayerstatus["0"].health;
+                }
             }
         }
 
