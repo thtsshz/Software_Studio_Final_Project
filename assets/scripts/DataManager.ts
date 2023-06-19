@@ -29,4 +29,5 @@ export class DataManager {
     public MultiplayerRoomID : number = -1;
 
     public Result: boolean = false; //True if player1 win
+    public WinCount: 0;
 }

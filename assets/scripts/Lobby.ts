@@ -102,4 +102,8 @@ export default class Lobby extends cc.Component {
             alert("error!\n" + e.message);
         });
     }
+
+    Leader() {
+        cc.director.loadScene("LeaderBoard");
+    }
 }
