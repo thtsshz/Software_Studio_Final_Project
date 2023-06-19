@@ -314,6 +314,10 @@ export default class player extends cc.Component {
     }
     onBeginContact(contact, self, other) {
         // console.log(contact.getWorldManifold().normal.y);
+        if(other.node.name=='floor'){
+            this.health = 0;
+            return ;
+        }
         if (contact.getWorldManifold().normal.y > 0.9) {
             // console.log(other.node.name);
 
