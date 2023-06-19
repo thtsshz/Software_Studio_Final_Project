@@ -30,6 +30,9 @@ export default class player extends cc.Component {
 
     @property(cc.Camera)
     camera: cc.Camera = null;
+
+    @property({ type: cc.Node })
+    pause: cc.Node = null;
     // LIFE-CYCLE CALLBACKS:
     left_move: boolean = false;
     right_move: boolean = false;
@@ -81,6 +84,8 @@ export default class player extends cc.Component {
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_UP, this.onKeyUp, this);
         this.anim = this.getComponent(cc.Animation);
         DataManager.instance.gameover = false;
+        this.pause.active = false;
+
     }
     cancel_basic_attack() {
         console.log('cancel_basic_attack');
@@ -123,11 +128,13 @@ export default class player extends cc.Component {
         if (this.ispause && event.keyCode == cc.macro.KEY.p) {
             this.ispause = false;
             cc.director.resume();
+            this.pause.active = false;
             return;
         }
         if (this.ispause) return;
 
         if (event.keyCode == cc.macro.KEY.p) {
+            this.pause.active = true;
             cc.director.pause();
             this.ispause = true;
         }
@@ -562,7 +569,7 @@ export default class player extends cc.Component {
     update(dt) {
 
         if (DataManager.instance.gameover) {
-            this.getComponent(cc.RigidBody).linearVelocity = cc.v2(0,0);
+            this.getComponent(cc.RigidBody).linearVelocity = cc.v2(0, 0);
             return;
         }
 
