@@ -22,6 +22,7 @@ export class DataManager {
     public UserRole=10;
     public opponentChar: number;
     public Map;
+    public gameover : boolean = false;
 
     public BackgroundVolume = 0.5;
     public EffectVolume = 0.5;

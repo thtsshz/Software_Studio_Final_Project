@@ -25,6 +25,22 @@ export default class WinScene extends cc.Component {
     @property(cc.SpriteFrame)
     DinahHecat: cc.SpriteFrame = null;
 
+    @property(cc.SpriteFrame)
+    MudiwaOnai: cc.SpriteFrame = null;
+
+    @property(cc.SpriteFrame)
+    Black: cc.SpriteFrame = null;
+
+    @property(cc.SpriteFrame)
+    GhostBloodyBaron: cc.SpriteFrame = null;
+
+    @property(cc.SpriteFrame)
+    GhostNick: cc.SpriteFrame = null;
+
+    @property(cc.SpriteFrame)
+    RookWood: cc.SpriteFrame = null;
+
+
     @property(cc.Node)
     Player1: cc.Node = null;
 
@@ -56,7 +72,15 @@ export default class WinScene extends cc.Component {
             else if(DataManager.instance.UserChar == 4)
                 this.Player1.getComponent(cc.Sprite).spriteFrame = this.EleazarFig;
             else if(DataManager.instance.UserChar == 5)
-                this.Player1.getComponent(cc.Sprite).spriteFrame = this.DinahHecat;
+                this.Player1.getComponent(cc.Sprite).spriteFrame = this.MudiwaOnai;
+            else if(DataManager.instance.UserChar == 6)
+                this.Player1.getComponent(cc.Sprite).spriteFrame = this.Black;
+            else if(DataManager.instance.UserChar == 7)
+                this.Player1.getComponent(cc.Sprite).spriteFrame = this.RookWood;
+            else if(DataManager.instance.UserChar == 8)
+                this.Player1.getComponent(cc.Sprite).spriteFrame = this.GhostNick;
+            else if(DataManager.instance.UserChar == 9)
+                this.Player1.getComponent(cc.Sprite).spriteFrame = this.GhostBloodyBaron;
 
             if(DataManager.instance.opponentChar == 1)
                 this.Player2.getComponent(cc.Sprite).spriteFrame = this.AbrahamRonen;
@@ -67,7 +91,15 @@ export default class WinScene extends cc.Component {
             else if(DataManager.instance.opponentChar == 4)
                 this.Player2.getComponent(cc.Sprite).spriteFrame = this.EleazarFig;
             else if(DataManager.instance.opponentChar == 5)
-                this.Player2.getComponent(cc.Sprite).spriteFrame = this.DinahHecat;
+                this.Player2.getComponent(cc.Sprite).spriteFrame = this.MudiwaOnai;
+            else if(DataManager.instance.opponentChar == 6)
+                this.Player2.getComponent(cc.Sprite).spriteFrame = this.Black;
+            else if(DataManager.instance.opponentChar == 7)
+                this.Player2.getComponent(cc.Sprite).spriteFrame = this.RookWood;
+            else if(DataManager.instance.opponentChar == 8)
+                this.Player2.getComponent(cc.Sprite).spriteFrame = this.GhostNick;
+            else if(DataManager.instance.opponentChar == 9)
+                this.Player2.getComponent(cc.Sprite).spriteFrame = this.GhostBloodyBaron;
             console.log(DataManager.instance.UserChar, DataManager.instance.UserChar2);
         }
         else {
@@ -81,7 +113,15 @@ export default class WinScene extends cc.Component {
             else if(DataManager.instance.UserChar == 4)
                 this.Player1.getComponent(cc.Sprite).spriteFrame = this.EleazarFig;
             else if(DataManager.instance.UserChar == 5)
-                this.Player1.getComponent(cc.Sprite).spriteFrame = this.DinahHecat;
+                this.Player1.getComponent(cc.Sprite).spriteFrame = this.MudiwaOnai;
+            else if(DataManager.instance.UserChar == 6)
+                this.Player1.getComponent(cc.Sprite).spriteFrame = this.Black;
+            else if(DataManager.instance.UserChar == 7)
+                this.Player1.getComponent(cc.Sprite).spriteFrame = this.RookWood;
+            else if(DataManager.instance.UserChar == 8)
+                this.Player1.getComponent(cc.Sprite).spriteFrame = this.GhostNick;
+            else if(DataManager.instance.UserChar == 9)
+                this.Player1.getComponent(cc.Sprite).spriteFrame = this.GhostBloodyBaron;
 
             if(DataManager.instance.UserChar2 == 1)
                 this.Player2.getComponent(cc.Sprite).spriteFrame = this.AbrahamRonen;
@@ -92,7 +132,15 @@ export default class WinScene extends cc.Component {
             else if(DataManager.instance.UserChar2 == 4)
                 this.Player2.getComponent(cc.Sprite).spriteFrame = this.EleazarFig;
             else if(DataManager.instance.UserChar2 == 5)
-                this.Player2.getComponent(cc.Sprite).spriteFrame = this.DinahHecat;
+                this.Player2.getComponent(cc.Sprite).spriteFrame = this.MudiwaOnai;
+            else if(DataManager.instance.UserChar2 == 6)
+                this.Player2.getComponent(cc.Sprite).spriteFrame = this.Black;
+            else if(DataManager.instance.UserChar2 == 7)
+                this.Player2.getComponent(cc.Sprite).spriteFrame = this.RookWood;
+            else if(DataManager.instance.UserChar2 == 8)
+                this.Player2.getComponent(cc.Sprite).spriteFrame = this.GhostNick;
+            else if(DataManager.instance.UserChar2 == 9)
+                this.Player2.getComponent(cc.Sprite).spriteFrame = this.GhostBloodyBaron;
                 
         }
 

@@ -65,6 +65,7 @@ export default class player extends cc.Component {
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyDown, this);
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_UP, this.onKeyUp, this);
         this.anim = this.getComponent(cc.Animation);
+        DataManager.instance.gameover = false;
     }
     cancel_basic_attack() {
         console.log('cancel_basic_attack');
@@ -354,7 +355,7 @@ export default class player extends cc.Component {
         let action = cc.sequence(cc.moveBy(0.01, 30, 3), cc.moveBy(0.01, -30, -3)).repeat(5);
         this.camera.node.runAction(action);
         if (skilltype == 1) {       // basic attack
-            this.health -= 100;
+            this.health -= 300;
         } else if (skilltype == 2) { // cannot move + damage
             this.health -= 200;
             this.moveable = false;
@@ -426,6 +427,32 @@ export default class player extends cc.Component {
             this.on_ground = false;
     }
     update(dt) {
+
+        if(DataManager.instance.gameover) return ;
+        
+        if(this.health <= 0){
+            DataManager.instance.gameover = true;
+            this.health = 0 ;
+            console.log(this.node.name, " is killed!");
+
+            if(DataManager.instance.UserRole == 0)
+                DataManager.instance.Result = false;
+            else if(DataManager.instance.UserRole == 1) 
+                DataManager.instance.Result = true;
+            else {
+                if(this.node.name == ("player"+DataManager.instance.UserChar.toString()))
+                    DataManager.instance.Result = false;
+                else
+                    DataManager.instance.Result = true;
+            }
+
+            this.anim.play(this.node.name + '_dead');
+            this.scheduleOnce(function(){
+                cc.director.loadScene("EndScene");
+            }, 2);
+            return ;
+        }
+
         if (!this.skillpush) this.playerSpeed = 0;
         if (this.left_move) {
             console.log(
