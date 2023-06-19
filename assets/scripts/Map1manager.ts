@@ -64,12 +64,58 @@ export default class NewClass extends cc.Component {
     @property(cc.AudioClip)
     Stupefy: cc.AudioClip = null;
 
+    @property(cc.AudioClip)
+    NormalAttack: cc.AudioClip = null;
+
+    @property(cc.AudioClip)
+    K: cc.AudioClip = null;
+
+    @property(cc.AudioClip)
+    J: cc.AudioClip = null;
+
+    @property(cc.AudioClip)
+    AccioLine: cc.AudioClip = null;
+
+    @property(cc.AudioClip)
+    Avada_kedavraLine: cc.AudioClip = null;
+    
+    @property(cc.AudioClip)
+    ConfringoLine: cc.AudioClip = null;
+
+    @property(cc.AudioClip)
+    DepulsoLine: cc.AudioClip = null;
+
+    @property(cc.AudioClip)
+    CrucioLine: cc.AudioClip = null;
+
+    @property(cc.AudioClip)
+    DiffindoLine: cc.AudioClip = null;
+
+    @property(cc.AudioClip)
+    ExpelliarmusLine: cc.AudioClip = null;
+
+    @property(cc.AudioClip)
+    GlaciusLine: cc.AudioClip = null;
+
+    @property(cc.AudioClip)
+    IncendioLine: cc.AudioClip = null;
+
+    @property(cc.AudioClip)
+    LeviosoLine: cc.AudioClip = null;
+
+    @property(cc.AudioClip)
+    StupefyLine: cc.AudioClip = null;
+
     P1skill1Audio: cc.AudioClip;
     P1skill2Audio: cc.AudioClip;
     P1skill3Audio: cc.AudioClip;
+    P1LineAudio: cc.AudioClip;
+    P1LineAudio2: cc.AudioClip = null;
     P2skill1Audio: cc.AudioClip;
     P2skill2Audio: cc.AudioClip;
     P2skill3Audio: cc.AudioClip;
+    P2LineAudio: cc.AudioClip;
+    P2LineAudio2: cc.AudioClip = null;
 
     private P1char = 0;
     private P2char = 0;
@@ -77,17 +123,19 @@ export default class NewClass extends cc.Component {
     P1S1: boolean = false;
     P1S2: boolean = false;
     P1S3: boolean = false;
+    P1Normal: boolean = false;
 
     P2S1: boolean = false;
     P2S2: boolean = false;
     P2S3: boolean = false;
+    P2Normal: boolean = false;
 
     // LIFE-CYCLE CALLBACKS:
 
     onLoad () {
         cc.loader.loadRes("BGM/hogwarts-legacy-everybody-grab-a-broom", (err, bgm) => {
             this.BGM1 = bgm;
-            cc.audioEngine.playMusic(this.BGM1, true);
+            //cc.audioEngine.playMusic(this.BGM1, true);
         })
         cc.loader.loadRes("BGM/BGM_anticipate_RookWood",() => {}, (err, bgm2) => {
             this.BGM2 = bgm2;
@@ -95,99 +143,132 @@ export default class NewClass extends cc.Component {
             //cc.audioEngine.playEffect(this.BGM2, false);
         })
 
+        this.P1LineAudio2 = null;
+        this.P2LineAudio2 = null;
+
+        if(DataManager.instance.UserRole == 10) {
+            this.P1char = DataManager.instance.UserChar;
+            this.P2char = DataManager.instance.UserChar2;
+        }
+        else {
+            this.P1char = DataManager.instance.UserChar;
+            this.P2char = DataManager.instance.opponentChar;
+        }
         
 
         if(this.P1char == 1) {
-            this.P1skill1Audio = this.Accio;
+            this.P1skill1Audio = this.J;
             this.P1skill2Audio = this.Depulso;
             this.P1skill3Audio = this.Accio;
+            this.P1LineAudio = this.AccioLine;
+            this.P1LineAudio2 = this.DepulsoLine;
         }
         else if(this.P1char == 2) {
-            this.P1skill1Audio = this.Accio;
+            this.P1skill1Audio = this.J;
             this.P1skill2Audio = this.Diffindo;
             this.P1skill3Audio = this.Confringo;
+            this.P1LineAudio = this.ConfringoLine;
+            this.P1LineAudio2 = this.DiffindoLine;
         }
         else if(this.P1char == 3) {
-            this.P1skill1Audio = this.Accio;
-            this.P1skill2Audio = this.Accio;
+            this.P1skill1Audio = this.J;
+            this.P1skill2Audio = this.K;
             this.P1skill3Audio = this.Levioso;
+            this.P1LineAudio = this.LeviosoLine;
         }
         else if(this.P1char == 4) {
-            this.P1skill1Audio = this.Accio;
-            this.P1skill2Audio = this.Accio;
+            this.P1skill1Audio = this.J;
+            this.P1skill2Audio = this.K;
             this.P1skill3Audio = this.Stupefy;
+            this.P1LineAudio = this.StupefyLine;
         }
         else if(this.P1char == 5) {
-            this.P1skill1Audio = this.Accio;
-            this.P1skill2Audio = this.Accio;
+            this.P1skill1Audio = this.J;
+            this.P1skill2Audio = this.K;
             this.P1skill3Audio = this.Expelliarmus;
+            this.P1LineAudio = this.ExpelliarmusLine;
         }
         else if(this.P1char == 6) {
-            this.P1skill1Audio = this.Accio;
-            this.P1skill2Audio = this.Accio;
+            this.P1skill1Audio = this.J;
+            this.P1skill2Audio = this.K;
             this.P1skill3Audio = this.Glacius;
+            this.P1LineAudio = this.GlaciusLine;
         }
         else if(this.P1char == 7) {
-            this.P1skill1Audio = this.Accio;
-            this.P1skill2Audio = this.Accio;
+            this.P1skill1Audio = this.J;
+            this.P1skill2Audio = this.K;
             this.P1skill3Audio = this.Avada_kedavra;
+            this.P1LineAudio = this.Avada_kedavraLine;
         }
         else if(this.P1char == 8) {
-            this.P1skill1Audio = this.Accio;
-            this.P1skill2Audio = this.Accio;
+            this.P1skill1Audio = this.J;
+            this.P1skill2Audio = this.K;
             this.P1skill3Audio = this.Crucio;
+            this.P1LineAudio = this.CrucioLine;
         }
         else if(this.P1char == 9) {
-            this.P1skill1Audio = this.Accio;
-            this.P1skill2Audio = this.Accio;
+            this.P1skill1Audio = this.J;
+            this.P1skill2Audio = this.K;
             this.P1skill3Audio = this.Incendio;
+            this.P1LineAudio = this.IncendioLine;
         }
 
 
         if(this.P2char == 1) {
-            this.P2skill1Audio = this.Accio;
-            this.P2skill2Audio = this.Accio;
+            this.P2skill1Audio = this.J;
+            this.P2skill2Audio = this.Depulso;
             this.P2skill3Audio = this.Accio;
+            this.P2LineAudio = this.AccioLine;
+            this.P2LineAudio2 = this.DepulsoLine;
         }
         else if(this.P2char == 2) {
-            this.P2skill1Audio = this.Accio;
-            this.P2skill2Audio = this.Accio;
-            this.P2skill3Audio = this.Accio;
+            this.P2skill1Audio = this.J;
+            this.P2skill2Audio = this.Diffindo;
+            this.P2skill3Audio = this.Confringo;
+            this.P2LineAudio = this.ConfringoLine;
+            this.P2LineAudio2 = this.DiffindoLine;
         }
         else if(this.P2char == 3) {
-            this.P2skill1Audio = this.Accio;
-            this.P2skill2Audio = this.Accio;
-            this.P2skill3Audio = this.Accio;
+            this.P2skill1Audio = this.J;
+            this.P2skill2Audio = this.K;
+            this.P2skill3Audio = this.Levioso;
+            this.P2LineAudio = this.LeviosoLine;
         }
         else if(this.P2char == 4) {
-            this.P2skill1Audio = this.Accio;
-            this.P2skill2Audio = this.Accio;
-            this.P2skill3Audio = this.Accio;
+            this.P2skill1Audio = this.J;
+            this.P2skill2Audio = this.K;
+            this.P2skill3Audio = this.Stupefy;
+            this.P2LineAudio = this.StupefyLine;
         }
         else if(this.P2char == 5) {
-            this.P2skill1Audio = this.Accio;
-            this.P2skill2Audio = this.Accio;
-            this.P2skill3Audio = this.Accio;
+            this.P2skill1Audio = this.J;
+            this.P2skill2Audio = this.K;
+            this.P2skill3Audio = this.Expelliarmus;
+            this.P2LineAudio = this.ExpelliarmusLine;
         }
         else if(this.P2char == 6) {
-            this.P2skill1Audio = this.Accio;
-            this.P2skill2Audio = this.Accio;
-            this.P2skill3Audio = this.Accio;
+            this.P2skill1Audio = this.J;
+            this.P2skill2Audio = this.K;
+            this.P2skill3Audio = this.Glacius;
+            this.P2LineAudio = this.GlaciusLine;
         }
         else if(this.P2char == 7) {
-            this.P2skill1Audio = this.Accio;
-            this.P2skill2Audio = this.Accio;
-            this.P2skill3Audio = this.Accio;
+            this.P2skill1Audio = this.J;
+            this.P2skill2Audio = this.K;
+            this.P2skill3Audio = this.Avada_kedavra;
+            this.P2LineAudio = this.Avada_kedavraLine;
         }
         else if(this.P2char == 8) {
-            this.P2skill1Audio = this.Accio;
-            this.P2skill2Audio = this.Accio;
-            this.P2skill3Audio = this.Accio;
+            this.P2skill1Audio = this.J;
+            this.P2skill2Audio = this.K;
+            this.P2skill3Audio = this.Crucio;
+            this.P2LineAudio = this.CrucioLine;
         }
         else if(this.P2char == 9) {
-            this.P2skill1Audio = this.Accio;
-            this.P2skill2Audio =this.Accio;
-            this.P2skill3Audio = this.Accio;
+            this.P2skill1Audio = this.J;
+            this.P2skill2Audio = this.K;
+            this.P2skill3Audio = this.Incendio;
+            this.P2LineAudio = this.IncendioLine;
         }
         
     }
@@ -261,6 +342,9 @@ export default class NewClass extends cc.Component {
     update (dt) {
         this.p1health.string = Math.trunc(this.player1.health).toString();
         this.p2health.string = Math.trunc(this.player2.health).toString();
+        if(!this.player1.normal_attack)
+            this.P1Normal = false;
+
         if(!this.player1.skill1)
             this.P1S1 = false;
 
@@ -270,6 +354,11 @@ export default class NewClass extends cc.Component {
         if(!this.player1.skill3)
             this.P1S3 = false;
 
+        if(this.player1.normal_attack && !this.P1Normal) {
+            this.P1Normal = true;
+            cc.audioEngine.playEffect(this.NormalAttack, false);
+        }
+
         if(this.player1.skill1 && !this.P1S1) {
             this.P1S1 = true;
             cc.audioEngine.playEffect(this.P1skill1Audio, false);
@@ -277,12 +366,17 @@ export default class NewClass extends cc.Component {
         if(this.player1.skill2 && !this.P1S2) {
             this.P1S2 = true;
             cc.audioEngine.playEffect(this.P1skill2Audio, false);
+            if(this.P1LineAudio2 != null)
+                cc.audioEngine.playEffect(this.P1LineAudio2, false);
         }
         if(this.player1.skill3 && !this.P1S3) {
             this.P1S3 = true;
             cc.audioEngine.playEffect(this.P1skill3Audio, false);
+            cc.audioEngine.playEffect(this.P1LineAudio, false);
         }
 
+        if(!this.player2.normal_attack)
+            this.P2Normal = false;
 
         if(!this.player2.skill1)
             this.P2S1 = false;
@@ -293,6 +387,11 @@ export default class NewClass extends cc.Component {
         if(!this.player2.skill3)
             this.P2S3 = false;
 
+        if(this.player2.normal_attack && !this.P2Normal) {
+            this.P2Normal = true;
+            cc.audioEngine.playEffect(this.NormalAttack, false);
+        }
+
         if(this.player2.skill1 && !this.P2S1) {
             this.P2S1 = true;
             cc.audioEngine.playEffect(this.P2skill1Audio, false);
@@ -300,10 +399,13 @@ export default class NewClass extends cc.Component {
         if(this.player2.skill2 && !this.P2S2) {
             this.P2S2 = true;
             cc.audioEngine.playEffect(this.P2skill2Audio, false);
+            if(this.P2LineAudio2 != null)
+                cc.audioEngine.playEffect(this.P2LineAudio2, false);
         }
         if(this.player2.skill3 && !this.P2S3) {
             this.P2S3 = true;
             cc.audioEngine.playEffect(this.P2skill3Audio, false);
+            cc.audioEngine.playEffect(this.P2LineAudio, false);
         }
     }
 }
