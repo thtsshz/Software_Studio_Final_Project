@@ -198,11 +198,13 @@ export default class Map1mgrMultiplayerF extends cc.Component {
         var data : playerstatus = {
             0 : {
                 x : this.Splayer1.node.x,
-                y : this.Splayer1.node.y
+                y : this.Splayer1.node.y,
+                health : this.Splayer1.health
             },
             1 : {
                 x : this.Splayer2.node.x,
-                y : this.Splayer2.node.y
+                y : this.Splayer2.node.y,
+                health : this.Splayer2.health
             }
         }
         this.server_sock.send(JSON.stringify(data));
@@ -237,8 +239,14 @@ export default class Map1mgrMultiplayerF extends cc.Component {
             this.P2char = DataManager.instance.UserChar2;
         }
         else {
-            this.P1char = DataManager.instance.UserChar;
-            this.P2char = DataManager.instance.opponentChar;
+            if(DataManager.instance.UserRole == 0) {
+                this.P1char = DataManager.instance.UserChar;
+                this.P2char = DataManager.instance.opponentChar;
+            }
+            else {
+                this.P2char = DataManager.instance.UserChar;
+                this.P1char = DataManager.instance.opponentChar;
+            }
         }
         let s = "player";
         if(DataManager.instance.UserRole == 10) {
@@ -593,10 +601,12 @@ class playerstatus{
     0 : {
         x : number;
         y : number; 
+        health : number;
     };
     1 : {
         x : number;
         y : number;
+        health : number;
     };
 }
 

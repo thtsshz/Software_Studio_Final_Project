@@ -253,10 +253,15 @@ export default class Map1multiplayerC extends cc.Component {
                     );
                 }
             }
-            if (event.keyCode == cc.macro.KEY.ctrl) {
+            if (event.keyCode == cc.macro.KEY.ctrl && DataManager.instance.UserRole == 0) {
                 // console.log('gather');
                 // this.progressbar.getComponent('ProgressBar').progressbar
                 this.progressbar.progress += 0.02;
+            }
+            if (event.keyCode == cc.macro.KEY.ctrl && DataManager.instance.UserRole == 1) {
+                // console.log('gather');
+                // this.progressbar.getComponent('ProgressBar').progressbar
+                this.progressbar2.progress += 0.02;
             }
             if (event.keyCode == cc.macro.KEY.j && !this.skill1_Cooldown && !this.inAttack) {
                 this.inAttack = true;
@@ -280,18 +285,48 @@ export default class Map1multiplayerC extends cc.Component {
                     this.anim.play(this.node.name + '_basic_attack');
                 }
             }
-            if (event.keyCode == cc.macro.KEY.l && this.progressbar.progress >= 1 && !this.skill3_Cooldown && !this.inAttack) {
-                this.inAttack = true;
-                this.skill3_Cooldown = true;
-                this.progressbar.progress = 0;
-                this.scheduleOnce(() => {
-                    this.skill3_Cooldown = false;
-                }, this.skill_time3);
-                this.skill3 = true;
-                if (!this.anim.getAnimationState(this.node.name + '_basic_attack').isPlaying) {
-                    this.anim.play(this.node.name + '_basic_attack');
+            if(event.keyCode == cc.macro.KEY.l) {
+                if(DataManager.instance.UserRole == 0) {
+                    if (this.progressbar.progress >= 1 && !this.skill3_Cooldown && !this.inAttack) {
+                        this.inAttack = true;
+                        this.skill3_Cooldown = true;
+                        this.progressbar.progress = 0;
+                        this.scheduleOnce(() => {
+                            this.skill3_Cooldown = false;
+                        }, this.skill_time3);
+                        this.skill3 = true;
+                        if (!this.anim.getAnimationState(this.node.name + '_basic_attack').isPlaying) {
+                            this.anim.play(this.node.name + '_basic_attack');
+                        }
+                    }
+                }
+                else {
+                    if (this.progressbar2.progress >= 1 && !this.skill3_Cooldown && !this.inAttack) {
+                        this.inAttack = true;
+                        this.skill3_Cooldown = true;
+                        this.progressbar2.progress = 0;
+                        this.scheduleOnce(() => {
+                            this.skill3_Cooldown = false;
+                        }, this.skill_time3);
+                        this.skill3 = true;
+                        if (!this.anim.getAnimationState(this.node.name + '_basic_attack').isPlaying) {
+                            this.anim.play(this.node.name + '_basic_attack');
+                        }
+                    }
                 }
             }
+            // if (event.keyCode == cc.macro.KEY.l && this.progressbar.progress >= 1 && !this.skill3_Cooldown && !this.inAttack) {
+            //     this.inAttack = true;
+            //     this.skill3_Cooldown = true;
+            //     this.progressbar.progress = 0;
+            //     this.scheduleOnce(() => {
+            //         this.skill3_Cooldown = false;
+            //     }, this.skill_time3);
+            //     this.skill3 = true;
+            //     if (!this.anim.getAnimationState(this.node.name + '_basic_attack').isPlaying) {
+            //         this.anim.play(this.node.name + '_basic_attack');
+            //     }
+            // }
         }
         else {
             if (event.keyCode == cc.macro.KEY.w && this.on_ground == true) {//w jump
@@ -616,17 +651,21 @@ export default class Map1multiplayerC extends cc.Component {
             if(this.node.name == ('player' + DataManager.instance.UserChar.toString())){ // player 1
                 this.node.x = this.serverplayerstatus["0"].x;
                 this.node.y = this.serverplayerstatus["0"].y;
+                this.health = this.serverplayerstatus["0"].health;
             }else{
                 this.node.x = this.serverplayerstatus["1"].x;
                 this.node.y = this.serverplayerstatus["1"].y;
+                this.health = this.serverplayerstatus["1"].health;
             }
         }else{
             if(this.node.name == ('player' + DataManager.instance.UserChar.toString())){ 
                 this.node.x = this.serverplayerstatus["1"].x;
                 this.node.y = this.serverplayerstatus["1"].y;
+                this.health = this.serverplayerstatus["1"].health;
             }else{
                 this.node.x = this.serverplayerstatus["0"].x;
                 this.node.y = this.serverplayerstatus["0"].y;
+                this.health = this.serverplayerstatus["0"].health;
             }
         }
 
@@ -731,9 +770,11 @@ class playerstatus{
     0 : {
         x : number;
         y : number; 
+        health : number;
     };
     1 : {
         x : number;
         y : number;
+        health : number;
     };
 }
