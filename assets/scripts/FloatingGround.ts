@@ -33,13 +33,13 @@ export default class FloatingGround extends cc.Component {
     }
 
     update (dt) {
-        
+        console.log(this.node.position.x, this.node.position.y);
     }
 
     onBeginContact(contact, self, other) {
         
         if(!this.Touched) {
-            let waitTime = Math.random() * 5 + 3;
+            let waitTime = Math.random() * 3;
             this.Touched = true;
             this.scheduleOnce(() => {
                 this.FloatingGround.runAction(this.actionSeq);
@@ -52,10 +52,11 @@ export default class FloatingGround extends cc.Component {
             }, waitTime+2);
 
             this.scheduleOnce(() => {
-                this.node.setPosition(this.initPosX, this.initPosY);
                 this.FloatingGround.setPosition(this.GinitPosX, this.GinitPosY);
+                this.node.setPosition(this.initPosX, this.initPosY);
+                
                 this.actionSeq = cc.sequence(cc.moveBy(0.05, 5, 0), cc.moveBy(0.1, -10,0), cc.moveBy(0.05, 5, 0)).repeat(7);
-            }, waitTime * 2 + 2);
+            }, waitTime * 2 + 5);
         }
     }
 }

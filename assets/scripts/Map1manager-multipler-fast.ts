@@ -1,25 +1,29 @@
-const { ccclass, property } = cc._decorator;
+const {ccclass, property} = cc._decorator;
 import { DataManager } from "./DataManager";
 import player from "./player";
 
 @ccclass
-export default class Map2Manager extends cc.Component {
-
+export default class Map1mgrMultiplayerF extends cc.Component {
 
     Player1: cc.Node = null;
     Player2: cc.Node = null;
     player1: player = null;
     player2: player = null;
 
+    SPlayer1: cc.Node = null;
+    SPlayer2: cc.Node = null;
+    Splayer1: player = null;
+    Splayer2: player = null;
+
     @property(player)
-    Char1: player = null;
+    Char1 : player = null;
     @property(player)
-    Char2: player = null;
+    Char2 : player = null;
 
     @property(cc.Label)
-    p1health: cc.Label = null;
+    p1health : cc.Label = null;
     @property(cc.Label)
-    p2health: cc.Label = null;
+    p2health : cc.Label = null;
 
 
     @property(cc.AudioClip)
@@ -33,7 +37,7 @@ export default class Map2Manager extends cc.Component {
 
     @property(cc.AudioClip)
     Avada_kedavra: cc.AudioClip = null;
-
+    
     @property(cc.AudioClip)
     Confringo: cc.AudioClip = null;
 
@@ -78,7 +82,7 @@ export default class Map2Manager extends cc.Component {
 
     @property(cc.AudioClip)
     Avada_kedavraLine: cc.AudioClip = null;
-
+    
     @property(cc.AudioClip)
     ConfringoLine: cc.AudioClip = null;
 
@@ -130,50 +134,75 @@ export default class Map2Manager extends cc.Component {
     P2S3: boolean = false;
     P2Normal: boolean = false;
 
-    private preP1health = 0;
-    private preP2health = 0;
+    keyboarddata : keyboardstats = null;
+    private server_sock = null;
+
     // LIFE-CYCLE CALLBACKS:
 
-    onLoad() {
-        cc.loader.loadRes("BGM/hogwarts-legacy-all-roads-lead-to-hogsmeade", (err, bgm) => {
+    onLoad () {
+        cc.loader.loadRes("BGM/hogwarts-legacy-everybody-grab-a-broom", (err, bgm) => {
             this.BGM1 = bgm;
-            cc.audioEngine.playMusic(this.BGM1, true);
         })
         cc.loader.loadRes("BGM/BGM_anticipate_RookWood",() => {}, (err, bgm2) => {
             this.BGM2 = bgm2;
-            //console.log(err);
-            //cc.audioEngine.playEffect(this.BGM2, false);
         })
 
         this.P1LineAudio2 = null;
         this.P2LineAudio2 = null;
-
-        // if(DataManager.instance.UserRole == 10) {
-        //     this.P1char = DataManager.instance.UserChar;
-        //     this.P2char = DataManager.instance.UserChar2;
-        // }
-        // else {
-        //     this.P1char = DataManager.instance.UserChar;
-        //     this.P2char = DataManager.instance.opponentChar;
-        // }
-
-
+        cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyDown, this);
+        if(DataManager.instance.UserRole == 0) this.server_connect_to_db();
     }
+    server_connect_to_db(){
+        this.server_sock = new WebSocket("ws://192.168.50.62:8081/server");
+        this.server_sock.onopen = () => {
+            console.log(`[server][open] Connected}`);
+        }
+        this.server_sock.onclose = (e) => {
+            if (e.wasClean) {
+                console.log(`[server][close] Connection closed, code=${e.code} reason=${e.reason}`);
+            } else {
+                console.log(`[server][close] Connection died, code=${e.code} reason=${e.reason}`);
+            }
+        }
+        this.server_sock.onerror = (e) => {
+            console.log(`[server][error] ${e.message}`);
+        };
 
-    start() {
-        cc.find("Canvas/Player/player1").active = false;
-        cc.find("Canvas/Player/player2").active = false;
-        cc.find("Canvas/Player/player3").active = false;
-        cc.find("Canvas/Player/player4").active = false;
-        cc.find("Canvas/Player/player5").active = false;
-        cc.find("Canvas/Player/player6").active = false;
-        cc.find("Canvas/Player/player7").active = false;
-        cc.find("Canvas/Player/player8").active = false;
-        cc.find("Canvas/Player/player9").active = false;
+        this.server_sock.onmessage = (e) => {
+            console.log("[server][recv]", e.data, performance.now() - JSON.parse(e.data).ts);
+            this.keyboarddata = e.data;
 
+            //update splayers.
+            if(e.data.name == 0){
+                if(e.data.updown == false)this.Splayer1.onKeyDown(e.key);
+                else this.Splayer1.onKeyUp(e.key);
+            }
+            if(e.data.name == 1){
+                if(e.data.updown == false)this.Splayer2.onKeyDown(e.key);
+                else this.Splayer2.onKeyUp(e.key);
+            }
+            
+        }
+    }
+    onKeyDown(event){
+        if(event.keyCode == cc.macro.KEY.p){
+            
+        }
+    }
+    
+    start () {
+        cc.find("Canvas/Player/player1").active = false;        
+        cc.find("Canvas/Player/player2").active = false; 
+        cc.find("Canvas/Player/player3").active = false; 
+        cc.find("Canvas/Player/player4").active = false; 
+        cc.find("Canvas/Player/player5").active = false;        
+        cc.find("Canvas/Player/player6").active = false; 
+        cc.find("Canvas/Player/player7").active = false; 
+        cc.find("Canvas/Player/player8").active = false; 
+        cc.find("Canvas/Player/player9").active = false; 
+        
 
-
-        if (DataManager.instance.UserRole == 10) {
+        if(DataManager.instance.UserRole == 10) {
             this.P1char = DataManager.instance.UserChar;
             this.P2char = DataManager.instance.UserChar2;
         }
@@ -182,138 +211,153 @@ export default class Map2Manager extends cc.Component {
             this.P2char = DataManager.instance.opponentChar;
         }
         let s = "player";
-        if (DataManager.instance.UserRole == 10) {
+        if(DataManager.instance.UserRole == 10) {
             let char1 = DataManager.instance.UserChar.toString();
-            cc.find("Canvas/Player/player" + char1).active = true;
-            this.Player1 = cc.find("Canvas/Player/player" + char1);
+            cc.find("Canvas/Player/player"+char1).active = true;
+            this.Player1 = cc.find("Canvas/Player/player"+char1);
             this.player1 = this.Player1.getComponent(player);
 
             char1 = DataManager.instance.UserChar2.toString();
-            let char2 = cc.find("Canvas/Player/player" + char1);
+            let char2 = cc.find("Canvas/Player/player"+char1);
             char2.active = true;
-            char2.setPosition(622.9, 275.859);
+            char2.setPosition(422,273);
             char2.scaleX = -0.2;
             this.Player2 = char2;
             this.player2 = this.Player2.getComponent(player);
-            console.log(s + DataManager.instance.UserChar.toString())
-            console.log(s + DataManager.instance.UserChar2.toString())
+            console.log(s+DataManager.instance.UserChar.toString())
+            console.log(s+DataManager.instance.UserChar2.toString())
         }
         else {
-            if (DataManager.instance.UserRole == 1) {
+            if(DataManager.instance.UserRole == 1) {
                 let char1 = DataManager.instance.UserChar.toString();
-                let char2 = cc.find("Canvas/Player/player" + char1);
+                let char2 = cc.find("Canvas/Player/player"+char1);
                 this.Player2 = char2;
                 this.player2 = this.Player2.getComponent(player);
                 char2.active = true;
-                char2.setPosition(622.9, 275.859);
+                char2.setPosition(422,273);
                 char2.scaleX = -0.2;
 
                 char1 = DataManager.instance.opponentChar.toString();
-                char2 = cc.find("Canvas/Player/player" + char1);
+                char2 = cc.find("Canvas/Player/player"+char1);
                 this.Player1 = char2;
                 this.player1 = this.Player1.getComponent(player);
                 char2.active = true;
+
+                //#multi
+                char1 = DataManager.instance.UserChar.toString();
+                char2 = cc.find("Canvas/SPlayer/player"+char1);
+                this.SPlayer2 = char2;
+                this.Splayer2 = this.SPlayer2.getComponent(player);
+                char2.active = true;
+                char2.setPosition(422,273);
+                char2.scaleX = -0.2;
+
+                char1 = DataManager.instance.opponentChar.toString();
+                char2 = cc.find("Canvas/SPlayer/player"+char1);
+                this.SPlayer1 = char2;
+                this.Splayer1 = this.SPlayer1.getComponent(player);
+                char2.active = true;
             }
-            else if (DataManager.instance.UserRole == 0) {
+            else if(DataManager.instance.UserRole == 0) {
                 let char1 = DataManager.instance.UserChar.toString();
-                let char2 = cc.find("Canvas/Player/player" + char1);
-                this.Player1 = cc.find("Canvas/Player/player" + char1);
+                let char2 = cc.find("Canvas/Player/player"+char1);
+                this.Player1 = cc.find("Canvas/Player/player"+char1);
                 this.player1 = this.Player1.getComponent(player);
                 char2.active = true;
 
                 char1 = DataManager.instance.opponentChar.toString();
-                char2 = cc.find("Canvas/Player/player" + char1);
+                char2 = cc.find("Canvas/Player/player"+char1);
                 this.Player2 = char2;
                 this.player2 = this.Player2.getComponent(player);
                 char2.active = true;
-                char2.setPosition(422, 273);
+                char2.setPosition(422,273);
+                char2.scaleX = -0.2;
+
+                //#multi
+                char1 = DataManager.instance.UserChar.toString();
+                char2 = cc.find("Canvas/SPlayer/player"+char1);
+                this.SPlayer1 = cc.find("Canvas/SPlayer/player"+char1);
+                this.Splayer1 = this.SPlayer1.getComponent(player);
+                char2.active = true;
+
+                char1 = DataManager.instance.opponentChar.toString();
+                char2 = cc.find("Canvas/SPlayer/player"+char1);
+                this.SPlayer2 = char2;
+                this.Splayer2 = this.SPlayer2.getComponent(player);
+                char2.active = true;
+                char2.setPosition(422,273);
                 char2.scaleX = -0.2;
             }
-            console.log(s + DataManager.instance.UserChar.toString())
+            console.log(s+DataManager.instance.UserChar.toString())
         }
 
         this.loadSkills();
     }
 
-    update(dt) {
-        //health UI
-        if (this.preP1health != this.player1.health) {
-            var diff = this.preP1health - this.player1.health;
-            if (diff > 0) this.UI_health_action("light", 1);
-            else if (diff > 100) this.UI_health_action("middle", 1);
-            else if (diff > 300) this.UI_health_action("high", 1);
-            this.preP1health = this.player1.health;
-        }
-        if (this.preP2health != this.player2.health) {
-            var diff = this.preP2health - this.player2.health;
-            if (diff > 0) this.UI_health_action("light", 2);
-            else if (diff > 100) this.UI_health_action("middle", 2);
-            else if (diff > 300) this.UI_health_action("high", 2);
-            this.preP2health = this.player2.health;
-        }
+    update (dt) {
         this.p1health.string = Math.trunc(this.player1.health).toString();
         this.p2health.string = Math.trunc(this.player2.health).toString();
-        if (!this.player1.normal_attack)
+        if(!this.player1.normal_attack)
             this.P1Normal = false;
 
-        if (!this.player1.skill1)
+        if(!this.player1.skill1)
             this.P1S1 = false;
 
-        if (!this.player1.skill2)
+        if(!this.player1.skill2)
             this.P1S2 = false;
 
-        if (!this.player1.skill3)
+        if(!this.player1.skill3)
             this.P1S3 = false;
 
-        if (this.player1.normal_attack && !this.P1Normal) {
+        if(this.player1.normal_attack && !this.P1Normal) {
             this.P1Normal = true;
             cc.audioEngine.playEffect(this.NormalAttack, false);
         }
 
-        if (this.player1.skill1 && !this.P1S1) {
+        if(this.player1.skill1 && !this.P1S1) {
             this.P1S1 = true;
             cc.audioEngine.playEffect(this.P1skill1Audio, false);
         }
-        if (this.player1.skill2 && !this.P1S2) {
+        if(this.player1.skill2 && !this.P1S2) {
             this.P1S2 = true;
             cc.audioEngine.playEffect(this.P1skill2Audio, false);
-            if (this.P1LineAudio2 != null)
+            if(this.P1LineAudio2 != null)
                 cc.audioEngine.playEffect(this.P1LineAudio2, false);
         }
-        if (this.player1.skill3 && !this.P1S3) {
+        if(this.player1.skill3 && !this.P1S3) {
             this.P1S3 = true;
             cc.audioEngine.playEffect(this.P1skill3Audio, false);
             cc.audioEngine.playEffect(this.P1LineAudio, false);
         }
 
-        if (!this.player2.normal_attack)
+        if(!this.player2.normal_attack)
             this.P2Normal = false;
 
-        if (!this.player2.skill1)
+        if(!this.player2.skill1)
             this.P2S1 = false;
 
-        if (!this.player2.skill2)
+        if(!this.player2.skill2)
             this.P2S2 = false;
 
-        if (!this.player2.skill3)
+        if(!this.player2.skill3)
             this.P2S3 = false;
 
-        if (this.player2.normal_attack && !this.P2Normal) {
+        if(this.player2.normal_attack && !this.P2Normal) {
             this.P2Normal = true;
             cc.audioEngine.playEffect(this.NormalAttack, false);
         }
 
-        if (this.player2.skill1 && !this.P2S1) {
+        if(this.player2.skill1 && !this.P2S1) {
             this.P2S1 = true;
             cc.audioEngine.playEffect(this.P2skill1Audio, false);
         }
-        if (this.player2.skill2 && !this.P2S2) {
+        if(this.player2.skill2 && !this.P2S2) {
             this.P2S2 = true;
             cc.audioEngine.playEffect(this.P2skill2Audio, false);
-            if (this.P2LineAudio2 != null)
+            if(this.P2LineAudio2 != null)
                 cc.audioEngine.playEffect(this.P2LineAudio2, false);
         }
-        if (this.player2.skill3 && !this.P2S3) {
+        if(this.player2.skill3 && !this.P2S3) {
             this.P2S3 = true;
             cc.audioEngine.playEffect(this.P2skill3Audio, false);
             cc.audioEngine.playEffect(this.P2LineAudio, false);
@@ -322,7 +366,7 @@ export default class Map2Manager extends cc.Component {
 
 
     loadSkills() {
-        if (this.P1char == 1) {
+        if(this.P1char == 1) {
             this.P1skill1Audio = this.J;
             this.P1skill2Audio = this.Depulso;
             this.P1skill3Audio = this.Accio;
@@ -331,7 +375,7 @@ export default class Map2Manager extends cc.Component {
             this.player2.skill3Effect = 6;
             this.player2.skill2Effect = 7;
         }
-        else if (this.P1char == 2) {
+        else if(this.P1char == 2) {
             this.P1skill1Audio = this.J;
             this.P1skill2Audio = this.Diffindo;
             this.P1skill3Audio = this.Confringo;
@@ -340,7 +384,7 @@ export default class Map2Manager extends cc.Component {
             this.player2.skill3Effect = 10;
             this.player2.skill2Effect = 10;
         }
-        else if (this.P1char == 3) {
+        else if(this.P1char == 3) {
             this.P1skill1Audio = this.J;
             this.P1skill2Audio = this.K;
             this.P1skill3Audio = this.Levioso;
@@ -348,7 +392,7 @@ export default class Map2Manager extends cc.Component {
             this.player2.skill3Effect = 5;
             this.player2.skill2Effect = 11;
         }
-        else if (this.P1char == 4) {
+        else if(this.P1char == 4) {
             this.P1skill1Audio = this.J;
             this.P1skill2Audio = this.K;
             this.P1skill3Audio = this.Stupefy;
@@ -356,7 +400,7 @@ export default class Map2Manager extends cc.Component {
             this.player2.skill3Effect = 9;
             this.player2.skill2Effect = 11;
         }
-        else if (this.P1char == 5) {
+        else if(this.P1char == 5) {
             this.P1skill1Audio = this.J;
             this.P1skill2Audio = this.K;
             this.P1skill3Audio = this.Expelliarmus;
@@ -364,7 +408,7 @@ export default class Map2Manager extends cc.Component {
             this.player2.skill3Effect = 4;
             this.player2.skill2Effect = 11;
         }
-        else if (this.P1char == 6) {
+        else if(this.P1char == 6) {
             this.P1skill1Audio = this.J;
             this.P1skill2Audio = this.K;
             this.P1skill3Audio = this.Glacius;
@@ -372,7 +416,7 @@ export default class Map2Manager extends cc.Component {
             this.player2.skill3Effect = 9;
             this.player2.skill2Effect = 11;
         }
-        else if (this.P1char == 7) {
+        else if(this.P1char == 7) {
             this.P1skill1Audio = this.J;
             this.P1skill2Audio = this.K;
             this.P1skill3Audio = this.Avada_kedavra;
@@ -380,7 +424,7 @@ export default class Map2Manager extends cc.Component {
             this.player2.skill3Effect = 8;
             this.player2.skill2Effect = 11;
         }
-        else if (this.P1char == 8) {
+        else if(this.P1char == 8) {
             this.P1skill1Audio = this.J;
             this.P1skill2Audio = this.K;
             this.P1skill3Audio = this.Crucio;
@@ -388,7 +432,7 @@ export default class Map2Manager extends cc.Component {
             this.player2.skill3Effect = 2;
             this.player2.skill2Effect = 11;
         }
-        else if (this.P1char == 9) {
+        else if(this.P1char == 9) {
             this.P1skill1Audio = this.J;
             this.P1skill2Audio = this.K;
             this.P1skill3Audio = this.Incendio;
@@ -398,7 +442,7 @@ export default class Map2Manager extends cc.Component {
         }
 
 
-        if (this.P2char == 1) {
+        if(this.P2char == 1) {
             this.P2skill1Audio = this.J;
             this.P2skill2Audio = this.Depulso;
             this.P2skill3Audio = this.Accio;
@@ -407,7 +451,7 @@ export default class Map2Manager extends cc.Component {
             this.player1.skill3Effect = 6;
             this.player1.skill2Effect = 7;
         }
-        else if (this.P2char == 2) {
+        else if(this.P2char == 2) {
             this.P2skill1Audio = this.J;
             this.P2skill2Audio = this.Diffindo;
             this.P2skill3Audio = this.Confringo;
@@ -416,7 +460,7 @@ export default class Map2Manager extends cc.Component {
             this.player1.skill3Effect = 10;
             this.player1.skill2Effect = 10;
         }
-        else if (this.P2char == 3) {
+        else if(this.P2char == 3) {
             this.P2skill1Audio = this.J;
             this.P2skill2Audio = this.K;
             this.P2skill3Audio = this.Levioso;
@@ -424,7 +468,7 @@ export default class Map2Manager extends cc.Component {
             this.player1.skill3Effect = 5;
             this.player1.skill2Effect = 11;
         }
-        else if (this.P2char == 4) {
+        else if(this.P2char == 4) {
             this.P2skill1Audio = this.J;
             this.P2skill2Audio = this.K;
             this.P2skill3Audio = this.Stupefy;
@@ -432,7 +476,7 @@ export default class Map2Manager extends cc.Component {
             this.player1.skill3Effect = 9;
             this.player1.skill2Effect = 11;
         }
-        else if (this.P2char == 5) {
+        else if(this.P2char == 5) {
             this.P2skill1Audio = this.J;
             this.P2skill2Audio = this.K;
             this.P2skill3Audio = this.Expelliarmus;
@@ -440,7 +484,7 @@ export default class Map2Manager extends cc.Component {
             this.player1.skill3Effect = 4;
             this.player1.skill2Effect = 11;
         }
-        else if (this.P2char == 6) {
+        else if(this.P2char == 6) {
             this.P2skill1Audio = this.J;
             this.P2skill2Audio = this.K;
             this.P2skill3Audio = this.Glacius;
@@ -448,7 +492,7 @@ export default class Map2Manager extends cc.Component {
             this.player1.skill3Effect = 9;
             this.player1.skill2Effect = 11;
         }
-        else if (this.P2char == 7) {
+        else if(this.P2char == 7) {
             this.P2skill1Audio = this.J;
             this.P2skill2Audio = this.K;
             this.P2skill3Audio = this.Avada_kedavra;
@@ -456,7 +500,7 @@ export default class Map2Manager extends cc.Component {
             this.player1.skill3Effect = 8;
             this.player1.skill2Effect = 11;
         }
-        else if (this.P2char == 8) {
+        else if(this.P2char == 8) {
             this.P2skill1Audio = this.J;
             this.P2skill2Audio = this.K;
             this.P2skill3Audio = this.Crucio;
@@ -464,7 +508,7 @@ export default class Map2Manager extends cc.Component {
             this.player1.skill3Effect = 2;
             this.player1.skill2Effect = 11;
         }
-        else if (this.P2char == 9) {
+        else if(this.P2char == 9) {
             this.P2skill1Audio = this.J;
             this.P2skill2Audio = this.K;
             this.P2skill3Audio = this.Incendio;
@@ -473,31 +517,15 @@ export default class Map2Manager extends cc.Component {
             this.player1.skill2Effect = 11;
         }
     }
-    UI_health_action(mode: string, player: number) {
-        var P1h = cc.find("Canvas/UI/P1health/p1h").getComponent(cc.Label);
-        var P2h = cc.find("Canvas/UI/P2health/p2h").getComponent(cc.Label);
-        console.log("P1h: ", P1h);
-
-        var Ph = (player == 1) ? P1h : P2h;
-        var seq;
-        var degree;
-        if (mode == "light") degree = 5;
-        else if (mode == "middle") degree = 10;
-        else if (mode == "high") degree = 15;
-        var up = cc.moveBy(0.1, cc.v2(0, degree));
-        var down = cc.moveBy(0.1, cc.v2(0, 0 - degree * 2));
-        var left = cc.moveBy(0.1, cc.v2(0 - degree, degree));
-        var right = cc.moveBy(0.1, cc.v2(2 * degree, 0));
-        var back = cc.moveBy(0.1, cc.v2(0 - degree, 0));
-        seq = cc.sequence(up, down, left, right, back);
-        Ph.node.runAction(seq);
-    }
 }
 
 
-
-
-
+class keyboardstats{
+    name : number;
+    character : number;
+    key : string;
+    updown : number;
+}
 
 
 

@@ -7473,6 +7473,8 @@ declare namespace cc {
 		(http://www.w3.org/TR/DOM-Level-3-Events/#event-flow), of the DOM Level 3 Events specification.
 		!#zh 事件阶段 */
 		eventPhase: number;		
+
+		touch: cc.Touch;
 		/**
 		!#en Reset the event for being stored in the object pool.
 		!#zh 重置对象池中存储的事件。 
@@ -15475,7 +15477,9 @@ declare namespace cc {
 		@param material material
 		@param owner owner 
 		*/
-		static create (material: Material, owner: cc.RenderComponent): MaterialVariant | null;	
+		static create (material: Material, owner: cc.RenderComponent): MaterialVariant | null;
+		
+		effect: any;
 	}	
 	/** !#en cc.EditBox is a component for inputing text, you can use it to gather small amounts of text from users.
 	!#zh EditBox 组件，用于获取用户的输入文本。 */

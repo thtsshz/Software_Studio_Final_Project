@@ -1,0 +1,17 @@
+{
+  "__type__": "cc.Material",
+  "_name": "searchlight",
+  "_objFlags": 0,
+  "_native": "",
+  "_effectAsset": {
+    "__uuid__": "e7e3f5d7-fe3e-418f-9d8c-2867f4f2c2a9"
+  },
+  "_techniqueIndex": 0,
+  "_techniqueData": {
+    "0": {
+      "defines": {
+        "USE_TEXTURE": true
+      }
+    }
+  }
+}

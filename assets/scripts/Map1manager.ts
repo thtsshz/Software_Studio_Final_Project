@@ -138,7 +138,7 @@ export default class NewClass extends cc.Component {
     onLoad() {
         cc.loader.loadRes("BGM/hogwarts-legacy-everybody-grab-a-broom", (err, bgm) => {
             this.BGM1 = bgm;
-            //cc.audioEngine.playMusic(this.BGM1, true);
+            cc.audioEngine.playMusic(this.BGM1, true);
         })
         cc.loader.loadRes("BGM/BGM_anticipate_RookWood", () => { }, (err, bgm2) => {
             this.BGM2 = bgm2;
