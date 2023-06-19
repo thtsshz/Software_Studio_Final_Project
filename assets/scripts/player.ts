@@ -47,6 +47,7 @@ export default class player extends cc.Component {
     private anim = null;
 
     health: number = 500;
+    MaxHealth: number = 5000;
 
     skill1: boolean = false;
     skill2: boolean = false;
@@ -308,14 +309,14 @@ export default class player extends cc.Component {
 
     }
     onBeginContact(contact, self, other) {
-        console.log(contact.getWorldManifold().normal.y);
+        // console.log(contact.getWorldManifold().normal.y);
         if (contact.getWorldManifold().normal.y > 0.9) {
-            console.log(other.node.name);
+            // console.log(other.node.name);
 
             if (other.node.name == 'House1' || other.node.name == 'Collider1_1' || other.node.name == 'Collider1_2' || other.node.name == 'Collider2_1' || other.node.name == 'Collider2_2' || other.node.name == 'Collider2_3' || other.node.name == 'Collider2_4' || other.node.name == 'Collider2_5') {
                 contact.disabled = true;
                 console.log(contact.disable);
-                console.log('disable');
+                // console.log('disable');
 
                 return;
             }
@@ -333,6 +334,21 @@ export default class player extends cc.Component {
             this.contactskill(4);
         }
 
+        if (other.node.name == "Bread") {
+            if (this.health + 100 < this.MaxHealth) this.health += 100;
+            else this.health = this.MaxHealth;
+            other.node.destroy();
+        } else if (other.node.name == "Meat") {
+            // speed *= 1.5
+            // this.playerSpeed *= 1.5;
+            other.node.destroy();
+        } else if (other.node.name == "Potion") {
+            //gather energy
+            other.node.destroy();
+        } else if (other.node.name == "Poisson") {
+            //reduce energy
+            other.node.destroy();
+        }
     }
     contactskill(skilltype: number): void {
         let action = cc.sequence(cc.moveBy(0.01, 30, 3), cc.moveBy(0.01, -30, -3)).repeat(5);
