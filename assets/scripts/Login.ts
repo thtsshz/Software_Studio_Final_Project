@@ -8,6 +8,16 @@ export default class Login extends cc.Component {
 
     private inputemail: string = "";
     private inputpassword: string = "";
+
+    @property(cc.AudioClip)
+    BGM: cc.AudioClip = null;
+
+    start() {
+        cc.audioEngine.setMusicVolume(DataManager.instance.BackgroundVolume);
+        cc.audioEngine.setEffectsVolume(DataManager.instance.EffectVolume);
+        cc.audioEngine.stopAll();
+        cc.audioEngine.playMusic(this.BGM, true);
+    }
     
     Login():void{
         firebase.auth().signInWithEmailAndPassword(this.inputemail, this.inputpassword)

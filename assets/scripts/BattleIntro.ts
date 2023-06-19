@@ -139,6 +139,7 @@ export default class BattleIntro extends cc.Component {
         }, 0.5);
 
         this.scheduleOnce(() => {
+            cc.audioEngine.stopMusic();
             if(DataManager.instance.Map == 1)
                 cc.director.loadScene("Map1");
             else 

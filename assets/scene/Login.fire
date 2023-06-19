@@ -3307,6 +3307,9 @@
       "__id__": 2
     },
     "_enabled": true,
+    "BGM": {
+      "__uuid__": "9e229694-a4fb-49a2-96cb-43ac3f8ede07"
+    },
     "_id": "0ahSFFCNNOQI9fe1pux9iJ"
   }
 ]
