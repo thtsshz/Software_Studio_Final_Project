@@ -578,13 +578,13 @@
     "body": null,
     "_offset": {
       "__type__": "cc.Vec2",
-      "x": 0,
-      "y": 340
+      "x": 1.3,
+      "y": 337.6
     },
     "_size": {
       "__type__": "cc.Size",
-      "width": 797,
-      "height": 10
+      "width": 794.5,
+      "height": 5.2
     },
     "_id": "941DnFOd9FmLf3uqCupOzS"
   },
