@@ -5772,7 +5772,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 962.88,
+      "width": 932.04,
       "height": 151.2
     },
     "_anchorPoint": {
@@ -5824,8 +5824,8 @@
     ],
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
-    "_string": "Press P to resume",
-    "_N$string": "Press P to resume",
+    "_string": "Press I to resume",
+    "_N$string": "Press I to resume",
     "_fontSize": 120,
     "_lineHeight": 120,
     "_enableWrapText": true,
@@ -17140,7 +17140,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 76.45,
+      "width": 79.76,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -17202,7 +17202,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 23.18,
+      "width": 26.4,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -17338,7 +17338,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 76.45,
+      "width": 83.76,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -17400,7 +17400,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 23.18,
+      "width": 26.4,
       "height": 50.4
     },
     "_anchorPoint": {

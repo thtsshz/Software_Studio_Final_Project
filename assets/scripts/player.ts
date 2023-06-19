@@ -125,7 +125,7 @@ export default class player extends cc.Component {
         // }
         if (DataManager.instance.gameover) return;
 
-        if (this.ispause && event.keyCode == cc.macro.KEY.p) {
+        if (this.ispause && event.keyCode == cc.macro.KEY.i) {
             this.ispause = false;
             cc.director.resume();
             this.pause.active = false;
@@ -133,7 +133,7 @@ export default class player extends cc.Component {
         }
         if (this.ispause) return;
 
-        if (event.keyCode == cc.macro.KEY.p) {
+        if (event.keyCode == cc.macro.KEY.i) {
             this.pause.active = true;
             cc.director.pause();
             this.ispause = true;
@@ -220,7 +220,7 @@ export default class player extends cc.Component {
                 }
             }
             if (event.keyCode == cc.macro.KEY.l && this.progressbar.progress >= 1 && !this.skill3_Cooldown && !this.inAttack) {
-                if(DataManager.instance.UserChar == 7) {
+                if (DataManager.instance.UserChar == 7) {
                     DataManager.instance.gameover = true;
                     let Vplay = cc.find("Canvas/VideoPlayer");
                     Vplay.active = true;
@@ -359,7 +359,7 @@ export default class player extends cc.Component {
                 }
             }
             if (event.keyCode == cc.macro.KEY.y && this.progressbar2.progress >= 1 && !this.skill3_Cooldown && !this.inAttack) {
-                if(DataManager.instance.UserChar2 == 7) {
+                if (DataManager.instance.UserChar2 == 7) {
                     DataManager.instance.gameover = true;
                     let Vplay = cc.find("Canvas/VideoPlayer");
                     Vplay.active = true;
