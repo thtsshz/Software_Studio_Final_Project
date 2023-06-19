@@ -1,6 +1,6 @@
 {
   "__type__": "cc.AnimationClip",
-  "_name": "player7_idle",
+  "_name": "player1_idle",
   "_objFlags": 0,
   "_native": "",
   "_duration": 0.1,
@@ -14,7 +14,7 @@
           {
             "frame": 0,
             "value": {
-              "__uuid__": "4e6cac8f-1917-4f40-bbd2-8d9e7ce02019"
+              "__uuid__": "657f9167-5fac-4d4b-8416-a2934c2b0e6f"
             }
           },
           {
