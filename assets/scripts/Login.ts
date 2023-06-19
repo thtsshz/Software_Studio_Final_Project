@@ -16,6 +16,15 @@ export default class Login extends cc.Component {
             DataManager.instance.UserName = this.inputemail;
             DataManager.instance.UserUID = uid;
             DataManager.instance.UserChar = 0;
+            
+            firebase.database().ref("User/" + DataManager.instance.UserUID).once("value", (snap) => {
+                DataManager.instance.WinCount = snap.val().WinCount;
+            }).then(() => {
+                //alert(DataManager.instance.WinCount);
+                cc.director.loadScene("change_scene");
+            }).catch(e => {
+                console.log(e.message);
+            });
             //console.log(DataManager.instance.UserName);
             // let Room;
             // firebase.database().ref("rooms/0").once("value", (room) => {
@@ -34,7 +43,7 @@ export default class Login extends cc.Component {
             //     cc.director.loadScene("Select_character");  
             // });
             
-            cc.director.loadScene("change_scene");
+            //cc.director.loadScene("change_scene");
         })
         .catch(e => {
             alert('Invalid Email or Password');
@@ -45,12 +54,12 @@ export default class Login extends cc.Component {
         firebase.auth().createUserWithEmailAndPassword(this.inputemail, this.inputpassword)
         .then((userCredential) => {
             let uid = firebase.auth().currentUser.uid
-            firebase.database().ref("User/" + uid).set({Email: this.inputemail, Character: 0, isReady: false})
+            firebase.database().ref("User/" + uid).set({Email: this.inputemail, Character: 0, isReady: false, WinCount: 0})
             .then((userCredential) => {
                 DataManager.instance.UserName = this.inputemail;
                 DataManager.instance.UserUID = uid;
                 DataManager.instance.UserChar = 0;
-
+                DataManager.instance.WinCount = 0;
                 // let Room;
                 // firebase.database().ref("rooms/0").once("value", (room) => {
                 //     Room = room.val();
@@ -93,7 +102,14 @@ export default class Login extends cc.Component {
             DataManager.instance.UserName = this.inputemail;
             DataManager.instance.UserUID = uid;
             DataManager.instance.UserChar = 0;
-            cc.director.loadScene("Lobby");
+            firebase.database().ref("User/" + DataManager.instance.UserUID).once("value", (snap) => {
+                DataManager.instance.WinCount = snap.val().WinCount;
+            }).then(() => {
+                //alert(DataManager.instance.WinCount);
+                cc.director.loadScene("Lobby");
+            }).catch(e => {
+                console.log(e.message);
+            });
         })
         .catch(e => {
             alert('Invalid Email or Password');
@@ -107,7 +123,14 @@ export default class Login extends cc.Component {
             DataManager.instance.UserName = this.inputemail;
             DataManager.instance.UserUID = uid;
             DataManager.instance.UserChar = 0;
-            cc.director.loadScene("Lobby");
+            firebase.database().ref("User/" + DataManager.instance.UserUID).once("value", (snap) => {
+                DataManager.instance.WinCount = snap.val().WinCount;
+            }).then(() => {
+                //alert(DataManager.instance.WinCount);
+                cc.director.loadScene("Lobby");
+            }).catch(e => {
+                console.log(e.message);
+            });
         })
         .catch(e => {
             alert('Invalid Email or Password');
