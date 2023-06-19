@@ -110,6 +110,8 @@ export default class player extends cc.Component {
         // if(event.keyCode == cc.macro.KEY.u){
         //     this.health += 10;
         // }
+        if(DataManager.instance.gameover) return ;
+
         if (this.node.name == ('player' + DataManager.instance.UserChar.toString())) {
             if (event.keyCode == cc.macro.KEY.up && this.on_ground == true) {//jump
                 this.jump = true;
@@ -339,10 +341,28 @@ export default class player extends cc.Component {
     }
 
     start() {
-
+        if(this.node.name == ('player' + DataManager.instance.UserChar.toString())) {
+            this.node.getChildByName("J").getComponent(cc.PhysicsBoxCollider).tag = 3;
+            this.node.getChildByName("K").getComponent(cc.PhysicsBoxCollider).tag = 3;
+            this.node.getChildByName("L").getComponent(cc.PhysicsBoxCollider).tag = 3;
+        }
+        else {
+            this.node.getChildByName("J").getComponent(cc.PhysicsBoxCollider).tag = 4;
+            this.node.getChildByName("K").getComponent(cc.PhysicsBoxCollider).tag = 4;
+            this.node.getChildByName("L").getComponent(cc.PhysicsBoxCollider).tag = 4;
+        }
     }
     onBeginContact(contact, self, other) {
         // console.log(contact.getWorldManifold().normal.y);
+        if(this.node.name == ('player' + DataManager.instance.UserChar.toString())) {
+            if(other.tag == 3)
+                return;
+        }
+        else {
+            if(other.tag == 4)
+                return;
+        }
+
         if(other.node.name=='Broom'&&this.on_broom==false){
             this.on_broom=true;
             console.log('contact broom');

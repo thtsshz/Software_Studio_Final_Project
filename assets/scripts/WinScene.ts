@@ -57,6 +57,9 @@ export default class WinScene extends cc.Component {
     @property(cc.AudioClip)
     BGM: cc.AudioClip = null;
 
+    @property(cc.AudioClip)
+    MainBGM: cc.AudioClip = null;
+
 
     onLoad () {}
 
@@ -166,6 +169,7 @@ export default class WinScene extends cc.Component {
 
     ReturnB() {
         cc.audioEngine.stopMusic();
+        cc.audioEngine.playMusic(this.MainBGM, true);
         cc.director.loadScene("Lobby");
     }
 }
