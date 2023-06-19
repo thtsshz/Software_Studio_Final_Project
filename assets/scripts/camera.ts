@@ -19,10 +19,15 @@ export default class NewClass extends cc.Component {
     // LIFE-CYCLE CALLBACKS:
     cnt=0;
     finish=0;
-    // onLoad () {}
+    onLoad () {
+        cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyDown, this);
+    }
 
     start () {
     
+    }
+    onKeyDown(event){
+        if(event.keyCode == cc.macro.KEY.p)this.node.x = 3000 - this.node.x;
     }
 
     update (dt) {
