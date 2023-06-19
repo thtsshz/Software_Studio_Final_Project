@@ -311,7 +311,7 @@
     "_enabled": true,
     "_materials": [
       {
-        "__uuid__": "eca5d2f2-8ef6-41c2-bbe6-f9c79d09c432"
+        "__uuid__": "f9b868ec-d62a-4471-9c06-3aa2c3676bd5"
       }
     ],
     "_srcBlendFactor": 770,
@@ -970,6 +970,12 @@
       "__id__": 2
     },
     "_enabled": true,
+    "BGM": {
+      "__uuid__": "9e229694-a4fb-49a2-96cb-43ac3f8ede07"
+    },
+    "sp": {
+      "__id__": 6
+    },
     "_id": "7431GJzJ5NZZQp6rQM2Rft"
   }
 ]

@@ -2472,8 +2472,8 @@
     "_skewX": 0,
     "_skewY": 0,
     "_is3DNode": false,
-    "_groupIndex": 1,
-    "groupIndex": 1,
+    "_groupIndex": 0,
+    "groupIndex": 0,
     "_id": "4f9pcXJLxDLpfIPzD4XEh3"
   },
   {
@@ -2520,7 +2520,7 @@
       "ctor": "Float64Array",
       "array": [
         3.29,
-        164.747,
+        163.032,
         0,
         0,
         0,

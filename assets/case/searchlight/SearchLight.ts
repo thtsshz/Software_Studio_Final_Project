@@ -1,18 +1,7 @@
-import { DataManager } from "./DataManager";
 const {ccclass, property} = cc._decorator;
 
 @ccclass
-export default class game extends cc.Component {
-
-    // LIFE-CYCLE CALLBACKS:
-    // onLoad () {}
-    // start () {}
-    // update (dt) {}
-    startbtn() : void{
-        cc.director.loadScene("Login");
-    }
-    @property(cc.AudioClip)
-    BGM: cc.AudioClip = null;
+export default class SearchLight extends cc.Component {
 
     @property({
         type: cc.Sprite
@@ -42,11 +31,6 @@ export default class game extends cc.Component {
         this._materi.effect.setProperty("light_strength", 0.8); 
         // 光源颜色，这里设置为白光
         this._materi.effect.setProperty("light_color", new cc.Vec4(1, 1, 1, 1)); 
-
-        cc.audioEngine.setMusicVolume(DataManager.instance.BackgroundVolume);
-        cc.audioEngine.setEffectsVolume(DataManager.instance.EffectVolume);
-        cc.audioEngine.stopAll();
-        cc.audioEngine.playMusic(this.BGM, true);
     }
 
     public touchBegin(event: cc.Event) {
