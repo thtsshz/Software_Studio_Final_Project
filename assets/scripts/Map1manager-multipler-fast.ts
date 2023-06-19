@@ -1,5 +1,7 @@
 const {ccclass, property} = cc._decorator;
 import { DataManager } from "./DataManager";
+import Map1multiplayerC from "./Map1multiplayerC";
+import Map1multiplayerS from "./Map1multiplayerS";
 import player from "./player";
 
 @ccclass
@@ -7,13 +9,13 @@ export default class Map1mgrMultiplayerF extends cc.Component {
 
     Player1: cc.Node = null;
     Player2: cc.Node = null;
-    player1: player = null;
-    player2: player = null;
+    player1: Map1multiplayerC = null;
+    player2: Map1multiplayerC = null;
 
     SPlayer1: cc.Node = null;
     SPlayer2: cc.Node = null;
-    Splayer1: player = null;
-    Splayer2: player = null;
+    Splayer1: Map1multiplayerS = null;
+    Splayer2: Map1multiplayerS = null;
 
     @property(player)
     Char1 : player = null;
@@ -136,7 +138,7 @@ export default class Map1mgrMultiplayerF extends cc.Component {
 
     keyboarddata : keyboardstats = null;
     private server_sock = null;
-
+    serverconnected = false;
     // LIFE-CYCLE CALLBACKS:
 
     onLoad () {
@@ -149,13 +151,17 @@ export default class Map1mgrMultiplayerF extends cc.Component {
 
         this.P1LineAudio2 = null;
         this.P2LineAudio2 = null;
-        cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyDown, this);
         if(DataManager.instance.UserRole == 0) this.server_connect_to_db();
     }
+    protected onDestroy(): void {
+        this.server_sock.close();
+    }
     server_connect_to_db(){
+        if(this.server_sock) delete this.server_sock;
         this.server_sock = new WebSocket("ws://192.168.50.62:8081/server");
         this.server_sock.onopen = () => {
             console.log(`[server][open] Connected}`);
+            this.serverconnected = true;
         }
         this.server_sock.onclose = (e) => {
             if (e.wasClean) {
@@ -163,34 +169,50 @@ export default class Map1mgrMultiplayerF extends cc.Component {
             } else {
                 console.log(`[server][close] Connection died, code=${e.code} reason=${e.reason}`);
             }
+            this.serverconnected = false;
         }
         this.server_sock.onerror = (e) => {
             console.log(`[server][error] ${e.message}`);
         };
 
         this.server_sock.onmessage = (e) => {
-            console.log("[server][recv]", e.data, performance.now() - JSON.parse(e.data).ts);
-            this.keyboarddata = e.data;
+            // console.log("[server][recv]", e.data, performance.now() - JSON.parse(e.data).ts);
+            this.keyboarddata = JSON.parse(e.data);
 
             //update splayers.
-            if(e.data.name == 0){
-                if(e.data.updown == false)this.Splayer1.onKeyDown(e.key);
-                else this.Splayer1.onKeyUp(e.key);
+            console.log("server receive data ! ", this.keyboarddata.name);
+            if(this.keyboarddata.name == 0){
+                if(this.keyboarddata.updown == 0)this.Splayer1.onKeyDown(this.keyboarddata.key);
+                else this.Splayer1.onKeyUp(this.keyboarddata.key);
             }
-            if(e.data.name == 1){
-                if(e.data.updown == false)this.Splayer2.onKeyDown(e.key);
-                else this.Splayer2.onKeyUp(e.key);
+            if(this.keyboarddata.name == 1){
+                if(this.keyboarddata.updown == 0)this.Splayer2.onKeyDown(this.keyboarddata.key);
+                else this.Splayer2.onKeyUp(this.keyboarddata.key);
             }
             
         }
     }
-    onKeyDown(event){
-        if(event.keyCode == cc.macro.KEY.p){
-            
+
+    uploaddata(){
+        if(!this.serverconnected || DataManager.instance.UserRole)return ;
+        var data : playerstatus = {
+            0 : {
+                x : this.Splayer1.node.x,
+                y : this.Splayer1.node.y,
+                health : this.Splayer1.health
+            },
+            1 : {
+                x : this.Splayer2.node.x,
+                y : this.Splayer2.node.y,
+                health : this.Splayer2.health
+            }
         }
+        this.server_sock.send(JSON.stringify(data));
     }
     
     start () {
+        console.log("start");
+
         cc.find("Canvas/Player/player1").active = false;        
         cc.find("Canvas/Player/player2").active = false; 
         cc.find("Canvas/Player/player3").active = false; 
@@ -200,6 +222,16 @@ export default class Map1mgrMultiplayerF extends cc.Component {
         cc.find("Canvas/Player/player7").active = false; 
         cc.find("Canvas/Player/player8").active = false; 
         cc.find("Canvas/Player/player9").active = false; 
+
+        cc.find("Canvas/SPlayer/player1").active = false;        
+        cc.find("Canvas/SPlayer/player2").active = false; 
+        cc.find("Canvas/SPlayer/player3").active = false; 
+        cc.find("Canvas/SPlayer/player4").active = false; 
+        cc.find("Canvas/SPlayer/player5").active = false;        
+        cc.find("Canvas/SPlayer/player6").active = false; 
+        cc.find("Canvas/SPlayer/player7").active = false; 
+        cc.find("Canvas/SPlayer/player8").active = false; 
+        cc.find("Canvas/SPlayer/player9").active = false; 
         
 
         if(DataManager.instance.UserRole == 10) {
@@ -207,15 +239,24 @@ export default class Map1mgrMultiplayerF extends cc.Component {
             this.P2char = DataManager.instance.UserChar2;
         }
         else {
-            this.P1char = DataManager.instance.UserChar;
-            this.P2char = DataManager.instance.opponentChar;
+            if(DataManager.instance.UserRole == 0) {
+                this.P1char = DataManager.instance.UserChar;
+                this.P2char = DataManager.instance.opponentChar;
+            }
+            else {
+                this.P2char = DataManager.instance.UserChar;
+                this.P1char = DataManager.instance.opponentChar;
+            }
         }
         let s = "player";
         if(DataManager.instance.UserRole == 10) {
+
+            console.log("single player");
+
             let char1 = DataManager.instance.UserChar.toString();
             cc.find("Canvas/Player/player"+char1).active = true;
             this.Player1 = cc.find("Canvas/Player/player"+char1);
-            this.player1 = this.Player1.getComponent(player);
+            this.player1 = this.Player1.getComponent(Map1multiplayerC);
 
             char1 = DataManager.instance.UserChar2.toString();
             let char2 = cc.find("Canvas/Player/player"+char1);
@@ -223,31 +264,36 @@ export default class Map1mgrMultiplayerF extends cc.Component {
             char2.setPosition(422,273);
             char2.scaleX = -0.2;
             this.Player2 = char2;
-            this.player2 = this.Player2.getComponent(player);
+            this.player2 = this.Player2.getComponent(Map1multiplayerC);
             console.log(s+DataManager.instance.UserChar.toString())
             console.log(s+DataManager.instance.UserChar2.toString())
         }
         else {
             if(DataManager.instance.UserRole == 1) {
-                let char1 = DataManager.instance.UserChar.toString();
+                let char1: string = DataManager.instance.UserChar.toString();
+                console.log(char1);
                 let char2 = cc.find("Canvas/Player/player"+char1);
                 this.Player2 = char2;
-                this.player2 = this.Player2.getComponent(player);
+                this.player2 = this.Player2.getComponent(Map1multiplayerC);
                 char2.active = true;
                 char2.setPosition(422,273);
                 char2.scaleX = -0.2;
-
+                
                 char1 = DataManager.instance.opponentChar.toString();
+                console.log(char1);
                 char2 = cc.find("Canvas/Player/player"+char1);
                 this.Player1 = char2;
-                this.player1 = this.Player1.getComponent(player);
+                this.player1 = this.Player1.getComponent(Map1multiplayerC);
                 char2.active = true;
+                console.log("char : ", char1, char2)
+                console.log(this.player1)
+                console.log(this.Player1.getComponent(Map1multiplayerC))
 
                 //#multi
                 char1 = DataManager.instance.UserChar.toString();
                 char2 = cc.find("Canvas/SPlayer/player"+char1);
                 this.SPlayer2 = char2;
-                this.Splayer2 = this.SPlayer2.getComponent(player);
+                this.Splayer2 = this.SPlayer2.getComponent(Map1multiplayerS);
                 char2.active = true;
                 char2.setPosition(422,273);
                 char2.scaleX = -0.2;
@@ -255,38 +301,47 @@ export default class Map1mgrMultiplayerF extends cc.Component {
                 char1 = DataManager.instance.opponentChar.toString();
                 char2 = cc.find("Canvas/SPlayer/player"+char1);
                 this.SPlayer1 = char2;
-                this.Splayer1 = this.SPlayer1.getComponent(player);
+                this.Splayer1 = this.SPlayer1.getComponent(Map1multiplayerS);
                 char2.active = true;
+                console.log(this.player1)
             }
             else if(DataManager.instance.UserRole == 0) {
-                let char1 = DataManager.instance.UserChar.toString();
-                let char2 = cc.find("Canvas/Player/player"+char1);
-                this.Player1 = cc.find("Canvas/Player/player"+char1);
-                this.player1 = this.Player1.getComponent(player);
+                let char0 : string = DataManager.instance.UserChar.toString();
+                console.log(char0);
+                
+                let char2 = cc.find("Canvas/Player/player"+char0);
+                this.Player1 = cc.find("Canvas/Player/player"+char0);
+                this.player1 = this.Player1.getComponent(Map1multiplayerC);
                 char2.active = true;
 
-                char1 = DataManager.instance.opponentChar.toString();
-                char2 = cc.find("Canvas/Player/player"+char1);
+                console.log("char : ", char0, char2)
+                console.log(this.player1)
+                console.log(this.Player1.getComponent(player))
+
+                char0 = DataManager.instance.opponentChar.toString();
+                console.log("cc", char0);
+                char2 = cc.find("Canvas/Player/player"+char0);
                 this.Player2 = char2;
-                this.player2 = this.Player2.getComponent(player);
+                this.player2 = this.Player2.getComponent(Map1multiplayerC);
                 char2.active = true;
                 char2.setPosition(422,273);
                 char2.scaleX = -0.2;
 
                 //#multi
-                char1 = DataManager.instance.UserChar.toString();
-                char2 = cc.find("Canvas/SPlayer/player"+char1);
-                this.SPlayer1 = cc.find("Canvas/SPlayer/player"+char1);
-                this.Splayer1 = this.SPlayer1.getComponent(player);
+                char0 = DataManager.instance.UserChar.toString();
+                char2 = cc.find("Canvas/SPlayer/player"+char0);
+                this.SPlayer1 = cc.find("Canvas/SPlayer/player"+char0);
+                this.Splayer1 = this.SPlayer1.getComponent(Map1multiplayerS);
                 char2.active = true;
 
-                char1 = DataManager.instance.opponentChar.toString();
-                char2 = cc.find("Canvas/SPlayer/player"+char1);
+                char0 = DataManager.instance.opponentChar.toString();
+                char2 = cc.find("Canvas/SPlayer/player"+char0);
                 this.SPlayer2 = char2;
-                this.Splayer2 = this.SPlayer2.getComponent(player);
+                this.Splayer2 = this.SPlayer2.getComponent(Map1multiplayerS);
                 char2.active = true;
                 char2.setPosition(422,273);
                 char2.scaleX = -0.2;
+                console.log(this.player1)
             }
             console.log(s+DataManager.instance.UserChar.toString())
         }
@@ -294,9 +349,24 @@ export default class Map1mgrMultiplayerF extends cc.Component {
         this.loadSkills();
     }
 
+    private nowtime : number = 0;
+    private nextconnectiontime : number = 10;
+
     update (dt) {
-        this.p1health.string = Math.trunc(this.player1.health).toString();
-        this.p2health.string = Math.trunc(this.player2.health).toString();
+        // return ;
+        this.nowtime += dt;
+        if(!this.serverconnected && this.nowtime >= this.nextconnectiontime){
+            this.nextconnectiontime = this.nowtime + 1;
+            console.log("connection failed, trying to connect to server...");
+            this.server_connect_to_db();
+        }
+
+        this.uploaddata();
+
+        if(this.player1 == null) console.log("player1 is null");
+        else this.p1health.string = Math.trunc(this.player1.health).toString();
+        if(this.player1 == null) console.log("player2 is null");
+        else this.p2health.string = Math.trunc(this.player2.health).toString();
         if(!this.player1.normal_attack)
             this.P1Normal = false;
 
@@ -527,6 +597,18 @@ class keyboardstats{
     updown : number;
 }
 
+class playerstatus{
+    0 : {
+        x : number;
+        y : number; 
+        health : number;
+    };
+    1 : {
+        x : number;
+        y : number;
+        health : number;
+    };
+}
 
 
 

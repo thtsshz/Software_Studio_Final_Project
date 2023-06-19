@@ -20,21 +20,21 @@ export default class joinroom extends cc.Component {
     }
     CreateRoom(): void{
 
-        const request = fetch('http://192.168.50.62:8080/createroom', {
-            method: "POST",
-            body: JSON.stringify({userID : DataManager.instance.UserUID}),
-        }).then(res => {
-            // console.log("", res)
-            return res.json()
-        }).catch(err => {
-            alert("connection error");
-            console.log(err);
-        }).then(res => {
+        // const request = fetch('http://192.168.50.62:8080/createroom', {
+        //     method: "POST",
+        //     body: JSON.stringify({userID : DataManager.instance.UserUID}),
+        // }).then(res => {
+        //     // console.log("", res)
+        //     return res.json()
+        // }).catch(err => {
+        //     alert("connection error");
+        //     console.log(err);
+        // }).then(res => {
 
-            console.log("RoomID: ", res.roomID);
-            firebase.database().ref("rooms/" + res.roomID).set({Map:0, P1:DataManager.instance.UserUID, P2:1})
+            console.log("RoomID: ", 0);
+            firebase.database().ref("rooms/" + "0").set({Map:0, P1:DataManager.instance.UserUID, P2:1})
             .then(data => {
-                DataManager.instance.MultiplayerRoomID = parseInt(res.roomID);  
+                DataManager.instance.MultiplayerRoomID = parseInt("0");  
                 alert(DataManager.instance.MultiplayerRoomID);
                 console.log(DataManager.instance.MultiplayerRoomID);
                 cc.director.loadScene("Select_character");
@@ -42,7 +42,7 @@ export default class joinroom extends cc.Component {
                 console.log(err);
             });
 
-        });
+        // });
     }
     JoinRoom(): void{
         console.log(this.JoinRoomID);

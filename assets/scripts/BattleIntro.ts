@@ -140,10 +140,14 @@ export default class BattleIntro extends cc.Component {
 
         this.scheduleOnce(() => {
             cc.audioEngine.stopMusic();
-            if(DataManager.instance.Map == 1)
-                cc.director.loadScene("Map1");
-            else 
-                cc.director.loadScene("Map2");
+            if(DataManager.instance.UserRole == 10){
+                if(DataManager.instance.Map == 1)
+                    cc.director.loadScene("Map1");
+                else 
+                    cc.director.loadScene("Map2");
+            }else{
+                cc.director.loadScene("Map1-multipler-fast");
+            }
         }, 3)
     }
 

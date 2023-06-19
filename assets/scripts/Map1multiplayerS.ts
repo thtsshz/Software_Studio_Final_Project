@@ -23,21 +23,16 @@ class keyboardstats{
 @ccclass
 export default class Map1multiplayerS extends cc.Component {
 
-    @property(cc.Label)
-    label: cc.Label = null;
-
     @property(cc.ProgressBar)
     progressbar: cc.ProgressBar = null;
     @property(cc.ProgressBar)
     progressbar2: cc.ProgressBar = null;
-    @property
-    text: string = 'hello';
 
     @property(cc.ParticleSystem)
     private GatherParticle: cc.ParticleSystem = null;
 
-    @property(cc.Camera)
-    camera: cc.Camera = null;
+    // @property(cc.Camera)
+    // camera: cc.Camera = null;
     // LIFE-CYCLE CALLBACKS:
     left_move: boolean = false;
     right_move: boolean = false;
@@ -427,8 +422,8 @@ export default class Map1multiplayerS extends cc.Component {
         }
     }
     contactskill(skilltype: number): void {
-        let action = cc.sequence(cc.moveBy(0.01, 30, 3), cc.moveBy(0.01, -30, -3)).repeat(5);
-        this.camera.node.runAction(action);
+        // let action = cc.sequence(cc.moveBy(0.01, 30, 3), cc.moveBy(0.01, -30, -3)).repeat(5);
+        // this.camera.node.runAction(action);
         if (skilltype == 1) {       // basic attack
             this.health -= 300;
         } else if (skilltype == 2) { // cannot move + damage
