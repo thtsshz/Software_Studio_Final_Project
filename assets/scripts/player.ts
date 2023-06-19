@@ -58,6 +58,9 @@ export default class player extends cc.Component {
     skill2_Cooldown: boolean = false;
     skill3_Cooldown: boolean = false;
 
+    skill3Effect: number;
+    skill2Effect: number;
+
     inAttack: boolean = false;
 
     onLoad() {
@@ -328,11 +331,11 @@ export default class player extends cc.Component {
         if (other.node.name == 'BasicAttack') {
             this.contactskill(1);
         } else if (other.node.name == 'J') {
-            this.contactskill(6);
+            this.contactskill(11);
         } else if (other.node.name == 'K') {
-            this.contactskill(3);
+            this.contactskill(this.skill2Effect);
         } else if (other.node.name == 'L') {
-            this.contactskill(4);
+            this.contactskill(this.skill3Effect);
         }
 
         if (other.node.name == "Bread") {
@@ -373,13 +376,14 @@ export default class player extends cc.Component {
                 this.inAttack = false;
             }, 4);
         } else if (skilltype == 5) { // floating
+            this.health -= 100;
             this.moveable = false;
             this.floating = true;
             this.scheduleOnce(function () {
                 this.moveable = true;
                 this.floating = false;
             }, 2);
-        } else if (skilltype == 6) { // damage + push right
+        } else if (skilltype == 6) { // damage + push right 
             this.health -= 100;
             this.skillpush = true;
             this.scheduleOnce(() => {
@@ -404,7 +408,9 @@ export default class player extends cc.Component {
                 this.moveable = true;
             }, 3);
         } else if (skilltype == 10) { // high damage
-            this.health -= 500;
+            this.health -= 400;
+        } else if (skilltype == 11){ // slightly higher damage
+            this.health -= 150;
         }
     }
     // onPreSolve(contact,self,other){
@@ -429,7 +435,7 @@ export default class player extends cc.Component {
     update(dt) {
 
         if(DataManager.instance.gameover) return ;
-        
+
         if(this.health <= 0){
             DataManager.instance.gameover = true;
             this.health = 0 ;
