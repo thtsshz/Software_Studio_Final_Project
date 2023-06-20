@@ -1036,7 +1036,7 @@ export default class player extends cc.Component {
         let action = cc.sequence(cc.moveBy(0.01, 30, 3), cc.moveBy(0.01, -30, -3)).repeat(5);
         this.camera.node.runAction(action);
         if (skilltype == 1) {       // basic attack
-            this.health -= 300;
+            this.health -= 100;
         } else if (skilltype == 2) { // cannot move + damage
             this.health -= 200;
             this.moveable = false;
