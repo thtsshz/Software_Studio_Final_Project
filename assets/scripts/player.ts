@@ -122,6 +122,10 @@ export default class player extends cc.Component {
         }
         this.pause.active = false;
     }
+    protected onDestroy(): void {
+        if(this.client_sock) this.client_sock.close();
+        if(this.server_sock) this.server_sock.close();
+    }
     server_connect_to_db(){ // #multiplayer
         if(this.server_sock) delete this.server_sock;
         this.server_sock = new WebSocket("ws://192.168.50.62:8081/server");
