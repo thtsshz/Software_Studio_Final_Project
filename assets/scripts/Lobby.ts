@@ -24,7 +24,7 @@ export default class Lobby extends cc.Component {
 
     onLoad () {
         cc.find("Canvas/Connection").getComponent(cc.Sprite).spriteFrame = this.redx;
-        cc.find("Canvas/MultiPlayer").getComponent(cc.Button).interactable= false;
+        cc.find("Canvas/MultiPlayer").getComponent(cc.Button).interactable = false;
     }
 
     start () {
@@ -39,12 +39,39 @@ export default class Lobby extends cc.Component {
     }
 
     private nowtime : number = 0;
-    private nextconnectiontime : number = 10;
+    private nextconnectiontime : number = 3;
+    connecttoserver(){
+        if(this.server_sock) delete this.server_sock;
+        this.server_sock = new WebSocket("ws://192.168.50.62:8081/server");
+        this.server_sock.onopen = () => {
+            console.log(`[server][open] Connected}`);
+            this.serveravailable = true;
+            cc.find("Canvas/Connection").getComponent(cc.Sprite).spriteFrame = this.greenwifi;
+            cc.find("Canvas/MultiPlayer").getComponent(cc.Button).interactable = true;
+        }
+        this.server_sock.onclose = (e) => {
+            if (e.wasClean) {
+                console.log(`[server][close] Connection closed, code=${e.code} reason=${e.reason}`);
+            } else {
+                console.log(`[server][close] Connection died, code=${e.code} reason=${e.reason}`);
+            }
+            this.serveravailable = false;
+            cc.find("Canvas/Connection").getComponent(cc.Sprite).spriteFrame = this.redx;
+            cc.find("Canvas/MultiPlayer").getComponent(cc.Button).interactable = false;
+        }
+        this.server_sock.onerror = (e) => {
+            // console.log(`[server][error] ${e.message}`);
+        };
 
+        this.server_sock.onmessage = (e) => {
+            // console.log("[server][recv]", e.data, performance.now() - JSON.parse(e.data).ts);
+        }
+    }
     update (dt) {
         this.nowtime += dt;
         if(!this.serveravailable && this.nowtime >= this.nextconnectiontime){
             this.nextconnectiontime = this.nowtime + 5;
+            this.connecttoserver();
             console.log("connection failed, trying to connect to server...");
         }
 
