@@ -68,6 +68,7 @@ export default class SelectMap extends cc.Component {
             this.scheduleOnce(() =>{
                 firebase.database().ref("rooms/" + DataManager.instance.MultiplayerRoomID.toString() + "/Map").set(0);
             }, 1)
+            cc.director.loadScene("BattleIntro");
         }
     }
 
