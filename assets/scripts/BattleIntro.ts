@@ -146,7 +146,7 @@ export default class BattleIntro extends cc.Component {
                 else 
                     cc.director.loadScene("Map2");
             }else{
-                cc.director.loadScene("Map1-multipler-fast");
+                cc.director.loadScene("Map1");
             }
         }, 3)
     }

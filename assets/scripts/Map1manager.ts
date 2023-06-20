@@ -178,8 +178,14 @@ export default class NewClass extends cc.Component {
             this.P2char = DataManager.instance.UserChar2;
         }
         else {
-            this.P1char = DataManager.instance.UserChar;
-            this.P2char = DataManager.instance.opponentChar;
+            if(DataManager.instance.UserRole == 0) {
+                this.P1char = DataManager.instance.UserChar;
+                this.P2char = DataManager.instance.opponentChar;
+            }
+            else {
+                this.P2char = DataManager.instance.UserChar;
+                this.P1char = DataManager.instance.opponentChar;
+            }
         }
         let s = "player";
         if (DataManager.instance.UserRole == 10) {

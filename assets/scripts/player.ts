@@ -9,6 +9,15 @@
 const { ccclass, property } = cc._decorator;
 import { DataManager } from "./DataManager";
 
+// #multiplayer
+class dbdata{
+    name : number;
+    data : cc.macro.KEY;
+    updown : number;
+    x : number;
+    y : number;
+}
+
 @ccclass
 export default class player extends cc.Component {
 
@@ -75,12 +84,104 @@ export default class player extends cc.Component {
 
     ispause: boolean = false;
 
+    private server_sock = null;
+    private client_sock = null;
+    private serverconnected : boolean = false;
+    private multimode : number = 0;
+
     onLoad() {
         cc.director.getPhysicsManager().enabled = true;
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyDown, this);
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_UP, this.onKeyUp, this);
         this.anim = this.getComponent(cc.Animation);
         DataManager.instance.gameover = false;
+
+        // #multiplayer
+        if(DataManager.instance.UserRole == 0){
+            if(this.node.name == ('player' + DataManager.instance.UserChar.toString())){ // p1
+                this.server_connect_to_db();
+                this.multimode = 1;
+            }
+            if(this.node.name == ('player' + DataManager.instance.opponentChar.toString())){ // p2
+                this.client_connect_to_db();
+                this.multimode = 2;
+            }
+        }
+        if(DataManager.instance.UserRole == 1){
+            if(this.node.name == ('player' + DataManager.instance.UserChar.toString())){ // p2
+                this.server_connect_to_db();
+                this.multimode = 3;
+            }
+            if(this.node.name == ('player' + DataManager.instance.opponentChar.toString())){ // p1
+                this.client_connect_to_db();
+                this.multimode = 4;
+            }
+        }
+    }
+    server_connect_to_db(){ // #multiplayer
+        if(this.server_sock) delete this.server_sock;
+        this.server_sock = new WebSocket("ws://192.168.50.62:8081/server");
+        this.server_sock.onopen = () => {
+            console.log(`[server][open] Connected}`);
+            this.serverconnected = true;
+        }
+        this.server_sock.onclose = (e) => {
+            if (e.wasClean) {
+                console.log(`[server][close] Connection closed, code=${e.code} reason=${e.reason}`);
+            } else {
+                console.log(`[server][close] Connection died, code=${e.code} reason=${e.reason}`);
+            }
+            this.serverconnected = false;
+        }
+        this.server_sock.onerror = (e) => {
+            console.log(`[server][error] ${e.message}`);
+        };
+
+        this.server_sock.onmessage = (e) => {
+            // console.log("[server][recv]", e.data, performance.now() - JSON.parse(e.data).ts);
+            
+        }
+    }
+    client_connect_to_db(){ // #multiplayer
+        if(this.client_sock) delete this.client_sock;
+        this.client_sock = new WebSocket("ws://192.168.50.62:8081/client");
+        this.client_sock.onopen = () => {
+            console.log(`[server][open] Connected}`);
+            this.serverconnected = true;
+        }
+        this.client_sock.onclose = (e) => {
+            if (e.wasClean) {
+                console.log(`[server][close] Connection closed, code=${e.code} reason=${e.reason}`);
+            } else {
+                console.log(`[server][close] Connection died, code=${e.code} reason=${e.reason}`);
+            }
+            this.serverconnected = false;
+        }
+        this.client_sock.onerror = (e) => {
+            console.log(`[server][error] ${e.message}`);
+        };
+
+        this.client_sock.onmessage = (e) => {
+            // console.log("[server][recv]", e.data, performance.now() - JSON.parse(e.data).ts);
+            if(this.multimode == 4){
+                let tmp : dbdata = JSON.parse(e.data);
+                if(tmp.name == 0){
+                    if(tmp.updown == 0)this.CustomeKeyDown(tmp.data);
+                    if(tmp.updown == 1)this.CustomeKeyUp(tmp.data);
+                    this.node.x = tmp.x;
+                    this.node.y = tmp.y;
+                }
+            }
+            if(this.multimode == 2){
+                let tmp : dbdata = JSON.parse(e.data);
+                if(tmp.name == 1){
+                    if(tmp.updown == 0)this.CustomeKeyDown(tmp.data);
+                    if(tmp.updown == 1)this.CustomeKeyUp(tmp.data);
+                    this.node.x = tmp.x;
+                    this.node.y = tmp.y;
+                }
+            }
+        }
     }
     cancel_basic_attack() {
         console.log('cancel_basic_attack');
@@ -114,46 +215,105 @@ export default class player extends cc.Component {
         }
 
     }
-    onKeyDown(event) {
+
+    onKeyDown(event){
+        this.CustomeKeyDown(event.keyCode);
+
+        // #multiplayer
+        if(this.multimode == 1){
+            let tmp : dbdata = {
+                name : 0,
+                data : event.keyCode,
+                updown : 0,
+                x : this.node.x,
+                y : this.node.y
+            }
+            if(tmp.data == cc.macro.KEY.up)tmp.data = cc.macro.KEY.w;
+            else if(tmp.data == cc.macro.KEY.down)tmp.data = cc.macro.KEY.s;
+            else if(tmp.data == cc.macro.KEY.left)tmp.data = cc.macro.KEY.a;
+            else if(tmp.data == cc.macro.KEY.right)tmp.data = cc.macro.KEY.d;
+            else if(tmp.data == cc.macro.KEY.j)tmp.data = cc.macro.KEY.r;
+            else if(tmp.data == cc.macro.KEY.k)tmp.data = cc.macro.KEY.t;
+            else if(tmp.data == cc.macro.KEY.l)tmp.data = cc.macro.KEY.y;
+            else if(tmp.data == cc.macro.KEY.ctrl)tmp.data = cc.macro.KEY.z;
+            else if(tmp.data == cc.macro.KEY.w)tmp.data = cc.macro.KEY.up;
+            else if(tmp.data == cc.macro.KEY.a)tmp.data = cc.macro.KEY.left;
+            else if(tmp.data == cc.macro.KEY.s)tmp.data = cc.macro.KEY.down;
+            else if(tmp.data == cc.macro.KEY.d)tmp.data = cc.macro.KEY.right;
+            else if(tmp.data == cc.macro.KEY.r)tmp.data = cc.macro.KEY.j;
+            else if(tmp.data == cc.macro.KEY.t)tmp.data = cc.macro.KEY.k;
+            else if(tmp.data == cc.macro.KEY.y)tmp.data = cc.macro.KEY.l;
+            else if(tmp.data == cc.macro.KEY.z)tmp.data = cc.macro.KEY.ctrl;
+
+            this.server_sock.send(JSON.stringify(tmp));
+        }else if(this.multimode == 3){
+            let tmp : dbdata = {
+                name : 1,
+                data : event.keyCode,
+                updown : 0,
+                x : this.node.x,
+                y : this.node.y
+            }
+            if(tmp.data == cc.macro.KEY.up)tmp.data = cc.macro.KEY.w;
+            else if(tmp.data == cc.macro.KEY.down)tmp.data = cc.macro.KEY.s;
+            else if(tmp.data == cc.macro.KEY.left)tmp.data = cc.macro.KEY.a;
+            else if(tmp.data == cc.macro.KEY.right)tmp.data = cc.macro.KEY.d;
+            else if(tmp.data == cc.macro.KEY.j)tmp.data = cc.macro.KEY.r;
+            else if(tmp.data == cc.macro.KEY.k)tmp.data = cc.macro.KEY.t;
+            else if(tmp.data == cc.macro.KEY.l)tmp.data = cc.macro.KEY.y;
+            else if(tmp.data == cc.macro.KEY.ctrl)tmp.data = cc.macro.KEY.z;
+            else if(tmp.data == cc.macro.KEY.w)tmp.data = cc.macro.KEY.up;
+            else if(tmp.data == cc.macro.KEY.a)tmp.data = cc.macro.KEY.left;
+            else if(tmp.data == cc.macro.KEY.s)tmp.data = cc.macro.KEY.down;
+            else if(tmp.data == cc.macro.KEY.d)tmp.data = cc.macro.KEY.right;
+            else if(tmp.data == cc.macro.KEY.r)tmp.data = cc.macro.KEY.j;
+            else if(tmp.data == cc.macro.KEY.t)tmp.data = cc.macro.KEY.k;
+            else if(tmp.data == cc.macro.KEY.y)tmp.data = cc.macro.KEY.l;
+            else if(tmp.data == cc.macro.KEY.z)tmp.data = cc.macro.KEY.ctrl;
+            this.server_sock.send(JSON.stringify(tmp));
+        }
+    }
+
+    CustomeKeyDown(keyCode : cc.macro.KEY) {
         // if(event.keyCode == cc.macro.KEY.u){
         //     this.health += 10;
         // }
         if (DataManager.instance.gameover) return;
 
-        if (this.ispause && event.keyCode == cc.macro.KEY.p) {
+        if (this.ispause && keyCode == cc.macro.KEY.p) {
             this.ispause = false;
             cc.director.resume();
             return;
         }
         if (this.ispause) return;
 
-        if (event.keyCode == cc.macro.KEY.p) {
+        if (keyCode == cc.macro.KEY.p) {
             cc.director.pause();
             this.ispause = true;
         }
 
         if (this.node.name == ('player' + DataManager.instance.UserChar.toString())) {
-            if (event.keyCode == cc.macro.KEY.up && this.on_ground == true) {//jump
+            if (keyCode == cc.macro.KEY.up && this.on_ground == true) {//jump
                 this.jump = true;
                 this.on_ground = false;
             }
-            else if (event.keyCode == cc.macro.KEY.up && this.on_broom) {
+            else if (keyCode == cc.macro.KEY.up && this.on_broom) {
                 this.down_move = false;
                 this.up_move = true;
             }
-            else if (event.keyCode == cc.macro.KEY.left) {//left
+            else if (keyCode == cc.macro.KEY.left) {//left
                 this.right_move = false;
                 this.left_move = true;
             }
-            else if (event.keyCode == cc.macro.KEY.right) {//right
+            else if (keyCode == cc.macro.KEY.right) {//right
                 this.right_move = true;
                 this.left_move = false;
             }
-            if (event.keyCode == cc.macro.KEY.down && this.on_broom) {
+            if (keyCode == cc.macro.KEY.down && this.on_broom) {
                 this.down_move = true;
                 this.up_move = false;
             }
-            else if (event.keyCode == cc.macro.KEY.down && !this.inAttack) {//skill
+            else if (keyCode == cc.macro.KEY.down && !this.inAttack) {//skill
                 if (this.can_attack) {
                     this.inAttack = true;
                     this.attack = true;
@@ -185,12 +345,15 @@ export default class player extends cc.Component {
                     );
                 }
             }
-            if (event.keyCode == cc.macro.KEY.ctrl) {
+            if (keyCode == cc.macro.KEY.ctrl) {
                 // console.log('gather');
                 // this.progressbar.getComponent('ProgressBar').progressbar
-                this.progressbar.progress += 0.02;
+                if(DataManager.instance.UserRole == 0 || DataManager.instance.UserRole == 10)
+                    this.progressbar.progress += 0.02;
+                else
+                    this.progressbar2.progress += 0.02;
             }
-            if (event.keyCode == cc.macro.KEY.j && !this.skill1_Cooldown && !this.inAttack) {
+            if (keyCode == cc.macro.KEY.j && !this.skill1_Cooldown && !this.inAttack) {
                 this.inAttack = true;
                 this.skill1_Cooldown = true;
                 this.scheduleOnce(() => {
@@ -201,7 +364,7 @@ export default class player extends cc.Component {
                     this.anim.play(this.node.name + '_basic_attack');
                 }
             }
-            if (event.keyCode == cc.macro.KEY.k && !this.skill2_Cooldown && !this.inAttack) {
+            if (keyCode == cc.macro.KEY.k && !this.skill2_Cooldown && !this.inAttack) {
                 this.inAttack = true;
                 this.skill2_Cooldown = true;
                 this.scheduleOnce(() => {
@@ -212,87 +375,209 @@ export default class player extends cc.Component {
                     this.anim.play(this.node.name + '_basic_attack');
                 }
             }
-            if (event.keyCode == cc.macro.KEY.l && this.progressbar.progress >= 1 && !this.skill3_Cooldown && !this.inAttack) {
-                if(DataManager.instance.UserChar == 7) {
-                    DataManager.instance.gameover = true;
-                    let Vplay = cc.find("Canvas/VideoPlayer");
-                    Vplay.active = true;
-                    Vplay.getComponent(cc.VideoPlayer).play();
-                    this.scheduleOnce(() => {
-                        DataManager.instance.gameover = false;
-                        Vplay.active = false;
-                        this.inAttack = true;
-                        this.skill3_Cooldown = true;
-                        this.progressbar.progress = 0;
-                        this.scheduleOnce(() => {
-                            this.skill3_Cooldown = false;
-                        }, this.skill_time3);
-                        this.skill3 = true;
-                        if (!this.anim.getAnimationState(this.node.name + '_basic_attack').isPlaying) {
-                            this.anim.play(this.node.name + '_basic_attack');
+            if(keyCode == cc.macro.KEY.l) {
+                if(DataManager.instance.UserRole == 0 || DataManager.instance.UserRole == 10) {
+                    if(this.progressbar.progress >= 1 && !this.skill3_Cooldown && !this.inAttack) {
+                        if(DataManager.instance.UserChar == 7) {
+                            DataManager.instance.gameover = true;
+                            let Vplay = cc.find("Canvas/VideoPlayer");
+                            Vplay.active = true;
+                            Vplay.getComponent(cc.VideoPlayer).play();
+                            this.scheduleOnce(() => {
+                                DataManager.instance.gameover = false;
+                                Vplay.active = false;
+                                this.inAttack = true;
+                                this.skill3_Cooldown = true;
+                                this.progressbar.progress = 0;
+                                this.scheduleOnce(() => {
+                                    this.skill3_Cooldown = false;
+                                }, this.skill_time3);
+                                this.skill3 = true;
+                                if (!this.anim.getAnimationState(this.node.name + '_basic_attack').isPlaying) {
+                                    this.anim.play(this.node.name + '_basic_attack');
+                                }
+                                //particle system
+                                this.scheduleOnce(
+                                    function () {
+                                        console.log(this.GatherParticleL);
+                                        this.GatherParticleL.resetSystem();
+                                    }, 0.15
+                                );
+                                this.scheduleOnce(
+                                    function () {
+                                        this.GatherParticleL.stopSystem();
+                                    }, 0.5
+                                );
+                            }, 7.5);
                         }
-                        //particle system
-                        this.scheduleOnce(
-                            function () {
-                                console.log(this.GatherParticleL);
-                                this.GatherParticleL.resetSystem();
-                            }, 0.15
-                        );
-                        this.scheduleOnce(
-                            function () {
-                                this.GatherParticleL.stopSystem();
-                            }, 0.5
-                        );
-                    }, 7.5);
+                        else {
+                            this.inAttack = true;
+                            this.skill3_Cooldown = true;
+                            this.progressbar.progress = 0;
+                            this.scheduleOnce(() => {
+                                this.skill3_Cooldown = false;
+                            }, this.skill_time3);
+                            this.skill3 = true;
+                            if (!this.anim.getAnimationState(this.node.name + '_basic_attack').isPlaying) {
+                                this.anim.play(this.node.name + '_basic_attack');
+                            }
+                            //particle system
+                            this.scheduleOnce(
+                                function () {
+                                    console.log(this.GatherParticleL);
+                                    this.GatherParticleL.resetSystem();
+                                }, 0.15
+                            );
+                            this.scheduleOnce(
+                                function () {
+                                    this.GatherParticleL.stopSystem();
+                                }, 0.5
+                            );
+                        }
+                    }
                 }
                 else {
-                    this.inAttack = true;
-                    this.skill3_Cooldown = true;
-                    this.progressbar.progress = 0;
-                    this.scheduleOnce(() => {
-                        this.skill3_Cooldown = false;
-                    }, this.skill_time3);
-                    this.skill3 = true;
-                    if (!this.anim.getAnimationState(this.node.name + '_basic_attack').isPlaying) {
-                        this.anim.play(this.node.name + '_basic_attack');
+                    if(this.progressbar2.progress >= 1 && !this.skill3_Cooldown && !this.inAttack) {
+                        if(DataManager.instance.UserChar == 7) {
+                            DataManager.instance.gameover = true;
+                            let Vplay = cc.find("Canvas/VideoPlayer");
+                            Vplay.active = true;
+                            Vplay.getComponent(cc.VideoPlayer).play();
+                            this.scheduleOnce(() => {
+                                DataManager.instance.gameover = false;
+                                Vplay.active = false;
+                                this.inAttack = true;
+                                this.skill3_Cooldown = true;
+                                this.progressbar2.progress = 0;
+                                this.scheduleOnce(() => {
+                                    this.skill3_Cooldown = false;
+                                }, this.skill_time3);
+                                this.skill3 = true;
+                                if (!this.anim.getAnimationState(this.node.name + '_basic_attack').isPlaying) {
+                                    this.anim.play(this.node.name + '_basic_attack');
+                                }
+                                //particle system
+                                this.scheduleOnce(
+                                    function () {
+                                        console.log(this.GatherParticleL);
+                                        this.GatherParticleL.resetSystem();
+                                    }, 0.15
+                                );
+                                this.scheduleOnce(
+                                    function () {
+                                        this.GatherParticleL.stopSystem();
+                                    }, 0.5
+                                );
+                            }, 7.5);
+                        }
+                        else {
+                            this.inAttack = true;
+                            this.skill3_Cooldown = true;
+                            this.progressbar2.progress = 0;
+                            this.scheduleOnce(() => {
+                                this.skill3_Cooldown = false;
+                            }, this.skill_time3);
+                            this.skill3 = true;
+                            if (!this.anim.getAnimationState(this.node.name + '_basic_attack').isPlaying) {
+                                this.anim.play(this.node.name + '_basic_attack');
+                            }
+                            //particle system
+                            this.scheduleOnce(
+                                function () {
+                                    console.log(this.GatherParticleL);
+                                    this.GatherParticleL.resetSystem();
+                                }, 0.15
+                            );
+                            this.scheduleOnce(
+                                function () {
+                                    this.GatherParticleL.stopSystem();
+                                }, 0.5
+                            );
+                        }
                     }
-                    //particle system
-                    this.scheduleOnce(
-                        function () {
-                            console.log(this.GatherParticleL);
-                            this.GatherParticleL.resetSystem();
-                        }, 0.15
-                    );
-                    this.scheduleOnce(
-                        function () {
-                            this.GatherParticleL.stopSystem();
-                        }, 0.5
-                    );
                 }
             }
+            // if (keyCode == cc.macro.KEY.l && this.progressbar.progress >= 1 && !this.skill3_Cooldown && !this.inAttack) {
+            //     if(DataManager.instance.UserChar == 7) {
+            //         DataManager.instance.gameover = true;
+            //         let Vplay = cc.find("Canvas/VideoPlayer");
+            //         Vplay.active = true;
+            //         Vplay.getComponent(cc.VideoPlayer).play();
+            //         this.scheduleOnce(() => {
+            //             DataManager.instance.gameover = false;
+            //             Vplay.active = false;
+            //             this.inAttack = true;
+            //             this.skill3_Cooldown = true;
+            //             this.progressbar.progress = 0;
+            //             this.scheduleOnce(() => {
+            //                 this.skill3_Cooldown = false;
+            //             }, this.skill_time3);
+            //             this.skill3 = true;
+            //             if (!this.anim.getAnimationState(this.node.name + '_basic_attack').isPlaying) {
+            //                 this.anim.play(this.node.name + '_basic_attack');
+            //             }
+            //             //particle system
+            //             this.scheduleOnce(
+            //                 function () {
+            //                     console.log(this.GatherParticleL);
+            //                     this.GatherParticleL.resetSystem();
+            //                 }, 0.15
+            //             );
+            //             this.scheduleOnce(
+            //                 function () {
+            //                     this.GatherParticleL.stopSystem();
+            //                 }, 0.5
+            //             );
+            //         }, 7.5);
+            //     }
+            //     else {
+            //         this.inAttack = true;
+            //         this.skill3_Cooldown = true;
+            //         this.progressbar.progress = 0;
+            //         this.scheduleOnce(() => {
+            //             this.skill3_Cooldown = false;
+            //         }, this.skill_time3);
+            //         this.skill3 = true;
+            //         if (!this.anim.getAnimationState(this.node.name + '_basic_attack').isPlaying) {
+            //             this.anim.play(this.node.name + '_basic_attack');
+            //         }
+            //         //particle system
+            //         this.scheduleOnce(
+            //             function () {
+            //                 console.log(this.GatherParticleL);
+            //                 this.GatherParticleL.resetSystem();
+            //             }, 0.15
+            //         );
+            //         this.scheduleOnce(
+            //             function () {
+            //                 this.GatherParticleL.stopSystem();
+            //             }, 0.5
+            //         );
+            //     }
+            // }
         }
         else {
-            if (event.keyCode == cc.macro.KEY.w && this.on_ground == true) {//w jump
+            if (keyCode == cc.macro.KEY.w && this.on_ground == true) {//w jump
                 this.jump = true;
                 this.on_ground = false;
             }
-            else if (event.keyCode == cc.macro.KEY.w && this.on_broom) {
+            else if (keyCode == cc.macro.KEY.w && this.on_broom) {
                 this.down_move = false;
                 this.up_move = true;
             }
-            else if (event.keyCode == cc.macro.KEY.a) {//left
+            else if (keyCode == cc.macro.KEY.a) {//left
                 this.right_move = false;
                 this.left_move = true;
             }
-            else if (event.keyCode == cc.macro.KEY.d) {//right
+            else if (keyCode == cc.macro.KEY.d) {//right
                 this.right_move = true;
                 this.left_move = false;
             }
-            if (event.keyCode == cc.macro.KEY.s && this.on_broom) {
+            if (keyCode == cc.macro.KEY.s && this.on_broom) {
                 this.down_move = true;
                 this.up_move = false;
             }
-            else if (event.keyCode == cc.macro.KEY.s && !this.inAttack) {//skill
+            else if (keyCode == cc.macro.KEY.s && !this.inAttack) {//skill
                 if (this.can_attack) {
                     this.inAttack = true;
                     this.attack = true;
@@ -324,12 +609,15 @@ export default class player extends cc.Component {
                     );
                 }
             }
-            if (event.keyCode == cc.macro.KEY.z) {
+            if (keyCode == cc.macro.KEY.z) {
                 // console.log('gather');
                 // this.progressbar.getComponent('ProgressBar').progressbar
-                this.progressbar2.progress += 0.004;
+                if(DataManager.instance.UserRole == 1)
+                    this.progressbar.progress += 0.02;
+                else
+                    this.progressbar2.progress += 0.02;
             }
-            if (event.keyCode == cc.macro.KEY.r && !this.skill1_Cooldown && !this.inAttack) {
+            if (keyCode == cc.macro.KEY.r && !this.skill1_Cooldown && !this.inAttack) {
                 this.inAttack = true;
                 this.skill1_Cooldown = true;
                 this.scheduleOnce(() => {
@@ -340,7 +628,7 @@ export default class player extends cc.Component {
                     this.anim.play(this.node.name + '_basic_attack');
                 }
             }
-            if (event.keyCode == cc.macro.KEY.t && !this.skill2_Cooldown && !this.inAttack) {
+            if (keyCode == cc.macro.KEY.t && !this.skill2_Cooldown && !this.inAttack) {
                 this.inAttack = true;
                 this.skill2_Cooldown = true;
                 this.scheduleOnce(() => {
@@ -351,101 +639,279 @@ export default class player extends cc.Component {
                     this.anim.play(this.node.name + '_basic_attack');
                 }
             }
-            if (event.keyCode == cc.macro.KEY.y && this.progressbar2.progress >= 1 && !this.skill3_Cooldown && !this.inAttack) {
-                if(DataManager.instance.UserChar2 == 7) {
-                    DataManager.instance.gameover = true;
-                    let Vplay = cc.find("Canvas/VideoPlayer");
-                    Vplay.active = true;
-                    Vplay.getComponent(cc.VideoPlayer).play();
-                    this.scheduleOnce(() => {
-                        DataManager.instance.gameover = false;
-                        Vplay.active = false;
-                        this.inAttack = true;
-                        this.skill3_Cooldown = true;
-                        this.progressbar2.progress = 0;
-                        this.scheduleOnce(() => {
-                            this.skill3_Cooldown = false;
-                        }, this.skill_time3);
-                        this.skill3 = true;
-                        if (!this.anim.getAnimationState(this.node.name + '_basic_attack').isPlaying) {
-                            this.anim.play(this.node.name + '_basic_attack');
+            if(keyCode == cc.macro.KEY.y) {
+                if(DataManager.instance.UserRole == 1) {
+                    if(this.progressbar.progress >= 1 && !this.skill3_Cooldown && !this.inAttack) {
+                        if(DataManager.instance.UserChar == 7) {
+                            DataManager.instance.gameover = true;
+                            let Vplay = cc.find("Canvas/VideoPlayer");
+                            Vplay.active = true;
+                            Vplay.getComponent(cc.VideoPlayer).play();
+                            this.scheduleOnce(() => {
+                                DataManager.instance.gameover = false;
+                                Vplay.active = false;
+                                this.inAttack = true;
+                                this.skill3_Cooldown = true;
+                                this.progressbar.progress = 0;
+                                this.scheduleOnce(() => {
+                                    this.skill3_Cooldown = false;
+                                }, this.skill_time3);
+                                this.skill3 = true;
+                                if (!this.anim.getAnimationState(this.node.name + '_basic_attack').isPlaying) {
+                                    this.anim.play(this.node.name + '_basic_attack');
+                                }
+                                //particle system
+                                this.scheduleOnce(
+                                    function () {
+                                        console.log(this.GatherParticleL);
+                                        this.GatherParticleL.resetSystem();
+                                    }, 0.15
+                                );
+                                this.scheduleOnce(
+                                    function () {
+                                        this.GatherParticleL.stopSystem();
+                                    }, 0.5
+                                );
+                            }, 7.5);
                         }
-                        //particle system
-                        this.scheduleOnce(
-                            function () {
-                                console.log(this.GatherParticleL);
-                                this.GatherParticleL.resetSystem();
-                            }, 0.15
-                        );
-                        this.scheduleOnce(
-                            function () {
-                                this.GatherParticleL.stopSystem();
-                            }, 0.5
-                        );
-                    }, 7.5);
+                        else {
+                            this.inAttack = true;
+                            this.skill3_Cooldown = true;
+                            this.progressbar.progress = 0;
+                            this.scheduleOnce(() => {
+                                this.skill3_Cooldown = false;
+                            }, this.skill_time3);
+                            this.skill3 = true;
+                            if (!this.anim.getAnimationState(this.node.name + '_basic_attack').isPlaying) {
+                                this.anim.play(this.node.name + '_basic_attack');
+                            }
+                            //particle system
+                            this.scheduleOnce(
+                                function () {
+                                    console.log(this.GatherParticleL);
+                                    this.GatherParticleL.resetSystem();
+                                }, 0.15
+                            );
+                            this.scheduleOnce(
+                                function () {
+                                    this.GatherParticleL.stopSystem();
+                                }, 0.5
+                            );
+                        }
+                    }
                 }
                 else {
-                    this.inAttack = true;
-                    this.skill3_Cooldown = true;
-                    this.progressbar2.progress = 0;
-                    this.scheduleOnce(() => {
-                        this.skill3_Cooldown = false;
-                    }, this.skill_time3);
-                    this.skill3 = true;
-                    if (!this.anim.getAnimationState(this.node.name + '_basic_attack').isPlaying) {
-                        this.anim.play(this.node.name + '_basic_attack');
+                    if(this.progressbar2.progress >= 1 && !this.skill3_Cooldown && !this.inAttack) {
+                        if(DataManager.instance.UserChar == 7) {
+                            DataManager.instance.gameover = true;
+                            let Vplay = cc.find("Canvas/VideoPlayer");
+                            Vplay.active = true;
+                            Vplay.getComponent(cc.VideoPlayer).play();
+                            this.scheduleOnce(() => {
+                                DataManager.instance.gameover = false;
+                                Vplay.active = false;
+                                this.inAttack = true;
+                                this.skill3_Cooldown = true;
+                                this.progressbar2.progress = 0;
+                                this.scheduleOnce(() => {
+                                    this.skill3_Cooldown = false;
+                                }, this.skill_time3);
+                                this.skill3 = true;
+                                if (!this.anim.getAnimationState(this.node.name + '_basic_attack').isPlaying) {
+                                    this.anim.play(this.node.name + '_basic_attack');
+                                }
+                                //particle system
+                                this.scheduleOnce(
+                                    function () {
+                                        console.log(this.GatherParticleL);
+                                        this.GatherParticleL.resetSystem();
+                                    }, 0.15
+                                );
+                                this.scheduleOnce(
+                                    function () {
+                                        this.GatherParticleL.stopSystem();
+                                    }, 0.5
+                                );
+                            }, 7.5);
+                        }
+                        else {
+                            this.inAttack = true;
+                            this.skill3_Cooldown = true;
+                            this.progressbar2.progress = 0;
+                            this.scheduleOnce(() => {
+                                this.skill3_Cooldown = false;
+                            }, this.skill_time3);
+                            this.skill3 = true;
+                            if (!this.anim.getAnimationState(this.node.name + '_basic_attack').isPlaying) {
+                                this.anim.play(this.node.name + '_basic_attack');
+                            }
+                            //particle system
+                            this.scheduleOnce(
+                                function () {
+                                    console.log(this.GatherParticleL);
+                                    this.GatherParticleL.resetSystem();
+                                }, 0.15
+                            );
+                            this.scheduleOnce(
+                                function () {
+                                    this.GatherParticleL.stopSystem();
+                                }, 0.5
+                            );
+                        }
                     }
-                    //particle system
-                    this.scheduleOnce(
-                        function () {
-                            console.log(this.GatherParticleL);
-                            this.GatherParticleL.resetSystem();
-                        }, 0.15
-                    );
-                    this.scheduleOnce(
-                        function () {
-                            this.GatherParticleL.stopSystem();
-                        }, 0.5
-                    );
                 }
             }
+            // if (keyCode == cc.macro.KEY.y && this.progressbar2.progress >= 1 && !this.skill3_Cooldown && !this.inAttack) {
+            //     if(DataManager.instance.UserChar2 == 7) {
+            //         DataManager.instance.gameover = true;
+            //         let Vplay = cc.find("Canvas/VideoPlayer");
+            //         Vplay.active = true;
+            //         Vplay.getComponent(cc.VideoPlayer).play();
+            //         this.scheduleOnce(() => {
+            //             DataManager.instance.gameover = false;
+            //             Vplay.active = false;
+            //             this.inAttack = true;
+            //             this.skill3_Cooldown = true;
+            //             this.progressbar2.progress = 0;
+            //             this.scheduleOnce(() => {
+            //                 this.skill3_Cooldown = false;
+            //             }, this.skill_time3);
+            //             this.skill3 = true;
+            //             if (!this.anim.getAnimationState(this.node.name + '_basic_attack').isPlaying) {
+            //                 this.anim.play(this.node.name + '_basic_attack');
+            //             }
+            //             //particle system
+            //             this.scheduleOnce(
+            //                 function () {
+            //                     console.log(this.GatherParticleL);
+            //                     this.GatherParticleL.resetSystem();
+            //                 }, 0.15
+            //             );
+            //             this.scheduleOnce(
+            //                 function () {
+            //                     this.GatherParticleL.stopSystem();
+            //                 }, 0.5
+            //             );
+            //         }, 7.5);
+            //     }
+            //     else {
+            //         this.inAttack = true;
+            //         this.skill3_Cooldown = true;
+            //         this.progressbar2.progress = 0;
+            //         this.scheduleOnce(() => {
+            //             this.skill3_Cooldown = false;
+            //         }, this.skill_time3);
+            //         this.skill3 = true;
+            //         if (!this.anim.getAnimationState(this.node.name + '_basic_attack').isPlaying) {
+            //             this.anim.play(this.node.name + '_basic_attack');
+            //         }
+            //         //particle system
+            //         this.scheduleOnce(
+            //             function () {
+            //                 console.log(this.GatherParticleL);
+            //                 this.GatherParticleL.resetSystem();
+            //             }, 0.15
+            //         );
+            //         this.scheduleOnce(
+            //             function () {
+            //                 this.GatherParticleL.stopSystem();
+            //             }, 0.5
+            //         );
+            //     }
+            // }
 
         }
 
     }
-    onKeyUp(event) {
+    onKeyUp(event){
+        this.CustomeKeyUp(event.keyCode);
+
+        // #multiplayer
+        if(this.multimode == 1){
+            let tmp : dbdata = {
+                name : 0,
+                data : event.keyCode,
+                updown : 1,
+                x : this.node.x,
+                y : this.node.y
+            }
+            if(tmp.data == cc.macro.KEY.up)tmp.data = cc.macro.KEY.w;
+            else if(tmp.data == cc.macro.KEY.down)tmp.data = cc.macro.KEY.s;
+            else if(tmp.data == cc.macro.KEY.left)tmp.data = cc.macro.KEY.a;
+            else if(tmp.data == cc.macro.KEY.right)tmp.data = cc.macro.KEY.d;
+            else if(tmp.data == cc.macro.KEY.j)tmp.data = cc.macro.KEY.r;
+            else if(tmp.data == cc.macro.KEY.k)tmp.data = cc.macro.KEY.t;
+            else if(tmp.data == cc.macro.KEY.l)tmp.data = cc.macro.KEY.y;
+            else if(tmp.data == cc.macro.KEY.ctrl)tmp.data = cc.macro.KEY.z;
+            else if(tmp.data == cc.macro.KEY.w)tmp.data = cc.macro.KEY.up;
+            else if(tmp.data == cc.macro.KEY.a)tmp.data = cc.macro.KEY.left;
+            else if(tmp.data == cc.macro.KEY.s)tmp.data = cc.macro.KEY.down;
+            else if(tmp.data == cc.macro.KEY.d)tmp.data = cc.macro.KEY.right;
+            else if(tmp.data == cc.macro.KEY.r)tmp.data = cc.macro.KEY.j;
+            else if(tmp.data == cc.macro.KEY.t)tmp.data = cc.macro.KEY.k;
+            else if(tmp.data == cc.macro.KEY.y)tmp.data = cc.macro.KEY.l;
+            else if(tmp.data == cc.macro.KEY.z)tmp.data = cc.macro.KEY.ctrl;
+            this.server_sock.send(JSON.stringify(tmp));
+        }else if(this.multimode == 3){
+            let tmp : dbdata = {
+                name : 1,
+                data : event.keyCode,
+                updown : 1,
+                x : this.node.x,
+                y : this.node.y
+            }
+            if(tmp.data == cc.macro.KEY.up)tmp.data = cc.macro.KEY.w;
+            else if(tmp.data == cc.macro.KEY.down)tmp.data = cc.macro.KEY.s;
+            else if(tmp.data == cc.macro.KEY.left)tmp.data = cc.macro.KEY.a;
+            else if(tmp.data == cc.macro.KEY.right)tmp.data = cc.macro.KEY.d;
+            else if(tmp.data == cc.macro.KEY.j)tmp.data = cc.macro.KEY.r;
+            else if(tmp.data == cc.macro.KEY.k)tmp.data = cc.macro.KEY.t;
+            else if(tmp.data == cc.macro.KEY.l)tmp.data = cc.macro.KEY.y;
+            else if(tmp.data == cc.macro.KEY.ctrl)tmp.data = cc.macro.KEY.z;
+            else if(tmp.data == cc.macro.KEY.w)tmp.data = cc.macro.KEY.up;
+            else if(tmp.data == cc.macro.KEY.a)tmp.data = cc.macro.KEY.left;
+            else if(tmp.data == cc.macro.KEY.s)tmp.data = cc.macro.KEY.down;
+            else if(tmp.data == cc.macro.KEY.d)tmp.data = cc.macro.KEY.right;
+            else if(tmp.data == cc.macro.KEY.r)tmp.data = cc.macro.KEY.j;
+            else if(tmp.data == cc.macro.KEY.t)tmp.data = cc.macro.KEY.k;
+            else if(tmp.data == cc.macro.KEY.y)tmp.data = cc.macro.KEY.l;
+            else if(tmp.data == cc.macro.KEY.z)tmp.data = cc.macro.KEY.ctrl;
+            this.server_sock.send(JSON.stringify(tmp));
+        }
+    }
+    CustomeKeyUp(keyCode : cc.macro.KEY) {
         if (this.node.name == ('player' + DataManager.instance.UserChar.toString())) {
-            if (event.keyCode == cc.macro.KEY.up) {//jump
+            if (keyCode == cc.macro.KEY.up) {//jump
                 this.jump = false;
                 this.up_move = false;
             }
-            else if (event.keyCode == cc.macro.KEY.left) {//left
+            else if (keyCode == cc.macro.KEY.left) {//left
                 this.left_move = false;
                 this.anim.stop(this.node.name + "_walk");
             }
-            else if (event.keyCode == cc.macro.KEY.right) {//right
+            else if (keyCode == cc.macro.KEY.right) {//right
                 this.right_move = false;
                 this.anim.stop(this.node.name + "_walk");
             }
-            else if (event.keyCode == cc.macro.KEY.down) {
+            else if (keyCode == cc.macro.KEY.down) {
                 this.down_move = false;
             }
         }
         else {
-            if (event.keyCode == cc.macro.KEY.w) {//w jump
+            if (keyCode == cc.macro.KEY.w) {//w jump
                 this.jump = false;
                 this.up_move = false;
 
             }
-            else if (event.keyCode == cc.macro.KEY.a) {//left
+            else if (keyCode == cc.macro.KEY.a) {//left
                 this.left_move = false;
                 this.anim.stop(this.node.name + "_walk");
             }
-            else if (event.keyCode == cc.macro.KEY.d) {//right
+            else if (keyCode == cc.macro.KEY.d) {//right
                 this.right_move = false;
                 this.anim.stop(this.node.name + "_walk");
             }
-            else if (event.keyCode == cc.macro.KEY.s) {
+            else if (keyCode == cc.macro.KEY.s) {
                 this.down_move = false;
             }
         }
