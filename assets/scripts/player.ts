@@ -1099,7 +1099,20 @@ export default class player extends cc.Component {
         if (other.node.group == 'Ground')
             this.on_ground = false;
     }
+    private nowtime : number = 0;
+    private nextconnectiontime : number = 10;
+
     update(dt) {
+
+        if(!this.serverconnected && this.nowtime >= this.nextconnectiontime){
+            this.nextconnectiontime = this.nowtime + 1;
+            console.log("connection failed, trying to connect to server...");
+            if(this.multimode == 1 || this.multimode == 3)
+                this.server_connect_to_db();
+            else if(this.multimode == 2 || this.multimode == 4)
+                this.client_connect_to_db();
+            return ;
+        }
 
         if (DataManager.instance.gameover) {
             this.getComponent(cc.RigidBody).linearVelocity = cc.v2(0, 0);

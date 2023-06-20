@@ -44,7 +44,7 @@ export default class SelectMap extends cc.Component {
     update (dt) {
         if(this.Map == 1 && !this.isLoad) {
             this.isLoad = true;
-            alert("CC");
+            // alert("CC");
             DataManager.instance.Map = 1;
             if(this.Role == 0) 
                 firebase.database().ref("rooms/" + DataManager.instance.MultiplayerRoomID.toString() + "/P1").set(1);
@@ -59,7 +59,7 @@ export default class SelectMap extends cc.Component {
         else if(this.Map == 2 && !this.isLoad) {
             this.isLoad = true;
             DataManager.instance.Map = 2;
-            alert("BB");
+            
             if(this.Role == 0)
                 firebase.database().ref("rooms/" + DataManager.instance.MultiplayerRoomID.toString() + "/P1").set(1);
             else
@@ -75,7 +75,7 @@ export default class SelectMap extends cc.Component {
     Select1() {
         if(this.Role == 0) {
             firebase.database().ref("rooms/" + DataManager.instance.MultiplayerRoomID.toString() + "/Map").set(1);
-            alert("AAA");
+            // alert("AAA");
         }
     }
 
