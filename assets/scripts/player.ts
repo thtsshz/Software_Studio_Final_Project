@@ -16,6 +16,7 @@ class dbdata{
     updown : number;
     x : number;
     y : number;
+    health : number;
 }
 
 @ccclass
@@ -178,6 +179,7 @@ export default class player extends cc.Component {
                     if(tmp.updown == 1)this.CustomeKeyUp(tmp.data);
                     this.node.x = tmp.x;
                     this.node.y = tmp.y;
+                    this.health = tmp.health;
                 }
             }
             if(this.multimode == 2){
@@ -187,6 +189,7 @@ export default class player extends cc.Component {
                     if(tmp.updown == 1)this.CustomeKeyUp(tmp.data);
                     this.node.x = tmp.x;
                     this.node.y = tmp.y;
+                    this.health = tmp.health;
                 }
             }
         }
@@ -234,7 +237,8 @@ export default class player extends cc.Component {
                 data : event.keyCode,
                 updown : 0,
                 x : this.node.x,
-                y : this.node.y
+                y : this.node.y,
+                health : this.health
             }
             if(tmp.data == cc.macro.KEY.up)tmp.data = cc.macro.KEY.w;
             else if(tmp.data == cc.macro.KEY.down)tmp.data = cc.macro.KEY.s;
@@ -260,7 +264,8 @@ export default class player extends cc.Component {
                 data : event.keyCode,
                 updown : 0,
                 x : this.node.x,
-                y : this.node.y
+                y : this.node.y,
+                health : this.health
             }
             if(tmp.data == cc.macro.KEY.up)tmp.data = cc.macro.KEY.w;
             else if(tmp.data == cc.macro.KEY.down)tmp.data = cc.macro.KEY.s;
@@ -843,7 +848,8 @@ export default class player extends cc.Component {
                 data : event.keyCode,
                 updown : 1,
                 x : this.node.x,
-                y : this.node.y
+                y : this.node.y,
+                health : this.health
             }
             if(tmp.data == cc.macro.KEY.up)tmp.data = cc.macro.KEY.w;
             else if(tmp.data == cc.macro.KEY.down)tmp.data = cc.macro.KEY.s;
@@ -868,7 +874,8 @@ export default class player extends cc.Component {
                 data : event.keyCode,
                 updown : 1,
                 x : this.node.x,
-                y : this.node.y
+                y : this.node.y,
+                health : this.health
             }
             if(tmp.data == cc.macro.KEY.up)tmp.data = cc.macro.KEY.w;
             else if(tmp.data == cc.macro.KEY.down)tmp.data = cc.macro.KEY.s;
