@@ -652,7 +652,7 @@ export default class player extends cc.Component {
             if(keyCode == cc.macro.KEY.y) {
                 if(DataManager.instance.UserRole == 1) {
                     if(this.progressbar.progress >= 1 && !this.skill3_Cooldown && !this.inAttack) {
-                        if(DataManager.instance.UserChar == 7) {
+                        if(DataManager.instance.opponentChar == 7) {
                             DataManager.instance.gameover = true;
                             let Vplay = cc.find("Canvas/VideoPlayer");
                             Vplay.active = true;
@@ -712,7 +712,7 @@ export default class player extends cc.Component {
                 }
                 else {
                     if(this.progressbar2.progress >= 1 && !this.skill3_Cooldown && !this.inAttack) {
-                        if(DataManager.instance.UserChar == 7) {
+                        if(DataManager.instance.opponentChar == 7 || DataManager.instance.UserChar2 == 7) {
                             DataManager.instance.gameover = true;
                             let Vplay = cc.find("Canvas/VideoPlayer");
                             Vplay.active = true;
