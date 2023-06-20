@@ -39,6 +39,9 @@ export default class player extends cc.Component {
 
     @property(cc.Camera)
     camera: cc.Camera = null;
+
+    @property({ type: cc.Node })
+    pause: cc.Node = null;
     // LIFE-CYCLE CALLBACKS:
     left_move: boolean = false;
     right_move: boolean = false;
@@ -117,6 +120,7 @@ export default class player extends cc.Component {
                 this.multimode = 4;
             }
         }
+        this.pause.active = false;
     }
     server_connect_to_db(){ // #multiplayer
         if(this.server_sock) delete this.server_sock;
@@ -280,14 +284,16 @@ export default class player extends cc.Component {
         // }
         if (DataManager.instance.gameover) return;
 
-        if (this.ispause && keyCode == cc.macro.KEY.p) {
+        if (this.ispause && keyCode == cc.macro.KEY.i) {
             this.ispause = false;
             cc.director.resume();
+            this.pause.active = false;
             return;
         }
         if (this.ispause) return;
 
-        if (keyCode == cc.macro.KEY.p) {
+        if (keyCode == cc.macro.KEY.i) {
+            this.pause.active = true;
             cc.director.pause();
             this.ispause = true;
         }
@@ -1096,7 +1102,7 @@ export default class player extends cc.Component {
     update(dt) {
 
         if (DataManager.instance.gameover) {
-            this.getComponent(cc.RigidBody).linearVelocity = cc.v2(0,0);
+            this.getComponent(cc.RigidBody).linearVelocity = cc.v2(0, 0);
             return;
         }
 
