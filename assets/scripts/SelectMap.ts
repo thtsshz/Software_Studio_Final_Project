@@ -46,7 +46,6 @@ export default class SelectMap extends cc.Component {
             this.isLoad = true;
             alert("CC");
             DataManager.instance.Map = 1;
-            cc.director.loadScene("BattleIntro");
             if(this.Role == 0) 
                 firebase.database().ref("rooms/" + DataManager.instance.MultiplayerRoomID.toString() + "/P1").set(1);
             else
@@ -55,12 +54,12 @@ export default class SelectMap extends cc.Component {
             this.scheduleOnce(() =>{
                 firebase.database().ref("rooms/" + DataManager.instance.MultiplayerRoomID.toString() + "/Map").set(0);
             }, 1)
+            cc.director.loadScene("BattleIntro");
         }
         else if(this.Map == 2 && !this.isLoad) {
             this.isLoad = true;
             DataManager.instance.Map = 2;
             alert("BB");
-            cc.director.loadScene("BattleIntro");
             if(this.Role == 0)
                 firebase.database().ref("rooms/" + DataManager.instance.MultiplayerRoomID.toString() + "/P1").set(1);
             else
