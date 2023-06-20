@@ -42,7 +42,7 @@ export default class Lobby extends cc.Component {
     private nextconnectiontime : number = 3;
     connecttoserver(){
         if(this.server_sock) delete this.server_sock;
-        this.server_sock = new WebSocket("ws://192.168.50.62:8081/server");
+        this.server_sock = new WebSocket("wss://hogwarts.dasbd72.com:8081/server");
         this.server_sock.onopen = () => {
             console.log(`[server][open] Connected}`);
             this.serveravailable = true;

@@ -93,7 +93,7 @@ export default class Map1multiplayerC extends cc.Component {
     
     client_connect_to_db() { // #multi 
         if(this.client_sock) delete this.client_sock;
-        this.client_sock = new WebSocket("ws://192.168.50.62:8081/client");
+        this.client_sock = new WebSocket("wss://hogwarts.dasbd72.com:8081/client");
         this.client_sock.onopen = () => {
             console.log(`[server][open] Connected}`);
             this.serverconnected = true;
