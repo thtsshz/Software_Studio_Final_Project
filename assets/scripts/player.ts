@@ -128,7 +128,7 @@ export default class player extends cc.Component {
     }
     server_connect_to_db(){ // #multiplayer
         if(this.server_sock) delete this.server_sock;
-        this.server_sock = new WebSocket("wss://hogwarts.dasbd72.com:8081/server");
+        this.server_sock = new WebSocket("ws://hogwarts.dasbd72.com/server");
         this.server_sock.onopen = () => {
             console.log(`[server][open] Connected}`);
             this.serverconnected = true;
@@ -152,7 +152,7 @@ export default class player extends cc.Component {
     }
     client_connect_to_db(){ // #multiplayer
         if(this.client_sock) delete this.client_sock;
-        this.client_sock = new WebSocket("wss://hogwarts.dasbd72.com:8081/client");
+        this.client_sock = new WebSocket("ws://hogwarts.dasbd72.com/client");
         this.client_sock.onopen = () => {
             console.log(`[server][open] Connected}`);
             this.serverconnected = true;
