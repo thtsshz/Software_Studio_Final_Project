@@ -163,7 +163,7 @@ export default class WinScene extends cc.Component {
             if (DataManager.instance.UserRole == 0 || DataManager.instance.UserRole == 1) {
                 firebase.database().ref("User/" + DataManager.instance.UserUID).update({ WinCount: DataManager.instance.WinCount + 1 })
                     .then().catch((e) => { console.log(e.message) });
-                alert("AA");
+                // alert("AA");
             }
 
         }
