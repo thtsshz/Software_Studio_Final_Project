@@ -1104,6 +1104,7 @@ export default class player extends cc.Component {
 
     update(dt) {
 
+        this.nowtime += dt;
         if(!this.serverconnected && this.nowtime >= this.nextconnectiontime){
             this.nextconnectiontime = this.nowtime + 1;
             console.log("connection failed, trying to connect to server...");
